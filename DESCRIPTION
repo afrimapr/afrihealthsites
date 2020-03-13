@@ -8,6 +8,13 @@ Authors@R:
            email = "southandy@gmail.com",
            comment = c(ORCID = "0000-0003-4051-6135"))
 Description: African healthsite locations from healthsites.io and WHO.
-License: GPL
+License: GPL (>= 3) | file LICENSE
+URL: https://github.com/afrimapr/afriadmin
+BugReports: https://github.com/afrimapr/afriadmin/issues
+Depends:
+    R (>= 2.10)
+Imports:
+    sf,
+    mapview
 Encoding: UTF-8
 LazyData: true
