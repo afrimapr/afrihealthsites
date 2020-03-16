@@ -1,2 +1,44 @@
 # afrihealthsites
 access to geographic locations of african health sites from different sources
+
+
+A part of the [afrimapr](www.afrimapr.org) project.
+
+In early development, will change, contact Andy South with questions.
+
+
+### Install afriadmin
+
+Install the development version from GitHub using [devtools](https://github.com/hadley/devtools).
+
+    # install.packages("devtools") # if not already installed
+    
+    devtools::install_github("afrimapr/afrihealthsites")
+
+
+### First Usage
+
+``` r
+library(afrihealthsites)
+library(sf)
+
+## WHO database 
+
+# with interactive map
+sfken <- afrihealthsites("kenya", datasource='who', plot='mapview')
+
+# static map
+sfeth <- afrihealthsites("ethiopia", datasource='who', plot='sf')
+
+
+## healthsites.io
+## requires an API key from 
+
+# with interactive map
+sfmali <- afrihealthsites("mali", datasource='healthsites', plot='mapview')
+
+
+
+# todo move the readme to an Rmd to allow plots
+
+```

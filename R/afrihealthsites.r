@@ -15,7 +15,7 @@
 #' @export
 #'
 afrihealthsites <- function(country,
-                      datasource = 'who',
+                      datasource = 'healthsites', #'hdx', #'who',
                       plot = 'mapview') {
 
 
@@ -43,10 +43,75 @@ afrihealthsites <- function(country,
     sfcountry <- sf_who_sites[ filter_country, ]
   }
 
+
+  # access healthsites.io data by country from rhealthsites package
+  # requires API key to be set first
+  if (datasource == 'healthsites')
+  {
+    library(rhealthsites)
+
+    #rhealthsites::hs_set_api_key('[can get key from healthsites.io]')
+
+    #NOTE this returns polygons for some facilities and points for others
+    #later be good to get just points
+
+    sfcountry <- rhealthsites::hs_facilities(country = country)
+
+  }
+
+
+  # access healthsites.io data by country stored monthly at hdx
+  # not working yet, has advantage that no API key needed
+  if (datasource == 'hdx')
+  {
+    library(rhdx)
+    rhdx::set_rhdx_config()
+
+
+    querytext <- 'name:"kenya-healthsites"'
+    #querytext <- 'name:"kenya-healthsites"'
+    datasets_list <- rhdx::search_datasets(query = querytext)
+
+    #query needs to return a single dataset (with multiple resources)
+    ds <- datasets_list[[1]]
+
+    #get list of resources
+    list_of_rs <- rhdx::get_resources(ds)
+    list_of_rs
+
+    #selecting resource
+    ds_id <- which( rhdx::get_formats(ds) %in% c("zipped shapefiles","zipped shapefile"))
+
+    rs <- rhdx::get_resource(ds, ds_id)
+
+    # find which layers in file (fails)
+    #mlayers <- rhdx::get_resource_layers(rs, download_folder=getwd())
+
+    #should read 1st layer by default
+    #DOES download data but
+    #FAILS TO READ LAYER DUE TO SUBFOLDER - shapefiles and that file called healthsites
+    #Problem that the error crashes it out of this function
+
+    sflayer <- rhdx::read_resource(rs, download_folder=getwd())
+
+    #can temporarily sort that now
+    utils::unzip("kenya-shapefiles.zip")
+
+    sfcountry <- sf::read_sf(dsn = "shapefiles/healthsites.shp")
+
+  }
+
+
+
   # display map if option chosen
   # helps with debugging, may not be permanent
 
-  if (plot == 'mapview') print(mapview::mapview(sfcountry, zcol="Facility type", legend=FALSE))
+
+  zcol <- ifelse(datasource=='healthsites', 'amenity',
+          ifelse(datasource=='who', "Facility type", NULL))
+
+  if (plot == 'mapview') print(mapview::mapview(sfcountry, zcol=zcol)) #, legend=FALSE))
+
   else if (plot == 'sf') plot(sf::st_geometry(sfcountry))
 
   invisible(sfcountry)
