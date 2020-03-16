@@ -48,9 +48,12 @@ afrihealthsites <- function(country,
   # requires API key to be set first
   if (datasource == 'healthsites')
   {
-    library(rhealthsites)
 
-    #rhealthsites::hs_set_api_key('[can get key from healthsites.io]')
+    check_rhealthsites()
+
+    #library(rhealthsites)
+
+    #rhealthsites::hs_set_api_key('[requires a free API key from https://healthsites.io/]')
 
     #NOTE this returns polygons for some facilities and points for others
     #later be good to get just points

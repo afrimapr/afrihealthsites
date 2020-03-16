@@ -32,7 +32,9 @@ sfeth <- afrihealthsites("ethiopia", datasource='who', plot='sf')
 
 
 ## healthsites.io
-## requires an API key from 
+## requires a free API key from https://healthsites.io/
+library(rhealthsites)
+#rhealthsites::hs_set_api_key('[requires a free API key from https://healthsites.io/]')
 
 # with interactive map
 sfmali <- afrihealthsites("mali", datasource='healthsites', plot='mapview')
