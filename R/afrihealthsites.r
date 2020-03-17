@@ -11,6 +11,9 @@
 #'
 #' sfnga <- afrihealthsites("nigeria")
 #'
+#' afrihealthsites('chad', datasource='who')
+#' afrihealthsites('chad', datasource='healthsites')
+#'
 #' @return \code{sf}
 #' @export
 #'
