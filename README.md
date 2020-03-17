@@ -36,7 +36,7 @@ sfeth <- afrihealthsites("ethiopia", datasource='who', plot='sf')
 # pre-downloaded data
 
 # with interactive map
-sfmali <- afrihealthsites("mali", datasource='healthsites-live', plot='mapview')
+sfmali <- afrihealthsites("mali", datasource='healthsites', plot='mapview')
 
 
 # live data - requires a free API key from https://healthsites.io/
@@ -44,7 +44,7 @@ library(rhealthsites)
 #rhealthsites::hs_set_api_key('[requires a free API key from https://healthsites.io/]')
 
 # with interactive map
-sfmali <- afrihealthsites("mali", datasource='healthsites-live', plot='mapview')
+sfmali <- afrihealthsites("mali", datasource='healthsites_live', plot='mapview')
 
 
 
