@@ -9,7 +9,7 @@ afrihealthsites(country, datasource = "healthsites", plot = "mapview")
 \arguments{
 \item{country}{a character vector of country names or iso3c character codes.}
 
-\item{datasource}{data source, 'healthsites' predownloaded, 'who', 'healthsites-live' needs API, 'hdx' not working yet}
+\item{datasource}{data source, 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}
 
 \item{plot}{option to display map 'mapview' for interactive, 'sf' for static}
 }
@@ -21,9 +21,12 @@ returns healthsite locations for specified countries and optionally plots map
 }
 \examples{
 
-sfnga <- afrihealthsites("nigeria")
 
-afrihealthsites('chad', datasource='who')
-afrihealthsites('chad', datasource='healthsites')
+#sfnga <- afrihealthsites("nigeria", plot='sf')
+
+#afrihealthsites('chad', datasource='who', plot='sf')
+#afrihealthsites('chad', datasource='healthsites', plot='sf')
+
+#sfnga <- afrihealthsites("nigeria", plot='mapview')
 
 }

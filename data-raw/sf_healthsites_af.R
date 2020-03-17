@@ -28,7 +28,8 @@ for(countrynum in 1:nrow(afcountries))
 
   cat(name,"\n")
 
-  sfcountry <- afrihealthsites(name, datasource='healthsites', plot=FALSE)
+  #important that uses healthsites_live
+  sfcountry <- afrihealthsites(name, datasource='healthsites_live', plot=FALSE)
 
   #add country identifiers
   sfcountry$country <- name
@@ -40,4 +41,4 @@ for(countrynum in 1:nrow(afcountries))
 }
 
 
-usethis::use_data(sf_healthsites_af)
+usethis::use_data(sf_healthsites_af, overwrite = TRUE)

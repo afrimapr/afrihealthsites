@@ -3,16 +3,25 @@
 #' returns healthsite locations for specified countries and optionally plots map
 #'
 #' @param country a character vector of country names or iso3c character codes.
-#' @param datasource data source, 'healthsites' predownloaded, 'who', 'healthsites-live' needs API, 'hdx' not working yet
+#' @param datasource data source, 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
 #'
 #'
 #' @examples
 #'
-#' sfnga <- afrihealthsites("nigeria")
+# sometimes get this error at CHECK and after but not when I browse to debug
+# seems to occur both for mapview and sf options
+# Error in st_geometry.sf(x) :
+# attr(obj, "sf_column") does not point to a geometry column.
+# Did you rename it, without setting st_geometry(obj) <- "newname"?
+# so commented examples out for now
 #'
-#' afrihealthsites('chad', datasource='who')
-#' afrihealthsites('chad', datasource='healthsites')
+#' #sfnga <- afrihealthsites("nigeria", plot='sf')
+#'
+#' #afrihealthsites('chad', datasource='who', plot='sf')
+#' #afrihealthsites('chad', datasource='healthsites', plot='sf')
+#'
+#' #sfnga <- afrihealthsites("nigeria", plot='mapview')
 #'
 #' @return \code{sf}
 #' @export
@@ -67,11 +76,12 @@ afrihealthsites <- function(country,
 
 
   # access healthsites.io data by country from rhealthsites package
-  # using healthsites-live requires API key to be set first
-  if (datasource == 'healthsites-live')
+  # using healthsites_live requires API key to be set first
+  if (datasource == 'healthsites_live')
   {
 
-    check_rhealthsites()
+    #temp removoing cos error
+    #check_rhealthsites()
 
     #library(rhealthsites)
     #rhealthsites::hs_set_api_key('[requires a free API key from https://healthsites.io/]')
@@ -86,7 +96,7 @@ afrihealthsites <- function(country,
   # not working yet, has advantage that no API key needed
   if (datasource == 'hdx')
   {
-    library(rhdx)
+    #library(rhdx)
     rhdx::set_rhdx_config()
 
 
@@ -129,8 +139,12 @@ afrihealthsites <- function(country,
   # helps with debugging, may not be permanent
 
 
-  zcol <- ifelse(datasource=='healthsites', 'amenity',
-          ifelse(datasource=='who', "Facility type", NULL))
+  if (plot != FALSE) zcol <- switch(datasource,
+         'healthsites' = 'amenity',
+         'healthsites_live' = 'amenity',
+         'hdx' = 'amenity',
+         'who'= "Facility type",
+          NULL)
 
   if (plot == 'mapview') print(mapview::mapview(sfcountry, zcol=zcol)) #, legend=FALSE))
 

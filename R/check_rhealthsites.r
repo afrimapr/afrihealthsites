@@ -38,7 +38,7 @@ install_rhealthsites <- function() {
      tryCatch( remotes::install_gitlab("dickoa/rhealthsites"),
                error = error_func, warning = error_func)
   } else {
-    stop(paste("The rhealthsites package is necessary for that method.\n",
+    stop(paste("The remotes and rhealthsites package are necessary for that method.\n",
                instructions))
   }
 
