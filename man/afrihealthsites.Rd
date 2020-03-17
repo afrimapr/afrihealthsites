@@ -23,4 +23,7 @@ returns healthsite locations for specified countries and optionally plots map
 
 sfnga <- afrihealthsites("nigeria")
 
+afrihealthsites('chad', datasource='who')
+afrihealthsites('chad', datasource='healthsites')
+
 }

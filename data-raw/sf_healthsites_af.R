@@ -1,6 +1,6 @@
 ## code to prepare `sf_healthsites_af` dataset goes here
 
-sf_healthsites_af <- NULL
+#sf_healthsites_af <- NULL
 
 #country names that currently need changing for rhealthsites
 afcountries$name2 <- afcountries$name
@@ -29,6 +29,10 @@ for(countrynum in 1:nrow(afcountries))
   cat(name,"\n")
 
   sfcountry <- afrihealthsites(name, datasource='healthsites', plot=FALSE)
+
+  #add country identifiers
+  sfcountry$country <- name
+  sfcountry$iso3c <- iso3c
 
   if (countrynum==1) sf_healthsites_af <- sfcountry
   else sf_healthsites_af <- rbind(sf_healthsites_af, sfcountry)
