@@ -3,7 +3,7 @@
 #' returns healthsite locations for specified countries and optionally plots map
 #'
 #' @param country a character vector of country names or iso3c character codes.
-#' @param datasource data source, initial default 'who'
+#' @param datasource data source, 'healthsites' predownloaded, 'who', 'healthsites-live' needs API, 'hdx' not working yet
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
 #'
 #'
@@ -30,7 +30,7 @@ afrihealthsites <- function(country,
 
   if (datasource == 'who')
   {
-    # todo check that this country is available for this datasource
+
     filter_country <- tolower(sf_who_sites$Country) %in% tolower(country)
     #filter <- filter & filter_country
 
@@ -46,21 +46,37 @@ afrihealthsites <- function(country,
     sfcountry <- sf_who_sites[ filter_country, ]
   }
 
+  #access pre-downloaded healthsites data stored in this package
+  if (datasource == 'healthsites')
+
+  {
+    #beware different country names may be better to use iso3c
+    filter_country <- tolower(sf_healthsites_af$country) %in% tolower(country)
+
+    nsites <- sum(filter_country)
+
+    if (nsites==0)
+    {
+      warning("no sites in ",datasource, " for ", country)
+      return()
+    }
+
+    sfcountry <- sf_healthsites_af[filter_country,]
+
+  }
+
 
   # access healthsites.io data by country from rhealthsites package
-  # requires API key to be set first
-  if (datasource == 'healthsites')
+  # using healthsites-live requires API key to be set first
+  if (datasource == 'healthsites-live')
   {
 
     check_rhealthsites()
 
     #library(rhealthsites)
-
     #rhealthsites::hs_set_api_key('[requires a free API key from https://healthsites.io/]')
 
-    #NOTE this returns polygons for some facilities and points for others
-    #later be good to get just points
-
+    #previously this returned polygons for some facilities and points for others
     sfcountry <- rhealthsites::hs_facilities(country = country)
 
   }

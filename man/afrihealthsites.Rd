@@ -9,7 +9,7 @@ afrihealthsites(country, datasource = "healthsites", plot = "mapview")
 \arguments{
 \item{country}{a character vector of country names or iso3c character codes.}
 
-\item{datasource}{data source, initial default 'who'}
+\item{datasource}{data source, 'healthsites' predownloaded, 'who', 'healthsites-live' needs API, 'hdx' not working yet}
 
 \item{plot}{option to display map 'mapview' for interactive, 'sf' for static}
 }
