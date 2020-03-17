@@ -129,4 +129,4 @@ countries_who <- unique(sf_who_sites$Country)
 #mapview::mapview(sf_who_sites, zcol="Facility type", legend=FALSE)
 
 
-usethis::use_data("sf_who_sites")
+usethis::use_data(sf_who_sites)
