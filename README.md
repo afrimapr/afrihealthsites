@@ -39,6 +39,14 @@ sfeth <- afrihealthsites("ethiopia", datasource='who', plot='sf')
 sfmali <- afrihealthsites("mali", datasource='healthsites', plot='mapview')
 
 
+## compare healthsite locations from different sources
+
+compare_hs_sources('togo')
+
+#these are defaults
+compare_hs_sources('togo', datasources=c('who', 'healthsites'), plot='mapview'))
+
+
 # live data - requires a free API key from https://healthsites.io/
 library(rhealthsites)
 #rhealthsites::hs_set_api_key('[requires a free API key from https://healthsites.io/]')
