@@ -80,10 +80,8 @@ afrihealthsites <- function(country,
   if (datasource == 'healthsites_live')
   {
 
-    #temp removoing cos error
-    #check_rhealthsites()
+    check_rhealthsites()
 
-    #library(rhealthsites)
     #rhealthsites::hs_set_api_key('[requires a free API key from https://healthsites.io/]')
 
     #previously this returned polygons for some facilities and points for others
