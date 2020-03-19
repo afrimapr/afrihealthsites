@@ -39,39 +39,50 @@ afrihealthsites <- function(country,
 
   if (datasource == 'who')
   {
-
-    filter_country <- tolower(sf_who_sites$Country) %in% tolower(country)
-    #filter <- filter & filter_country
-
-    nsites <- sum(filter_country)
-
-    if (nsites==0)
+    if (country=='all')
     {
-      warning("no sites in ",datasource, " for ", country)
-      return()
-    }
+      sfcountry <- sf_who_sites
 
-    #sfcountry <- sf_who_sites[ tolower(sf_who_sites$Country) == tolower(country),]
-    sfcountry <- sf_who_sites[ filter_country, ]
+    } else
+    {
+      filter_country <- tolower(sf_who_sites$Country) %in% tolower(country)
+      #filter <- filter & filter_country
+
+      nsites <- sum(filter_country)
+
+      if (nsites==0)
+      {
+        warning("no sites in ",datasource, " for ", country)
+        return()
+      }
+
+      #sfcountry <- sf_who_sites[ tolower(sf_who_sites$Country) == tolower(country),]
+      sfcountry <- sf_who_sites[ filter_country, ]
+    }
   }
 
   #access pre-downloaded healthsites data stored in this package
   if (datasource == 'healthsites')
-
   {
-    #beware different country names may be better to use iso3c
-    filter_country <- tolower(sf_healthsites_af$country) %in% tolower(country)
-
-    nsites <- sum(filter_country)
-
-    if (nsites==0)
+    if (country=='all')
     {
-      warning("no sites in ",datasource, " for ", country)
-      return()
+      sfcountry <- sf_healthsites_af
+
+    } else
+    {
+      #beware different country names may be better to use iso3c
+      filter_country <- tolower(sf_healthsites_af$country) %in% tolower(country)
+
+      nsites <- sum(filter_country)
+
+      if (nsites==0)
+      {
+        warning("no sites in ",datasource, " for ", country)
+        return()
+      }
+
+      sfcountry <- sf_healthsites_af[filter_country,]
     }
-
-    sfcountry <- sf_healthsites_af[filter_country,]
-
   }
 
 
@@ -79,6 +90,12 @@ afrihealthsites <- function(country,
   # using healthsites_live requires API key to be set first
   if (datasource == 'healthsites_live')
   {
+
+    if (country=='all')
+    {
+      warning("no country='all' option for healthsites_live, choose countries\n")
+      return()
+    }
 
     check_rhealthsites()
 
@@ -94,6 +111,12 @@ afrihealthsites <- function(country,
   # not working yet, has advantage that no API key needed
   if (datasource == 'hdx')
   {
+    if (country=='all')
+    {
+      warning("no country='all' option for hdx, choose countries\n")
+      return()
+    }
+
     #library(rhdx)
     rhdx::set_rhdx_config()
 
