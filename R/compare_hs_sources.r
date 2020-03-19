@@ -39,18 +39,47 @@ compare_hs_sources <- function(country,
       zcol
     }
 
+    set_labcol <- function(datasource) {
+      labcol <- switch(datasource,
+                     'healthsites' = 'name',
+                     'healthsites_live' = 'name',
+                     'hdx' = 'name',
+                     'who'= "Facility name",
+                     NULL)
+      labcol
+    }
+
     zcol1 <- set_zcol(datasources[1])
     zcol2 <- set_zcol(datasources[2])
 
+    labcol1 <- set_labcol(datasources[1])
+    labcol2 <- set_labcol(datasources[2])
+
     #library(RColorBrewer)
 
+    # mapplot <- mapview::mapview(list(sf1,sf2),
+    #                        zcol=list(zcol1,zcol2),
+    #                        cex=list(4,6),
+    #                        #col.regions=list(RColorBrewer::brewer.pal(5, "Reds"), RColorBrewer::brewer.pal(5, "Blues")),
+    #                        col.regions=list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
+    #                        #fill=list(brewer.pal(9, "YlGn"),'blue'),
+    #                        layer.name=list(datasources[1],datasources[2])) #, legend=FALSE))
+
+    #the above worked for any order of datasources
     mapplot <- mapview::mapview(list(sf1,sf2),
-                           zcol=list(zcol1,zcol2),
-                           cex=list(4,6),
-                           #col.regions=list(RColorBrewer::brewer.pal(5, "Reds"), RColorBrewer::brewer.pal(5, "Blues")),
-                           col.regions=list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
-                           #fill=list(brewer.pal(9, "YlGn"),'blue'),
-                           layer.name=list(datasources[1],datasources[2])) #, legend=FALSE))
+                            zcol=list(zcol1,zcol2),
+                            #label=list(paste(sf1$`Facility type`,sf1$`Facility name`), paste(sf2$amenity,sf2$name)),
+                            label=list(paste(sf1[[zcol1]],sf1[[labcol1]]), paste(sf2[[zcol2]],sf2[[labcol2]])),
+                            cex=list(4,6),
+                            #col.regions=list(RColorBrewer::brewer.pal(5, "Reds"), RColorBrewer::brewer.pal(5, "Blues")),
+                            col.regions=list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
+                            #fill=list(brewer.pal(9, "YlGn"),'blue'),
+                            layer.name=list(datasources[1],datasources[2])) #, legend=FALSE))
+
+
+
+
+
   }
 
 

@@ -7,8 +7,13 @@ lapply(cran_packages, function(x) if(!require(x,character.only = TRUE)) install.
 
 library(shiny)
 
+if(!require(afrihealthsites)){
+  remotes::install_github("afrimapr/afrihealthsites")
+}
+
+library(afrihealthsites)
+
 # library(leaflet)
-# library(afrihealthsites)
 # library(mapview)
 
 

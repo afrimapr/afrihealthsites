@@ -7,7 +7,8 @@
 compare_hs_sources(
   country,
   datasources = c("who", "healthsites"),
-  plot = "mapview"
+  plot = "mapview",
+  plotshow = TRUE
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ compare_hs_sources(
 \item{datasources}{vector of 2 datasources from 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}
 
 \item{plot}{option to display map 'mapview' for interactive, 'sf' for static}
+
+\item{plotshow}{whether to show the plot, otherwiser just return plot object}
 }
 \value{
 \code{sf}
@@ -25,8 +28,7 @@ main aim to plot map comparing different sources
 }
 \examples{
 
-
-#sfnga <- afrihealthsites("nigeria", datasources=c('who', 'healthsites'), plot='mapview')
-
+#compare_hs_sources("nigeria", datasources=c('who', 'healthsites'), plot='mapview')
+#compare_hs_sources(c('malawi','zambia'))
 
 }
