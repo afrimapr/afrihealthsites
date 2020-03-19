@@ -82,6 +82,7 @@ afrihealthsites <- function(country,
       }
 
       sfcountry <- sf_healthsites_af[filter_country,]
+
     }
   }
 
@@ -154,6 +155,11 @@ afrihealthsites <- function(country,
 
   }
 
+
+  # trying to correct occasional :  Error in st_geometry.sf(x) :
+  # attr(obj, "sf_column") does not point to a geometry column.
+  # sfcountry already should be sf from above but just seeing if this helps
+  sfcountry <- st_as_sf(sfcountry)
 
 
   # display map if option chosen
