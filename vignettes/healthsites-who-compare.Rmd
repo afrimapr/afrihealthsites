@@ -1,0 +1,51 @@
+---
+title: "healthsites-who-compare"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{healthsites-who-compare}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(afrihealthsites)
+```
+
+
+```{r atlas-healthsites-who, fig.width=8.5, fig.height=8.5 }
+
+
+#get vector of countries that have healthsites data
+v_iso3c <- unique(sf_healthsites_af$iso3c)
+
+  
+for(countrynum in 1:length(v_iso3c))
+{
+  iso3c <- v_iso3c[countrynum]  
+  name <- iso2country(iso3c)
+  
+  #gadm max level
+  maxlevel <- maxadmin(iso3c, datasource='gadm')
+
+  #cat(name," ",iso3c," levels=",maxlevel,"\n")
+  
+  for(level in 1:maxlevel) 
+  {
+    #hdxlive(country=name, level=level, plot='compare_sf')    
+    hdxlive(country=name, level=level, plot='compare_mapview') 
+  }
+  
+}
+
+
+
+
+
+```
