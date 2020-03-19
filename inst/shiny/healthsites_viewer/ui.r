@@ -1,11 +1,13 @@
 #afrihealthsites/healthsites_viewer/ui.r
 # keeping this very simple partly so it can be used as a template by other (maybe new) R users
 
-cran_packages <- c("shiny")
+cran_packages <- c("shiny","leaflet","remotes")
 
 lapply(cran_packages, function(x) if(!require(x,character.only = TRUE)) install.packages(x))
 
 library(shiny)
+library(leaflet)
+library(remotes)
 
 if(!require(afrihealthsites)){
   remotes::install_github("afrimapr/afrihealthsites")
@@ -13,7 +15,7 @@ if(!require(afrihealthsites)){
 
 library(afrihealthsites)
 
-# library(leaflet)
+
 # library(mapview)
 
 

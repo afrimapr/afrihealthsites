@@ -15,9 +15,10 @@ if(!require(afrihealthsites)){
   remotes::install_github("afrimapr/afrihealthsites")
 }
 
+library(afrihealthsites)
 
 #library(mapview)
-#library(afrihealthsites)
+
 
 # Define a server for the Shiny app
 function(input, output) {
