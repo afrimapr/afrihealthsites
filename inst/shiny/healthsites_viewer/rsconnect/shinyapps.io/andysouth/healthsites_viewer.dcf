@@ -1,0 +1,12 @@
+name: healthsites_viewer
+title: healthsites_viewer
+username:
+account: andysouth
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1967968
+bundleId: 2899381
+url: https://andysouth.shinyapps.io/healthsites_viewer/
+when: 1584649640.36149
+asMultiple: FALSE
+asStatic: FALSE

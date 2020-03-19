@@ -1,11 +1,15 @@
 #afrihealthsites/healthsites_viewer/ui.r
 # keeping this very simple partly so it can be used as a template by other (maybe new) R users
 
+cran_packages <- c("shiny")
+
+lapply(cran_packages, function(x) if(!require(x,character.only = TRUE)) install.packages(x))
+
 library(shiny)
-library(leaflet)
-library(afrihealthsites)
-library(mapview)
-#library(sf)
+
+# library(leaflet)
+# library(afrihealthsites)
+# library(mapview)
 
 
 pageWithSidebar(
