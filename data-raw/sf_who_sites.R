@@ -29,7 +29,7 @@ indices_na_coords <- which(is.na(who_sites$Long) | is.na(who_sites$Lat))
 who_sites <- who_sites[-indices_na_coords,]
 
 # convert to sf
-sf_who_sites <- st_as_sf(who_sites, coords = c("Long", "Lat"), crs = 4326)
+sf_who_sites <- sf::st_as_sf(who_sites, coords = c("Long", "Lat"), crs = 4326)
 
 #nrow(sf_who_sites)
 #[1] 96395

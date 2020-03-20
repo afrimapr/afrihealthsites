@@ -5,8 +5,8 @@ account: andysouth
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1967968
-bundleId: 2899381
+bundleId: 2899874
 url: https://andysouth.shinyapps.io/healthsites_viewer/
-when: 1584649640.36149
+when: 1584656540.99943
 asMultiple: FALSE
 asStatic: FALSE

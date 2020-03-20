@@ -22,25 +22,23 @@ library(afrihealthsites)
 ```{r atlas-healthsites-who, fig.width=8.5, fig.height=8.5 }
 
 
-#get vector of countries that have healthsites data
-v_iso3c <- unique(sf_healthsites_af$iso3c)
-
   
-for(countrynum in 1:length(v_iso3c))
+for(countrynum in 1:length(afcountries$name))
 {
-  iso3c <- v_iso3c[countrynum]  
-  name <- iso2country(iso3c)
+  #iso3c <- v_iso3c[countrynum]  
+  #name <- iso2country(iso3c)
+  country <- afcountries$name[countrynum]
   
-  #gadm max level
-  maxlevel <- maxadmin(iso3c, datasource='gadm')
-
-  #cat(name," ",iso3c," levels=",maxlevel,"\n")
+  cat(country,"\n")
   
-  for(level in 1:maxlevel) 
-  {
-    #hdxlive(country=name, level=level, plot='compare_sf')    
-    hdxlive(country=name, level=level, plot='compare_mapview') 
-  }
+  #E> Error: processing vignette 'healthsites-who-compare.Rmd' failed with diagnostics:
+  #E> attr(obj, "sf_column") does not point to a geometry column.
+  #E> Did you rename it, without setting st_geometry(obj) <- "newname"?
+  
+  #temp commented out to avoid error above
+  
+  #compare_hs_sources(country, datasources=c('who', 'healthsites'), plot='mapview')
+  
   
 }
 

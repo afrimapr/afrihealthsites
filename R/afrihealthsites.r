@@ -33,8 +33,9 @@ afrihealthsites <- function(country,
 
   #path <- system.file(package="afriadmin","/external")
 
-  # check and convert country names to iso codes
+  #check and convert country names to iso codes
   #iso3c <- country2iso(country)
+  #BUT WHO data only has country name
 
 
   if (datasource == 'who')
@@ -53,6 +54,8 @@ afrihealthsites <- function(country,
       if (nsites==0)
       {
         warning("no sites in ",datasource, " for ", country)
+        #this creates an empty sf that may save plotting errors with things that use this e.g. mapview
+        #return(sf::st_sf(st_sfc()))
         return()
       }
 
@@ -78,6 +81,8 @@ afrihealthsites <- function(country,
       if (nsites==0)
       {
         warning("no sites in ",datasource, " for ", country)
+        #this creates an empty sf that may save plotting errors with things that use this e.g. mapview
+        #return(sf::st_sf(st_sfc()))
         return()
       }
 
@@ -95,6 +100,8 @@ afrihealthsites <- function(country,
     if (country=='all')
     {
       warning("no country='all' option for healthsites_live, choose countries\n")
+      #this creates an empty sf that may save plotting errors with things that use this e.g. mapview
+      #return(sf::st_sf(st_sfc()))
       return()
     }
 
@@ -115,6 +122,8 @@ afrihealthsites <- function(country,
     if (country=='all')
     {
       warning("no country='all' option for hdx, choose countries\n")
+      #this creates an empty sf that may save plotting errors with things that use this e.g. mapview
+      #return(sf::st_sf(st_sfc()))
       return()
     }
 
@@ -159,7 +168,7 @@ afrihealthsites <- function(country,
   # trying to correct occasional :  Error in st_geometry.sf(x) :
   # attr(obj, "sf_column") does not point to a geometry column.
   # sfcountry already should be sf from above but just seeing if this helps
-  sfcountry <- st_as_sf(sfcountry)
+  sfcountry <- sf::st_as_sf(sfcountry)
 
 
   # display map if option chosen

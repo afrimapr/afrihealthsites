@@ -6,6 +6,9 @@
 #' @param datasources vector of 2 datasources from 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
 #' @param plotshow whether to show the plot, otherwiser just return plot object
+#' @param plotcex sizes of symbols for each source default=c(6,3), helps view symbol overlap
+#' @param col.regions list of two colour palettes to pass to mapview
+#' @param plotlegend whether to add legend to mapview plot
 #'
 #'
 #' @examples
@@ -17,12 +20,16 @@
 #' @export
 #'
 compare_hs_sources <- function(country,
-                            datasources = c('who', 'healthsites'), #'hdx',
+                            datasources = c('healthsites','who'), #'hdx',
                             plot = 'mapview',
-                            plotshow = TRUE) {
+                            plotshow = TRUE,
+                            plotcex = c(6,3),
+                            col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
+                            plotlegend = TRUE) {
 
   sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE)
   sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE)
+
 
   #TODO add a plot='sf' option
 
@@ -60,25 +67,58 @@ compare_hs_sources <- function(country,
     # mapplot <- mapview::mapview(list(sf1,sf2),
     #                        zcol=list(zcol1,zcol2),
     #                        cex=list(4,6),
-    #                        #col.regions=list(RColorBrewer::brewer.pal(5, "Reds"), RColorBrewer::brewer.pal(5, "Blues")),
     #                        col.regions=list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
-    #                        #fill=list(brewer.pal(9, "YlGn"),'blue'),
     #                        layer.name=list(datasources[1],datasources[2])) #, legend=FALSE))
 
-    #the above worked for any order of datasources
-    mapplot <- mapview::mapview(list(sf1,sf2),
-                            zcol=list(zcol1,zcol2),
-                            #label=list(paste(sf1$`Facility type`,sf1$`Facility name`), paste(sf2$amenity,sf2$name)),
-                            label=list(paste(sf1[[zcol1]],sf1[[labcol1]]), paste(sf2[[zcol2]],sf2[[labcol2]])),
-                            cex=list(4,6),
-                            #col.regions=list(RColorBrewer::brewer.pal(5, "Reds"), RColorBrewer::brewer.pal(5, "Blues")),
-                            col.regions=list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
-                            #fill=list(brewer.pal(9, "YlGn"),'blue'),
-                            layer.name=list(datasources[1],datasources[2])) #, legend=FALSE))
+    # mapplot <- mapview::mapview(list(sf1,sf2),
+    #                         zcol=list(zcol1,zcol2),
+    #                         label=list(paste(sf1[[zcol1]],sf1[[labcol1]]), paste(sf2[[zcol2]],sf2[[labcol2]])),
+    #                         cex=as.list(plotcex), #list(3,6),
+    #                         #col.regions=list(RColorBrewer::brewer.pal(5, "Reds"), RColorBrewer::brewer.pal(5, "Blues")),
+    #                         col.regions=col.regions,
+    #                         layer.name=list(datasources[1],datasources[2])) #, legend=FALSE))
+
+    #trying to create a blank object to add to didn't work, got the below when adding the next layer to it
+    #Error in UseMethod("st_bbox") :
+    #  no applicable method for 'st_bbox' applied to an object of class "NULL"
+    #mapplot <- mapview::mapview()
+
+    #add datasources separately to cope when one is missing
+    if (!is.null(sf1))
+    {
+      mapplot <- mapview::mapview(sf1,
+                                  zcol=zcol1,
+                                  label=paste(sf1[[zcol1]],sf1[[labcol1]]),
+                                  cex=plotcex[1],
+                                  col.regions=col.regions[[1]],
+                                  layer.name=datasources[1],
+                                  legend=plotlegend )
+    }
 
 
+    if (!is.null(sf2))
+    {
+      if (!is.null(sf1))
+      {
+        mapplot <- mapplot + mapview::mapview(sf2,
+                                          zcol=zcol2,
+                                          label=paste(sf2[[zcol2]],sf2[[labcol2]]),
+                                          cex=plotcex[2],
+                                          col.regions=col.regions[[2]],
+                                          layer.name=datasources[2],
+                                          legend=plotlegend )
+      } else {
+        #if there's no sf1 then start the plot with sf2
+        mapplot <- mapview::mapview(sf2,
+                                     zcol=zcol2,
+                                     label=paste(sf2[[zcol2]],sf2[[labcol2]]),
+                                     cex=plotcex[2],
+                                     col.regions=col.regions[[2]],
+                                     layer.name=datasources[2],
+                                     legend=plotlegend )
 
-
+      }
+    }
 
   }
 

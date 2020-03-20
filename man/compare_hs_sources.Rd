@@ -6,9 +6,13 @@
 \usage{
 compare_hs_sources(
   country,
-  datasources = c("who", "healthsites"),
+  datasources = c("healthsites", "who"),
   plot = "mapview",
-  plotshow = TRUE
+  plotshow = TRUE,
+  plotcex = c(6, 3),
+  col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5,
+    "BuPu")),
+  plotlegend = TRUE
 )
 }
 \arguments{
@@ -19,6 +23,12 @@ compare_hs_sources(
 \item{plot}{option to display map 'mapview' for interactive, 'sf' for static}
 
 \item{plotshow}{whether to show the plot, otherwiser just return plot object}
+
+\item{plotcex}{sizes of symbols for each source default=c(6,3), helps view symbol overlap}
+
+\item{col.regions}{list of two colour palettes to pass to mapview}
+
+\item{plotlegend}{whether to add legend to mapview plot}
 }
 \value{
 \code{sf}
