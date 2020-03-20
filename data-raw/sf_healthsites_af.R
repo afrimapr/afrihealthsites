@@ -14,11 +14,11 @@ afcountries$name2[afcountries$name=='United Republic of Tanzania'] <- 'Tanzania'
 afcountries <- afcountries[-which(afcountries$name=='Western Sahara'),]
 afcountries <- afcountries[-which(afcountries$name=='Sao Tome and Principe'),]
 
-#there is a problem with south africa
+#there was a problem with south africa
 # Error in rbind.data.frame(...) :
 # numbers of columns of arguments do not match
 #remove it temporarily
-afcountries <- afcountries[-which(afcountries$name=='South Africa'),]
+#afcountries <- afcountries[-which(afcountries$name=='South Africa'),]
 
 for(countrynum in 1:nrow(afcountries))
 {
@@ -34,6 +34,16 @@ for(countrynum in 1:nrow(afcountries))
   #add country identifiers
   sfcountry$country <- name
   sfcountry$iso3c <- iso3c
+
+  #strangely South Africa has an extra column "part_time_beds"
+  #which breaks the rbind to the rest of the data
+  #so remove it
+  indexExtraCol <- which(names(sfcountry) %in% "part_time_beds")
+  if (isTRUE( indexExtraCol > 0))
+  {
+    sfcountry <- sfcountry[,-indexExtraCol]
+  }
+
 
   if (countrynum==1) sf_healthsites_af <- sfcountry
   else sf_healthsites_af <- rbind(sf_healthsites_af, sfcountry)
