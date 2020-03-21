@@ -28,6 +28,12 @@ indices_na_coords <- which(is.na(who_sites$Long) | is.na(who_sites$Lat))
 
 who_sites <- who_sites[-indices_na_coords,]
 
+#move WHO Zanzibar data into Tanzania (consistent with healthsites that has it in Tanzania)
+sf_who_sites$Country[sf_who_sites$Country=='Zanzibar'] <- 'Tanzania'
+
+# add iso3c helps with country ids later
+sf_who_sites$iso3c <- country2iso(sf_who_sites$Country)
+
 # convert to sf
 sf_who_sites <- sf::st_as_sf(who_sites, coords = c("Long", "Lat"), crs = 4326)
 
@@ -129,4 +135,4 @@ countries_who <- unique(sf_who_sites$Country)
 #mapview::mapview(sf_who_sites, zcol="Facility type", legend=FALSE)
 
 
-usethis::use_data(sf_who_sites)
+usethis::use_data(sf_who_sites, overwrite = TRUE)
