@@ -16,13 +16,13 @@ Depends:
 Imports:
     sf,
     mapview,
+    countrycode,
     RColorBrewer
 Suggests:
     rhdx,
     rhealthsites,
     remotes,
-    knitr,
-    rmarkdown
+    knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2

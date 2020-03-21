@@ -3,4 +3,6 @@
 export(afrihealthsites)
 export(check_rhealthsites)
 export(compare_hs_sources)
+export(country2iso)
 export(install_rhealthsites)
+export(iso2country)
