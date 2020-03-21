@@ -20,21 +20,23 @@ library(afrihealthsites)
 
 
 pageWithSidebar(
-  headerPanel('healthsites in Africa, from healthsites.io and WHO'),
+  headerPanel('Afrihealthsites viewer'),
   sidebarPanel( width=3,
     selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
 
-    #p("This app was developed by", a(tags$strong("data-analysis OG"), href="http://www.data-analysis.at", target="_blank")),
+    #p("This app was developed by", a(tags$strong("data-analysis OG"), href="http://www.", target="_blank")),
+
+    p("under development March 2020, some countries not working, if you get an error msg try selecting another country\n"),
 
     p("Developed by ", a("afrimapr", href="http://www.afrimapr.org", target="_blank")),
+    p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),
-
-    p("under development March 2020, some countries not yet working"),
 
     p("Compares data from :\n"),
     p(a("healthsites.io", href="https://www.healthsites.io", target="_blank")),
     p("\n", a("WHO", href="https://www.who.int/malaria/areas/surveillance/public-sector-health-facilities-ss-africa/en/", target="_blank")),
 
+    p("\nWHO symbols shown smaller, rings indicate overlap\n"),
   ),
   mainPanel(
     leafletOutput("serve_healthsites_map", height=1000)
