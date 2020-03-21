@@ -34,8 +34,8 @@ afrihealthsites <- function(country,
   #path <- system.file(package="afriadmin","/external")
 
   #check and convert country names to iso codes
-  #iso3c <- country2iso(country)
-  #BUT WHO data only has country name
+  #copes better with any naming differences
+  iso3c <- country2iso(country)
 
 
   if (datasource == 'who')
@@ -46,14 +46,15 @@ afrihealthsites <- function(country,
 
     } else
     {
-      filter_country <- tolower(sf_who_sites$Country) %in% tolower(country)
+      #filter_country <- tolower(sf_who_sites$Country) %in% tolower(country)
+      filter_country <- tolower(sf_who_sites$iso3c) %in% tolower(iso3c)
       #filter <- filter & filter_country
 
       nsites <- sum(filter_country)
 
       if (nsites==0)
       {
-        warning("no sites in ",datasource, " for ", country)
+        warning("no sites in ",datasource, " for ", country, " iso:", iso3c)
         #this creates an empty sf that may save plotting errors with things that use this e.g. mapview
         #return(sf::st_sf(st_sfc()))
         return()
@@ -74,13 +75,14 @@ afrihealthsites <- function(country,
     } else
     {
       #beware different country names may be better to use iso3c
-      filter_country <- tolower(sf_healthsites_af$country) %in% tolower(country)
+      #filter_country <- tolower(sf_healthsites_af$country) %in% tolower(country)
+      filter_country <- tolower(sf_healthsites_af$iso3c) %in% tolower(iso3c)
 
       nsites <- sum(filter_country)
 
       if (nsites==0)
       {
-        warning("no sites in ",datasource, " for ", country)
+        warning("no sites in ",datasource, " for ", country, " iso:", iso3c)
         #this creates an empty sf that may save plotting errors with things that use this e.g. mapview
         #return(sf::st_sf(st_sfc()))
         return()
@@ -116,7 +118,8 @@ afrihealthsites <- function(country,
 
 
   # access healthsites.io data by country stored monthly at hdx
-  # not working yet, has advantage that no API key needed
+  # NOT WORKING YET, has advantage that no API key needed
+  # but now that I save data in the package this not a priority
   if (datasource == 'hdx')
   {
     if (country=='all')
@@ -167,7 +170,7 @@ afrihealthsites <- function(country,
 
   # trying to correct occasional :  Error in st_geometry.sf(x) :
   # attr(obj, "sf_column") does not point to a geometry column.
-  # sfcountry already should be sf from above but just seeing if this helps
+  # sfcountry already should be sf from above but just seeing if this helps (it doesn't!)
   sfcountry <- sf::st_as_sf(sfcountry)
 
 
