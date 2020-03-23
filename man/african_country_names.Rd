@@ -5,7 +5,11 @@
 \alias{african_country_names}
 \alias{afcountries}
 \title{african country names and iso 3 letter country codes}
-\format{\code{dataframe}}
+\format{
+\code{dataframe}
+
+An object of class \code{data.frame} with 53 rows and 2 columns.
+}
 \usage{
 afcountries
 }

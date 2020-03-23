@@ -5,7 +5,11 @@
 \alias{africa_healthsites}
 \alias{sf_healthsites_af}
 \title{africa healthsite points from healthsites.io}
-\format{\code{sf}}
+\format{
+\code{sf}
+
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 56854 rows and 35 columns.
+}
 \source{
 \url{https://www.healthsites.io}
 }

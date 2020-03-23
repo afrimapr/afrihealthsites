@@ -5,7 +5,11 @@
 \alias{africa_healthsites_WHO}
 \alias{sf_who_sites}
 \title{africa healthsite points from WHO}
-\format{\code{sf}}
+\format{
+\code{sf}
+
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 96395 rows and 8 columns.
+}
 \source{
 \url{https://www.who.int/malaria/areas/surveillance/who-cds-gmp-2019-01-eng.xlsx}
 }
