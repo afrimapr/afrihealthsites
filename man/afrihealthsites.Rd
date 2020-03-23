@@ -22,7 +22,7 @@ returns healthsite locations for specified countries and optionally plots map
 \examples{
 
 
-#sfnga <- afrihealthsites("nigeria", plot='sf')
+#sfnga <- afrihealthsites("nigeria", datasource='who', plot='sf')
 
 #afrihealthsites('chad', datasource='who', plot='sf')
 #afrihealthsites('chad', datasource='healthsites', plot='sf')

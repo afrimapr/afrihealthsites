@@ -16,7 +16,7 @@
 # Did you rename it, without setting st_geometry(obj) <- "newname"?
 # so commented examples out for now
 #'
-#' #sfnga <- afrihealthsites("nigeria", plot='sf')
+#' #sfnga <- afrihealthsites("nigeria", datasource='who', plot='sf')
 #'
 #' #afrihealthsites('chad', datasource='who', plot='sf')
 #' #afrihealthsites('chad', datasource='healthsites', plot='sf')
@@ -171,7 +171,8 @@ afrihealthsites <- function(country,
   # trying to correct occasional :  Error in st_geometry.sf(x) :
   # attr(obj, "sf_column") does not point to a geometry column.
   # sfcountry already should be sf from above but just seeing if this helps (it doesn't!)
-  sfcountry <- sf::st_as_sf(sfcountry)
+  #sfcountry <- sf::st_as_sf(sfcountry)
+  sf::st_geometry(sfcountry) <- "geometry"
 
 
   # display map if option chosen
