@@ -5,7 +5,7 @@
 #' @name afrihealthsites
 #' @docType package
 #' @seealso \code{\link{afrihealthsites}} \code{\link{compare_hs_sources}}
-# @import utils sf
+#' @import sf
 NULL
 
 # to avoid 'no visible binding' notes at R CMD CHECK

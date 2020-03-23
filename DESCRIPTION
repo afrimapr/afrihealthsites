@@ -12,9 +12,9 @@ License: GPL (>= 3) | file LICENSE
 URL: https://github.com/afrimapr/afriadmin
 BugReports: https://github.com/afrimapr/afriadmin/issues
 Depends:
-    R (>= 2.10)
+    R (>= 2.10),
+    sf
 Imports:
-    sf,
     mapview,
     countrycode,
     RColorBrewer

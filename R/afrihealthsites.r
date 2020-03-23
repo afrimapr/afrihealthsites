@@ -9,19 +9,13 @@
 #'
 #' @examples
 #'
-# sometimes get this error at CHECK and after but not when I browse to debug
-# seems to occur both for mapview and sf options
-# Error in st_geometry.sf(x) :
-# attr(obj, "sf_column") does not point to a geometry column.
-# Did you rename it, without setting st_geometry(obj) <- "newname"?
-# so commented examples out for now
 #'
-#' #sfnga <- afrihealthsites("nigeria", datasource='who', plot='sf')
+#' sfnga <- afrihealthsites("nigeria", datasource='who', plot='sf')
 #'
-#' #afrihealthsites('chad', datasource='who', plot='sf')
-#' #afrihealthsites('chad', datasource='healthsites', plot='sf')
+#' afrihealthsites('chad', datasource='who', plot='sf')
+#' afrihealthsites('chad', datasource='healthsites', plot='sf')
 #'
-#' #sfnga <- afrihealthsites("nigeria", plot='mapview')
+#' sfnga <- afrihealthsites("nigeria", plot='mapview')
 #'
 #' @return \code{sf}
 #' @export
@@ -168,16 +162,9 @@ afrihealthsites <- function(country,
   }
 
 
-  # trying to correct occasional :  Error in st_geometry.sf(x) :
-  # attr(obj, "sf_column") does not point to a geometry column.
-  # sfcountry already should be sf from above but just seeing if this helps (it doesn't!)
-  #sfcountry <- sf::st_as_sf(sfcountry)
-  sf::st_geometry(sfcountry) <- "geometry"
-
 
   # display map if option chosen
   # helps with debugging, may not be permanent
-
 
   if (plot != FALSE) zcol <- switch(datasource,
          'healthsites' = 'amenity',
