@@ -3,10 +3,8 @@
 
 
 cran_packages <- c("leaflet","remotes")
-
 lapply(cran_packages, function(x) if(!require(x,character.only = TRUE)) install.packages(x))
 
-#lapply(cran_packages, function(x) library(x))
 
 library(remotes)
 library(leaflet)
@@ -16,7 +14,6 @@ if(!require(afrihealthsites)){
 }
 
 library(afrihealthsites)
-
 #library(mapview)
 
 
@@ -33,7 +30,6 @@ function(input, output) {
     mapplot@map
 
     #mapview::mapview(sf_who_sites)
-    #mapview::mapview(breweries)
 
     })
 
