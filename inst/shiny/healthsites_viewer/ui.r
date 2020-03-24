@@ -30,7 +30,9 @@ pageWithSidebar(
     #miss out Western Sahara because no healthsites or WHO
     selectInput('country', 'Country', afcountries$name[!afcountries$name=="Western Sahara"], size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
 
-    #p("This app was developed by", a(tags$strong("data-analysis OG"), href="http://www.", target="_blank")),
+    checkboxGroupInput("hs_amenity", label = h4("healthsites amenities"),
+                       choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
+                       selected = c("hospital","clinic","doctors","pharmacy")),
 
     p("under development March 2020\n"),
 

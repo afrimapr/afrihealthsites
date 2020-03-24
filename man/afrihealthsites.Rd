@@ -5,7 +5,12 @@
 \alias{afrihealthsites}
 \title{afrihealthsites : healthsite locations for Africa}
 \usage{
-afrihealthsites(country, datasource = "healthsites", plot = "mapview")
+afrihealthsites(
+  country,
+  datasource = "healthsites",
+  plot = "mapview",
+  hs_amenity = "all"
+)
 }
 \arguments{
 \item{country}{a character vector of country names or iso3c character codes.}
@@ -13,6 +18,8 @@ afrihealthsites(country, datasource = "healthsites", plot = "mapview")
 \item{datasource}{data source, 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}
 
 \item{plot}{option to display map 'mapview' for interactive, 'sf' for static}
+
+\item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'}
 }
 \value{
 \code{sf}

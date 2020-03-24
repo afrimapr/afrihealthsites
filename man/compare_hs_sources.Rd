@@ -12,7 +12,8 @@ compare_hs_sources(
   plotcex = c(6, 3),
   col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5,
     "BuPu")),
-  plotlegend = TRUE
+  plotlegend = TRUE,
+  hs_amenity = "all"
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ compare_hs_sources(
 \item{col.regions}{list of two colour palettes to pass to mapview}
 
 \item{plotlegend}{whether to add legend to mapview plot}
+
+\item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'}
 }
 \value{
 \code{sf}

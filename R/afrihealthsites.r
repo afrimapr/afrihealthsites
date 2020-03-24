@@ -5,7 +5,7 @@
 #' @param country a character vector of country names or iso3c character codes.
 #' @param datasource data source, 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
-#'
+#' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #'
 #' @examples
 #'
@@ -22,7 +22,8 @@
 #'
 afrihealthsites <- function(country,
                       datasource = 'healthsites', #'hdx', #'who',
-                      plot = 'mapview') {
+                      plot = 'mapview',
+                      hs_amenity = 'all') {
 
 
   #path <- system.file(package="afriadmin","/external")
@@ -84,6 +85,12 @@ afrihealthsites <- function(country,
 
       sfcountry <- sf_healthsites_af[filter_country,]
 
+      # filter by amenity type
+      if (!isTRUE(hs_amenity == 'all'))
+      {
+        filter_amenity <- tolower(sfcountry$amenity) %in% tolower(hs_amenity)
+        sfcountry <- sfcountry[filter_amenity,]
+      }
     }
   }
 

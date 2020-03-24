@@ -9,6 +9,7 @@
 #' @param plotcex sizes of symbols for each source default=c(6,3), helps view symbol overlap
 #' @param col.regions list of two colour palettes to pass to mapview
 #' @param plotlegend whether to add legend to mapview plot
+#' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #'
 #'
 #' @examples
@@ -25,10 +26,11 @@ compare_hs_sources <- function(country,
                             plotshow = TRUE,
                             plotcex = c(6,3),
                             col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
-                            plotlegend = TRUE) {
+                            plotlegend = TRUE,
+                            hs_amenity = 'all') {
 
-  sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE)
-  sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE)
+  sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity)
+  sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity)
 
 
   #TODO add a plot='sf' option
@@ -83,8 +85,8 @@ compare_hs_sources <- function(country,
     #  no applicable method for 'st_bbox' applied to an object of class "NULL"
     #mapplot <- mapview::mapview()
 
-    #add datasources separately to cope when one is missing
-    if (!is.null(sf1))
+    #add datasources separately to cope when one is missing or empty
+    if (!is.null(sf1) & nrow(sf1) > 0)
     {
       mapplot <- mapview::mapview(sf1,
                                   zcol=zcol1,
@@ -96,9 +98,9 @@ compare_hs_sources <- function(country,
     }
 
 
-    if (!is.null(sf2))
+    if (!is.null(sf2)  & nrow(sf2) > 0)
     {
-      if (!is.null(sf1))
+      if (!is.null(sf1) & nrow(sf1) > 0)
       {
         mapplot <- mapplot + mapview::mapview(sf2,
                                           zcol=zcol2,

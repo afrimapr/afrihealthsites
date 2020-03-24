@@ -23,7 +23,11 @@ function(input, output) {
   # mapview interactive leaflet map plot
   output$serve_healthsites_map <- renderLeaflet({
 
-    mapplot <- afrihealthsites::compare_hs_sources(input$country, datasources=c('healthsites','who'), plot='mapview', plotshow=FALSE)
+    mapplot <- afrihealthsites::compare_hs_sources(input$country,
+                                                   datasources=c('healthsites','who'),
+                                                   plot='mapview',
+                                                   plotshow=FALSE,
+                                                   hs_amenity=input$hs_amenity)
 
     #important that this returns the @map bit
     #otherwise get Error in : $ operator not defined for this S4 class
