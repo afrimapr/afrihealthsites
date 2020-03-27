@@ -86,7 +86,7 @@ compare_hs_sources <- function(country,
     #mapplot <- mapview::mapview()
 
     #add datasources separately to cope when one is missing or empty
-    if (!is.null(sf1) & nrow(sf1) > 0)
+    if (!is.null(sf1) & isTRUE(nrow(sf1) > 0))
     {
       mapplot <- mapview::mapview(sf1,
                                   zcol=zcol1,
@@ -98,9 +98,9 @@ compare_hs_sources <- function(country,
     }
 
 
-    if (!is.null(sf2)  & nrow(sf2) > 0)
+    if (!is.null(sf2)  & isTRUE(nrow(sf2) > 0))
     {
-      if (!is.null(sf1) & nrow(sf1) > 0)
+      if (!is.null(sf1) & isTRUE(nrow(sf1) > 0))
       {
         mapplot <- mapplot + mapview::mapview(sf2,
                                           zcol=zcol2,
