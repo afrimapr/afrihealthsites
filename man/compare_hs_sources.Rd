@@ -13,7 +13,8 @@ compare_hs_sources(
   col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5,
     "BuPu")),
   plotlegend = TRUE,
-  hs_amenity = "all"
+  hs_amenity = "all",
+  canvas = TRUE
 )
 }
 \arguments{
@@ -32,6 +33,8 @@ compare_hs_sources(
 \item{plotlegend}{whether to add legend to mapview plot}
 
 \item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'}
+
+\item{canvas}{mapview plotting option, TRUE by default for better performance with larger data}
 }
 \value{
 \code{sf}

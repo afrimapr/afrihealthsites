@@ -10,6 +10,7 @@
 #' @param col.regions list of two colour palettes to pass to mapview
 #' @param plotlegend whether to add legend to mapview plot
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
+#' @param canvas mapview plotting option, TRUE by default for better performance with larger data
 #'
 #'
 #' @examples
@@ -27,7 +28,8 @@ compare_hs_sources <- function(country,
                             plotcex = c(6,3),
                             col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
                             plotlegend = TRUE,
-                            hs_amenity = 'all') {
+                            hs_amenity = 'all',
+                            canvas = TRUE) {
 
   sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity)
   sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity)
@@ -64,26 +66,6 @@ compare_hs_sources <- function(country,
     labcol1 <- set_labcol(datasources[1])
     labcol2 <- set_labcol(datasources[2])
 
-    #library(RColorBrewer)
-
-    # mapplot <- mapview::mapview(list(sf1,sf2),
-    #                        zcol=list(zcol1,zcol2),
-    #                        cex=list(4,6),
-    #                        col.regions=list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
-    #                        layer.name=list(datasources[1],datasources[2])) #, legend=FALSE))
-
-    # mapplot <- mapview::mapview(list(sf1,sf2),
-    #                         zcol=list(zcol1,zcol2),
-    #                         label=list(paste(sf1[[zcol1]],sf1[[labcol1]]), paste(sf2[[zcol2]],sf2[[labcol2]])),
-    #                         cex=as.list(plotcex), #list(3,6),
-    #                         #col.regions=list(RColorBrewer::brewer.pal(5, "Reds"), RColorBrewer::brewer.pal(5, "Blues")),
-    #                         col.regions=col.regions,
-    #                         layer.name=list(datasources[1],datasources[2])) #, legend=FALSE))
-
-    #trying to create a blank object to add to didn't work, got the below when adding the next layer to it
-    #Error in UseMethod("st_bbox") :
-    #  no applicable method for 'st_bbox' applied to an object of class "NULL"
-    #mapplot <- mapview::mapview()
 
     #add datasources separately to cope when one is missing or empty
     if (!is.null(sf1) & isTRUE(nrow(sf1) > 0))
@@ -94,7 +76,8 @@ compare_hs_sources <- function(country,
                                   cex=plotcex[1],
                                   col.regions=col.regions[[1]],
                                   layer.name=datasources[1],
-                                  legend=plotlegend )
+                                  legend=plotlegend,
+                                  canvas=canvas)
     }
 
 
@@ -108,7 +91,8 @@ compare_hs_sources <- function(country,
                                           cex=plotcex[2],
                                           col.regions=col.regions[[2]],
                                           layer.name=datasources[2],
-                                          legend=plotlegend )
+                                          legend=plotlegend,
+                                          canvas=canvas )
       } else {
         #if there's no sf1 then start the plot with sf2
         mapplot <- mapview::mapview(sf2,
@@ -117,17 +101,18 @@ compare_hs_sources <- function(country,
                                      cex=plotcex[2],
                                      col.regions=col.regions[[2]],
                                      layer.name=datasources[2],
-                                     legend=plotlegend )
+                                     legend=plotlegend,
+                                     canvas=canvas )
 
       }
     }
-
   }
 
 
   if (plotshow) print(mapplot)
 
   invisible(mapplot)
+
   # of course can't do the below because they have different numbers columns
   # TODO I could subset just the geometry and zcol columns (and maybe name) and then rbind to return
   #add source column, rbind and return in case it is useful
