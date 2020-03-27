@@ -24,13 +24,15 @@ pageWithSidebar(
     p(tags$strong("view healthsite locations provided by",
                   a("healthsites.io", href="https://www.healthsites.io", target="_blank"),
                   " & ",
+                  a("KEMRI Wellcome", href="https://www.nature.com/articles/s41597-019-0142-2", target="_blank"),
+                  " / ",
                   a("WHO", href="https://www.who.int/malaria/areas/surveillance/public-sector-health-facilities-ss-africa/en/", target="_blank"))),
 
     #selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
     #miss out Western Sahara because no healthsites or WHO
     selectInput('country', 'Country', afcountries$name[!afcountries$name=="Western Sahara"], size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
 
-    checkboxGroupInput("hs_amenity", label = h4("healthsites amenities"),
+    checkboxGroupInput("hs_amenity", label = h5("healthsites amenities"),
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
                        selected = c("hospital","clinic","doctors","pharmacy")),
 
@@ -44,7 +46,10 @@ pageWithSidebar(
     #p("\n", a("WHO", href="https://www.who.int/malaria/areas/surveillance/public-sector-health-facilities-ss-africa/en/", target="_blank")),
 
     p("\nWHO data Sub-Sahara only, symbols shown smaller, rings indicate overlap\n"),
+
     p("Input and suggestions ", a("welcome", href="https://github.com/afrimapr/suggestions_and_requests", target="_blank")),
+
+    p(tags$small("Disclaimer : Data used by afrimapr are sourced from published open data sets. We provide no guarantee of accuracy.")),
 
   ),
   mainPanel(
