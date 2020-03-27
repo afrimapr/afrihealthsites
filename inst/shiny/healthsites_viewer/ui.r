@@ -28,7 +28,8 @@ pageWithSidebar(
 
     #selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
     #miss out Western Sahara because no healthsites or WHO
-    selectInput('country', 'Country', afcountries$name[!afcountries$name=="Western Sahara"], size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
+    selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]), 
+                size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
 
     checkboxGroupInput("hs_amenity", label = h4("healthsites amenities"),
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
