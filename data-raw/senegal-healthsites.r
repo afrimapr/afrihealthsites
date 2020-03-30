@@ -1,0 +1,30 @@
+#senegal-healthsites.r
+
+#temporary code
+#move somewhere else
+
+
+library(sf)
+library(mapview)
+
+path <- "C:\\Dropbox\\_afrimapr\\healthsites\\"
+filename <- "St Louis Data Collection Campaign-Gth_Hs_Osm_11.csv"
+
+filename <- paste0(path, filename)
+
+#todo sort, currently messes up accents
+dfsen <- read.csv(filename, stringsAsFactors = FALSE)
+
+
+#BEWARE of order of long lat and it changing with sf version
+#sfsen <- sf::st_as_sf(dfsen, coords=c("Facility.Location...latitude","Facility.Location...longitude"))
+sfsen <- sf::st_as_sf(dfsen, coords=c("Facility.Location...longitude", "Facility.Location...latitude"), crs = 4326)
+
+# have to specify the crs above for it to display on the map
+mapview::mapview(sfsen)
+
+mapview::mapview(sfsen,
+                 zcol="Number.of.Beds",
+                 #at = c(0,1,2,5,10,50,100,250),
+                 at = c(0,1,2,10,50,100,250),
+                 cex = "Number.of.Beds")

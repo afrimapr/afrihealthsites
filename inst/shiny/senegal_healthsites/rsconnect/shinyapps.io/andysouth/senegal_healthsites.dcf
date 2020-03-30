@@ -1,0 +1,12 @@
+name: senegal_healthsites
+title: senegal_healthsites
+username:
+account: andysouth
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2022028
+bundleId: 2944779
+url: https://andysouth.shinyapps.io/senegal_healthsites/
+when: 1585587808.97526
+asMultiple: FALSE
+asStatic: FALSE
