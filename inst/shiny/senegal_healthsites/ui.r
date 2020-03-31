@@ -8,6 +8,11 @@
 library(shiny)
 library(leaflet)
 library(remotes)
+
+if(!require(afrihealthsites)){
+  remotes::install_github("afrimapr/afrihealthsites")
+}
+
 library(afrihealthsites)
 #library(mapview)
 
@@ -26,7 +31,7 @@ pageWithSidebar(
                                 "Number.of.Nurses"= "Number.of.Nurses"),
                  selected = "Number.of.Beds"),
 
-    p("under development March 2020\n"),
+    p("PROTOTYPE under development March 2020\n"),
 
     p("Developed by ", a("afrimapr", href="http://www.afrimapr.org", target="_blank"), "Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),
