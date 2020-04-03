@@ -11,7 +11,8 @@
 #' @param plotlegend whether to add legend to mapview plot
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #' @param canvas mapview plotting option, TRUE by default for better performance with larger data
-#' @param plotstaticlabels whether to add mapview static labels
+#' @param plotlabels1 whether to add static labels for source1
+#' @param plotlabels2 whether to add static labels for source2
 #'
 #' @examples
 #'
@@ -30,7 +31,8 @@ compare_hs_sources <- function(country,
                             plotlegend = TRUE,
                             hs_amenity = 'all',
                             canvas = TRUE,
-                            plotstaticlabels=FALSE) {
+                            plotlabels1 = FALSE,
+                            plotlabels2 = FALSE) {
 
   sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity)
   sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity)
@@ -41,31 +43,12 @@ compare_hs_sources <- function(country,
 
   if (plot == 'mapview')
   {
-    set_zcol <- function(datasource) {
-      zcol <- switch(datasource,
-                      'healthsites' = 'amenity',
-                      'healthsites_live' = 'amenity',
-                      'hdx' = 'amenity',
-                      'who'= "Facility type",
-                      NULL)
-      zcol
-    }
 
-    set_labcol <- function(datasource) {
-      labcol <- switch(datasource,
-                     'healthsites' = 'name',
-                     'healthsites_live' = 'name',
-                     'hdx' = 'name',
-                     'who'= "Facility name",
-                     NULL)
-      labcol
-    }
+    zcol1 <- nameof_zcol(datasources[1])
+    zcol2 <- nameof_zcol(datasources[2])
 
-    zcol1 <- set_zcol(datasources[1])
-    zcol2 <- set_zcol(datasources[2])
-
-    labcol1 <- set_labcol(datasources[1])
-    labcol2 <- set_labcol(datasources[2])
+    labcol1 <- nameof_labcol(datasources[1])
+    labcol2 <- nameof_labcol(datasources[2])
 
 
     #add datasources separately to cope when one is missing or empty
@@ -80,17 +63,6 @@ compare_hs_sources <- function(country,
                                   legend=plotlegend,
                                   canvas=canvas)
 
-      #option to add static labels
-      #still trialling, not quite working
-      #TODO try to fix this
-      if (plotstaticlabels)
-      {
-        lopt = labelOptions(noHide = TRUE,
-                            direction = 'bottom',
-                            textOnly = FALSE, offset=c(10,10))
-        #this causes an error later, non numeric arg to binary operator
-        mapplot <- mapview::addStaticLabels(mapplot, label=paste(sf1[[zcol1]],sf1[[labcol1]]), labelOptions = lopt)
-      }
 
     }
 
@@ -123,6 +95,55 @@ compare_hs_sources <- function(country,
   }
 
 
+  #option to add static labels
+  #problem that it converts mapview object to a leaflet object so I can only do it once (unless I change to leaflet)
+  #it should work on both mapview and leaflet objects
+  #seems need to use package leafem version from github mapview version is deprecated
+  #BUT when I installed development version of leafem from github it messed up how the map appeared
+  #devtools::install_github("r-spatial/leafem")
+  #different background and legend not right even when plotlabels1 & 2 set to FALSE
+  #without leafem get this on the 2nd one
+  #Error in checkAdjustProjection(data) :
+  #  argument "data" is missing, with no default
+  #as a workaround maybe I can add both at the same time ?
+  if (plotlabels1 & plotlabels2) #TODO add test for if sf1 present
+  {
+    lopt = leaflet::labelOptions(noHide = TRUE,
+                                 direction = 'bottom',
+                                 textOnly = FALSE, offset=c(10,10)) #offset and textOnly seem not to work, may work in leafem
+
+    #FAIL using list gave huge labels at each point
+    # mapplot <- mapview::addStaticLabels(mapplot, label=list(paste(sf1[[zcol1]],sf1[[labcol1]]),
+    #                                                         paste(sf2[[zcol2]],sf2[[labcol2]])),
+    #                                     labelOptions = lopt)
+    #this using c() didn't work either ...
+    #mapplot <- mapview::addStaticLabels(mapplot, label=c(paste(sf1[[zcol1]],sf1[[labcol1]]),
+    #                                                        paste(sf2[[zcol2]],sf2[[labcol2]])),
+    #                                    labelOptions = lopt)
+    #try using + failed too
+    # mapplot <- mapplot + mapview::addStaticLabels(mapplot, data=sf2, label= paste(sf2[[zcol2]],sf2[[labcol2]]),
+    #                                     labelOptions = lopt)
+
+
+  }  else if (plotlabels1) #TODO add test for if sf1 present
+  {
+    lopt = leaflet::labelOptions(noHide = TRUE,
+                        direction = 'bottom',
+                        textOnly = FALSE, offset=c(10,10)) #offset and textOnly seem not to work, may work in leafem
+
+    mapplot <- mapview::addStaticLabels(mapplot, label=paste(sf1[[zcol1]],sf1[[labcol1]]), labelOptions = lopt)
+
+  } else if (plotlabels2) #TODO add test for if sf2 present
+  {
+    lopt = leaflet::labelOptions(noHide = TRUE,
+                                 direction = 'bottom',
+                                 textOnly = FALSE, offset=c(10,10)) #offset and textOnly seem not to work
+
+    mapplot <- mapview::addStaticLabels(mapplot, label=paste(sf2[[zcol2]],sf2[[labcol2]]), labelOptions = lopt)
+  }
+
+
+
   if (plotshow) print(mapplot)
 
   invisible(mapplot)
@@ -136,3 +157,9 @@ compare_hs_sources <- function(country,
   # sfboth <- rbind(sf1,sf2)
   # invisible(sfboth)
 }
+
+
+#trying to create a reproducible example of the problem
+
+
+
