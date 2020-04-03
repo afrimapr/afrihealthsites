@@ -15,7 +15,8 @@ compare_hs_sources(
   plotlegend = TRUE,
   hs_amenity = "all",
   canvas = TRUE,
-  plotstaticlabels = FALSE
+  plotlabels1 = FALSE,
+  plotlabels2 = FALSE
 )
 }
 \arguments{
@@ -37,7 +38,9 @@ compare_hs_sources(
 
 \item{canvas}{mapview plotting option, TRUE by default for better performance with larger data}
 
-\item{plotstaticlabels}{whether to add mapview static labels}
+\item{plotlabels1}{whether to add static labels for source1}
+
+\item{plotlabels2}{whether to add static labels for source2}
 }
 \value{
 \code{sf}
