@@ -68,6 +68,16 @@ merge_points <- function(country,
 
   sf3 <- rbind(sf1new, sf2new)
 
+
+  cat(country,
+      "num points:",
+      datasources[1], ":", nrow(sf1),
+      datasources[2], ":", nrow(sf2),
+      " shared at dist thresh", dist_same_m, "m :", length(same_index1),
+      " after merging:", nrow(sf3)
+      )
+
+
   # for vis show lines linking point to its closest equivalent
   #link_lines <- st_sfc(mapply(function(a,b){st_cast(st_union(a,b),"LINESTRING")}, sf1$geometry, sf2$geometry[nrst_index1], SIMPLIFY=FALSE))
 
