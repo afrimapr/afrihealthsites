@@ -11,7 +11,7 @@
 #' @param plotlegend whether to add legend to mapview plot
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #' @param canvas mapview plotting option, TRUE by default for better performance with larger data
-#'
+#' @param plotstaticlabels whether to add mapview static labels
 #'
 #' @examples
 #'
@@ -29,7 +29,8 @@ compare_hs_sources <- function(country,
                             col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
                             plotlegend = TRUE,
                             hs_amenity = 'all',
-                            canvas = TRUE) {
+                            canvas = TRUE,
+                            plotstaticlabels=FALSE) {
 
   sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity)
   sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity)
@@ -78,6 +79,19 @@ compare_hs_sources <- function(country,
                                   layer.name=datasources[1],
                                   legend=plotlegend,
                                   canvas=canvas)
+
+      #option to add static labels
+      #still trialling, not quite working
+      #TODO try to fix this
+      if (plotstaticlabels)
+      {
+        lopt = labelOptions(noHide = TRUE,
+                            direction = 'bottom',
+                            textOnly = FALSE, offset=c(10,10))
+        #this causes an error later, non numeric arg to binary operator
+        mapplot <- mapview::addStaticLabels(mapplot, label=paste(sf1[[zcol1]],sf1[[labcol1]]), labelOptions = lopt)
+      }
+
     }
 
 

@@ -14,7 +14,8 @@ compare_hs_sources(
     "BuPu")),
   plotlegend = TRUE,
   hs_amenity = "all",
-  canvas = TRUE
+  canvas = TRUE,
+  plotstaticlabels = FALSE
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ compare_hs_sources(
 \item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'}
 
 \item{canvas}{mapview plotting option, TRUE by default for better performance with larger data}
+
+\item{plotstaticlabels}{whether to add mapview static labels}
 }
 \value{
 \code{sf}
