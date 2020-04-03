@@ -35,6 +35,8 @@ function(input, output) {
   # mapview interactive leaflet map plot
   output$serve_healthsites_map <- renderLeaflet({
 
+    #if attribute column is numeric use it to set symbol size, otherwise keep symbol size constant
+    cex <- ifelse(is.numeric(sfsen[[input$attribute_to_plot]]),input$attribute_to_plot,5)
 
     mapplot <- mapview::mapview(sfsen,
                      zcol = input$attribute_to_plot,
@@ -42,7 +44,7 @@ function(input, output) {
                      label=paste(sfsen[["Facility.Category"]],":",sfsen[["Name.of.Facility"]],":",sfsen[[input$attribute_to_plot]]),
                      #at = c(0,1,2,5,10,50,100,250),
                      #at = c(0,1,2,10,50,100,250),
-                     cex = input$attribute_to_plot)
+                     cex = cex)
 
     #important that this returns the @map bit
     #otherwise get Error in : $ operator not defined for this S4 class

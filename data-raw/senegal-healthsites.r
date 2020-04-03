@@ -1,7 +1,7 @@
 #senegal-healthsites.r
 
 #temporary code
-#move somewhere else
+#move somewhere else : also used in shiny/senegal_healthsites/server.r
 
 
 library(sf)
@@ -12,8 +12,8 @@ filename <- "St Louis Data Collection Campaign-Gth_Hs_Osm_11.csv"
 
 filename <- paste0(path, filename)
 
-#todo sort, currently messes up accents
-dfsen <- read.csv(filename, stringsAsFactors = FALSE)
+# encoding="UTF-8" fixes accent problems
+dfsen <- read.csv(filename, stringsAsFactors = FALSE, encoding="UTF-8")
 
 
 #BEWARE of order of long lat and it changing with sf version

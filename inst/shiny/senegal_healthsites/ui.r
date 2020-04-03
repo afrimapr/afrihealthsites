@@ -19,7 +19,7 @@ library(afrihealthsites)
 
 pageWithSidebar(
   headerPanel('senegal healthsites pilot viewer'),
-  sidebarPanel( width=3,
+  sidebarPanel( width=4,
 
     # checkboxGroupInput("hs_amenity", label = h5("healthsites amenities"),
     #                    choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
@@ -28,7 +28,12 @@ pageWithSidebar(
     radioButtons("attribute_to_plot", label = h3("Attribute to plot"),
                  choices = list("Number.of.Beds" = "Number.of.Beds",
                                 "Number.of.Doctors" = "Number.of.Doctors",
-                                "Number.of.Nurses"= "Number.of.Nurses"),
+                                "Number.of.Nurses"= "Number.of.Nurses",
+                                "Operator.Type" = "Operator.Type",
+                                "When.is.the.facility.open." = "When.is.the.facility.open.",
+                                "Facility.Category" = "Facility.Category",
+                                "Does.this.facility.provide.Emergency.Services." = "Does.this.facility.provide.Emergency.Services.",
+                                "Types.of.insurance.accepted." = "Types.of.insurance.accepted."),
                  selected = "Number.of.Beds"),
 
     p("PROTOTYPE under development March 2020\n"),
