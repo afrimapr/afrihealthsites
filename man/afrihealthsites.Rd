@@ -19,7 +19,8 @@ afrihealthsites(
 
 \item{plot}{option to display map 'mapview' for interactive, 'sf' for static}
 
-\item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'}
+\item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
+to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
 }
 \value{
 \code{sf}

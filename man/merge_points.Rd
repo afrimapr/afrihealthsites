@@ -7,8 +7,9 @@
 merge_points(
   country,
   datasources = c("healthsites", "who"),
-  hs_amenity = "all",
-  dist_same_m = 100
+  hs_amenity = c("clinic", "doctors", "pharmacy", "hospital"),
+  dist_same_m = 100,
+  toreturn = "summary"
 )
 }
 \arguments{
@@ -16,9 +17,12 @@ merge_points(
 
 \item{datasources}{vector of 2 datasources from 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}
 
-\item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'}
+\item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
+to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
 
 \item{dist_same_m}{distance below which a site from source 1 and 2 is considered same}
+
+\item{toreturn}{whether to return 'summary' or the merged 'sf' object}
 }
 \value{
 \code{sf}

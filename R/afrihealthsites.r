@@ -6,7 +6,7 @@
 #' @param datasource data source, 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
-#'
+#'                   to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')
 #' @examples
 #'
 #'
