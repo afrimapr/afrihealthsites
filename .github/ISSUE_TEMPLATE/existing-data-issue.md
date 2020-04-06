@@ -7,10 +7,10 @@ assignees: ''
 
 ---
 
-## Which dataset
+**Which dataset**
 
 
-## Short description of the error or suggestion
+**Short description of the error or suggestion**
 
 
-## Suggested actions
+**Suggested actions**
