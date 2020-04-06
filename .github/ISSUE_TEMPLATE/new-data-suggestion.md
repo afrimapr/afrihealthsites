@@ -2,7 +2,7 @@
 name: New data suggestion
 about: Suggest a new dataset that could be made available through afrihealthsites
 title: "[New data]"
-labels: enhancement, data
+labels: data, enhancement
 assignees: ''
 
 ---
