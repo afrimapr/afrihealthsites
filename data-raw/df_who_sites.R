@@ -1,5 +1,5 @@
-## code to prepare `sf_who_sites` dataset goes here
-#use_data_raw('sf_who_sites') #to create this script
+## code to prepare `df_who_sites` dataset goes here
+#use_data_raw('df_who_sites') #to create this script
 
 address <- "https://www.who.int/malaria/areas/surveillance/who-cds-gmp-2019-01-eng.xlsx"
 
@@ -14,36 +14,33 @@ download_failed <- tryCatch( utils::download.file(file.path(address), tempfilesi
 if (download_failed) return()
 
 
-who_sites <- readxl::read_excel(tempfilesites)
+df_who_sites <- readxl::read_excel(tempfilesites)
 
-#sf_who_sites <- st_as_sf(who_sites, coords = c("Long", "Lat"), crs = 4326)
-#Error in st_as_sf.data.frame(who_sites, coords = c("Long", "Lat"), crs = 4326) :
-#  missing values in coordinates not allowed
 
-# identify and remove rows with no coords
-indices_na_coords <- which(is.na(who_sites$Long) | is.na(who_sites$Lat))
-
+# identify rows with no coords
+indices_na_coords <- which(is.na(df_who_sites$Long) | is.na(df_who_sites$Lat))
 #length(indices_na_coords)
 #[1] 2350 #records that have no coords
 
-who_sites <- who_sites[-indices_na_coords,]
+#I used to remove rows with no coords here
+#df_who_sites <- df_who_sites[-indices_na_coords,]
 
 #move WHO Zanzibar data into Tanzania (consistent with healthsites that has it in Tanzania)
-sf_who_sites$Country[sf_who_sites$Country=='Zanzibar'] <- 'Tanzania'
+df_who_sites$Country[df_who_sites$Country=='Zanzibar'] <- 'Tanzania'
 
 # add iso3c helps with country ids later
-sf_who_sites$iso3c <- country2iso(sf_who_sites$Country)
+df_who_sites$iso3c <- country2iso(df_who_sites$Country)
 
-# convert to sf
-sf_who_sites <- sf::st_as_sf(who_sites, coords = c("Long", "Lat"), crs = 4326)
+# used to convert to sf here
+#sf_who_sites <- sf::st_as_sf(df_who_sites, coords = c("Long", "Lat"), crs = 4326)
 
-#nrow(sf_who_sites)
+#nrow(df_who_sites)
 #[1] 96395
 
-countries_who <- unique(sf_who_sites$Country)
+countries_who <- unique(df_who_sites$Country)
 
 
-# > unique(sf_who_sites$`Facility type`)
+# > unique(df_who_sites$`Facility type`)
 # [1] "Hospital"                                     "Municipal Hospital"
 # [3] "Provincial Hospital"                          "Centro de Saúde"
 # [5] "Posto de Saúde"                               "Centro Materno Infantil"
@@ -132,7 +129,4 @@ countries_who <- unique(sf_who_sites$Country)
 # [171] "Rural Health Clinic"                          "District/Provincial Hospital"
 
 
-#mapview::mapview(sf_who_sites, zcol="Facility type", legend=FALSE)
-
-
-usethis::use_data(sf_who_sites, overwrite = TRUE)
+usethis::use_data(df_who_sites, overwrite = TRUE)

@@ -3,18 +3,18 @@
 \docType{data}
 \name{africa_healthsites_WHO}
 \alias{africa_healthsites_WHO}
-\alias{sf_who_sites}
+\alias{df_who_sites}
 \title{africa healthsite points from WHO}
 \format{
-\code{sf}
+\code{dataframe}
 
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 96395 rows and 8 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 98745 rows and 9 columns.
 }
 \source{
 \url{https://www.who.int/malaria/areas/surveillance/who-cds-gmp-2019-01-eng.xlsx}
 }
 \usage{
-sf_who_sites
+df_who_sites
 }
 \description{
 africa healthsite points from WHO

@@ -50,7 +50,6 @@ function(input, output) {
     #otherwise get Error in : $ operator not defined for this S4 class
     mapplot@map
 
-    #mapview::mapview(sf_who_sites)
 
     })
 

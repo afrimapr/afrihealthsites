@@ -1,14 +1,14 @@
 #' africa healthsite points from WHO
 #'
 #'
-#' @format \code{sf}
+#' @format \code{dataframe}
 #' @slot data healthsite points
-#' @aliases sf_who_sites
+#' @aliases df_who_sites
 #' @name africa_healthsites_WHO
 NULL
 #' @source \url{https://www.who.int/malaria/areas/surveillance/who-cds-gmp-2019-01-eng.xlsx}
 #' @rdname africa_healthsites_WHO
-"sf_who_sites"
+"df_who_sites"
 
 
 

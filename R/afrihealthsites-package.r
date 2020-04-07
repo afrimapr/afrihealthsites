@@ -10,5 +10,5 @@ NULL
 
 # to avoid 'no visible binding' notes at R CMD CHECK
 if (getRversion() >= "2.15.1") {
-  utils::globalVariables(c("afcountries","sf_who_sites","sf_healthsites_af"))
+  utils::globalVariables(c("afcountries","df_who_sites","sf_healthsites_af"))
 }

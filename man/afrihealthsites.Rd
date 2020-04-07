@@ -9,7 +9,8 @@ afrihealthsites(
   country,
   datasource = "healthsites",
   plot = "mapview",
-  hs_amenity = "all"
+  hs_amenity = "all",
+  returnclass = "sf"
 )
 }
 \arguments{
@@ -21,6 +22,8 @@ afrihealthsites(
 
 \item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
+
+\item{returnclass}{'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords}
 }
 \value{
 \code{sf}
@@ -32,13 +35,16 @@ returns healthsite locations for specified countries and optionally plots map
 }
 \examples{
 
-
 sfnga <- afrihealthsites("nigeria", datasource='who', plot='sf')
 
 afrihealthsites('chad', datasource='who', plot='sf')
 afrihealthsites('chad', datasource='healthsites', plot='sf')
 
 sfnga <- afrihealthsites("nigeria", plot='mapview')
+
+#to return raw dataframe for WHO data including any rows with no coordinates
+dfzaf <- afrihealthsites("south africa", plot=FALSE, returnclass='dataframe')
+
 
 }
 \seealso{
