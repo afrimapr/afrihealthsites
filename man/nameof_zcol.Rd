@@ -4,10 +4,10 @@
 \alias{nameof_zcol}
 \title{name of z column according to datasource}
 \usage{
-nameof_zcol(datasource)
+nameof_zcol(datasource, type_column)
 }
 \arguments{
-\item{datasource}{vector of 2 datasources from 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}
+\item{datasource}{'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}
 }
 \value{
 character column name

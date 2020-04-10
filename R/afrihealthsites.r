@@ -8,6 +8,9 @@
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #'                   to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')
 #' @param returnclass 'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords
+#' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
+#' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
+#'
 #' @examples
 #'
 #' sfnga <- afrihealthsites("nigeria", datasource='who', plot='sf')
@@ -18,8 +21,10 @@
 #' sfnga <- afrihealthsites("nigeria", plot='mapview')
 #'
 #' #to return raw dataframe for WHO data including any rows with no coordinates
-#' dfzaf <- afrihealthsites("south africa", plot=FALSE, returnclass='dataframe')
-#'
+#' dfzaf <- afrihealthsites("south africa", datasource='who', plot=FALSE, returnclass='dataframe')
+#' #note that ISO 3 letter codes and country names with upper case letters can also be used
+#' #afrihealthsites("ZAF")
+#' #afrihealthsites("South Africa")
 #'
 #' @return \code{sf}
 #' @export
@@ -28,7 +33,9 @@ afrihealthsites <- function(country,
                       datasource = 'healthsites', #'hdx', #'who',
                       plot = 'mapview',
                       hs_amenity = 'all',
-                      returnclass = 'sf'
+                      returnclass = 'sf',
+                      type_column = 'Facility Type',
+                      label_column = 'Facility Name'
                       ) {
 
 
@@ -71,16 +78,14 @@ afrihealthsites <- function(country,
      # identify rows with no coords
      indices_na_coords <- which(is.na(sfcountry$Long) | is.na(sfcountry$Lat))
      #remove rows with no coords
-     sfcountry <- sfcountry[-indices_na_coords,]
+     if (length(indices_na_coords) > 0) sfcountry <- sfcountry[-indices_na_coords,]
      #convert to sf
      sfcountry <- sf::st_as_sf(sfcountry, coords = c("Long", "Lat"), crs = 4326)
    }
 
-  }
-
-  #access pre-downloaded healthsites data stored in this package
-  if (datasource == 'healthsites')
+  } else if (datasource == 'healthsites') #pre-downloaded healthsites data stored in this package
   {
+
     if (country=='all')
     {
       sfcountry <- sf_healthsites_af
@@ -110,14 +115,31 @@ afrihealthsites <- function(country,
         sfcountry <- sfcountry[filter_amenity,]
       }
     }
-  }
 
-
-  # access healthsites.io data by country from rhealthsites package
-  # using healthsites_live requires API key to be set first
-  if (datasource == 'healthsites_live')
+  } else if (file.exists(datasource)) # a user supplied file
   {
+    ######################################
+    #TODO test whether it is sf compatible
 
+    # most options are likely to be csvs
+    #set check.names to FALSE to stop names being cahnged e.g. spaces to dots
+    dfcountry <- read.csv(datasource, as.is=TRUE, check.names = FALSE)
+
+    #TODO allow names of coord columns to be set by user
+    #ideally detect which they are likely to be
+
+    #convert to sf
+    sfcountry <- sf::st_as_sf(dfcountry, coords = c("Longitude", "Latitude"), crs = 4326)
+
+    #other option if it is shp and 1 country already
+    #sfcountry <- sf::st_read(datasource)
+
+
+
+  } else if (datasource == 'healthsites_live')
+  {
+    # access healthsites.io data by country from rhealthsites package
+    # using healthsites_live requires API key to be set first
     if (country=='all')
     {
       warning("no country='all' option for healthsites_live, choose countries\n")
@@ -187,20 +209,24 @@ afrihealthsites <- function(country,
   }
 
 
-
   # display map if option chosen
   # helps with debugging, may not be permanent
 
-  if (plot != FALSE) zcol <- switch(datasource,
-         'healthsites' = 'amenity',
-         'healthsites_live' = 'amenity',
-         'hdx' = 'amenity',
-         'who'= "Facility type",
-          NULL)
+  # set the zcolumn that determines symbol colour on map and legend
+  # for type of facility e.g. hospital, doctors
+
+  if (plot != FALSE)
+    {
+     zcol <- nameof_zcol(datasource, type_column)
+     labcol <- nameof_labcol(datasource, label_column)
+    }
+
+
 
   if (plot != FALSE & returnclass != 'sf') warning('plots only possible when returnclass="sf" chosen\n')
 
-  if (plot == 'mapview' & returnclass == 'sf') print(mapview::mapview(sfcountry, zcol=zcol)) #, legend=FALSE))
+  if (plot == 'mapview' & returnclass == 'sf')
+    print(mapview::mapview(sfcountry, zcol=zcol, label=paste(sfcountry[[zcol]],sfcountry[[labcol]]))) #, legend=FALSE))
 
   else if (plot == 'sf' & returnclass == 'sf') plot(sf::st_geometry(sfcountry))
 

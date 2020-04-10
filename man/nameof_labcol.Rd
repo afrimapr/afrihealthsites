@@ -4,10 +4,12 @@
 \alias{nameof_labcol}
 \title{name of label column according to datasource}
 \usage{
-nameof_labcol(datasource)
+nameof_labcol(datasource, label_column)
 }
 \arguments{
 \item{datasource}{vector of 2 datasources from 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}
+
+\item{label_column}{just for user provided files which column has information on name of site, default : 'Facility Name'}
 }
 \value{
 character column name

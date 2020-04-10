@@ -10,7 +10,9 @@ afrihealthsites(
   datasource = "healthsites",
   plot = "mapview",
   hs_amenity = "all",
-  returnclass = "sf"
+  returnclass = "sf",
+  type_column = "Facility Type",
+  label_column = "Facility Name"
 )
 }
 \arguments{
@@ -24,6 +26,10 @@ afrihealthsites(
 to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
 
 \item{returnclass}{'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords}
+
+\item{type_column}{just for user provided files which column has information on type of site, default : 'Facility Type'}
+
+\item{label_column}{just for user provided files which column has information on name of site, default : 'Facility Name'}
 }
 \value{
 \code{sf}
@@ -43,8 +49,10 @@ afrihealthsites('chad', datasource='healthsites', plot='sf')
 sfnga <- afrihealthsites("nigeria", plot='mapview')
 
 #to return raw dataframe for WHO data including any rows with no coordinates
-dfzaf <- afrihealthsites("south africa", plot=FALSE, returnclass='dataframe')
-
+dfzaf <- afrihealthsites("south africa", datasource='who', plot=FALSE, returnclass='dataframe')
+#note that ISO 3 letter codes and country names with upper case letters can also be used
+#afrihealthsites("ZAF")
+#afrihealthsites("South Africa")
 
 }
 \seealso{

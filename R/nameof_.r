@@ -1,6 +1,6 @@
 #' name of z column according to datasource
 #'
-#' @param datasource vector of 2 datasources from 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
+#' @param datasource 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
 #'
 #' @examples
 #'
@@ -9,13 +9,13 @@
 #' @return character column name
 #' @export
 #'
-nameof_zcol <- function(datasource) {
+nameof_zcol <- function(datasource, type_column) {
   zcol <- switch(datasource,
                  'healthsites' = 'amenity',
                  'healthsites_live' = 'amenity',
                  'hdx' = 'amenity',
                  'who'= "Facility type",
-                 NULL)
+                 type_column ) #if not one of recognised datasets, use the optional user supplied option
   zcol
 }
 
@@ -23,6 +23,7 @@ nameof_zcol <- function(datasource) {
 #' name of label column according to datasource
 #'
 #' @param datasource vector of 2 datasources from 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
+#' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
 #'
 #' @examples
 #'
@@ -31,12 +32,13 @@ nameof_zcol <- function(datasource) {
 #' @return character column name
 #' @export
 #'
-nameof_labcol <- function(datasource) {
+nameof_labcol <- function(datasource, label_column) {
   labcol <- switch(datasource,
                    'healthsites' = 'name',
                    'healthsites_live' = 'name',
                    'hdx' = 'name',
-                   'who'= "Facility name",
-                   NULL)
+                   'who'= 'Facility name',
+                   label_column ) #if not one of recognised datasets, use the optional user supplied option
+
   labcol
 }

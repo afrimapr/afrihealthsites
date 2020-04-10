@@ -13,6 +13,8 @@
 #' @param canvas mapview plotting option, TRUE by default for better performance with larger data
 #' @param plotlabels1 whether to add static labels for source1
 #' @param plotlabels2 whether to add static labels for source2
+#' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
+#' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
 #'
 #' @examples
 #'
@@ -32,7 +34,11 @@ compare_hs_sources <- function(country,
                             hs_amenity = 'all',
                             canvas = TRUE,
                             plotlabels1 = FALSE,
-                            plotlabels2 = FALSE) {
+                            plotlabels2 = FALSE,
+                            #TODO allow these columns to be specified for both sources
+                            type_column = 'Facility Type',
+                            label_column = 'Facility Name'
+                            ) {
 
   sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity)
   sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity)
@@ -44,11 +50,11 @@ compare_hs_sources <- function(country,
   if (plot == 'mapview')
   {
 
-    zcol1 <- nameof_zcol(datasources[1])
-    zcol2 <- nameof_zcol(datasources[2])
+    zcol1 <- nameof_zcol(datasources[1], type_column)
+    zcol2 <- nameof_zcol(datasources[2], type_column)
 
-    labcol1 <- nameof_labcol(datasources[1])
-    labcol2 <- nameof_labcol(datasources[2])
+    labcol1 <- nameof_labcol(datasources[1], label_column)
+    labcol2 <- nameof_labcol(datasources[2], label_column)
 
 
     #add datasources separately to cope when one is missing or empty
