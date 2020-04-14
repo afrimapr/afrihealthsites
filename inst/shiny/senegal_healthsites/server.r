@@ -18,7 +18,7 @@ library(sf)
 
 #load the data
 #temporarily put it in extdata
-filename <- "St Louis Data Collection Campaign-Gth_Hs_Osm_11.csv"
+filename <- "St-Louis-Data-Collection-Campaign-Gth_Hs_Osm_11.csv"
 filename <- system.file("extdata", filename, package = "afrihealthsites")
 
 # encoding="UTF-8" fixes accent problems

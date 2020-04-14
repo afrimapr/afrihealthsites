@@ -1,4 +1,5 @@
 ^afrihealthsites\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
-^.dcf$
+^.*\.dcf$
+^.github$

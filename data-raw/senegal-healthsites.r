@@ -7,8 +7,12 @@
 library(sf)
 library(mapview)
 
-path <- "C:\\Dropbox\\_afrimapr\\healthsites\\"
-filename <- "St Louis Data Collection Campaign-Gth_Hs_Osm_11.csv"
+#path <- "C:\\Dropbox\\_afrimapr\\healthsites\\"
+#filename <- "St Louis Data Collection Campaign-Gth_Hs_Osm_11.csv"
+
+#temporarily put it in extdata
+filename <- "St-Louis-Data-Collection-Campaign-Gth_Hs_Osm_11.csv"
+filename <- system.file("extdata", filename, package = "afrihealthsites")
 
 filename <- paste0(path, filename)
 
