@@ -1,7 +1,7 @@
 #' name of z column according to datasource
 #'
 #' @param datasource 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
-#'
+#' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
 #' @examples
 #'
 #' nameof_zcol('who')

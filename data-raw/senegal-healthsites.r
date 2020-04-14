@@ -13,7 +13,7 @@ filename <- "St Louis Data Collection Campaign-Gth_Hs_Osm_11.csv"
 filename <- paste0(path, filename)
 
 # encoding="UTF-8" fixes accent problems
-dfsen <- read.csv(filename, stringsAsFactors = FALSE, encoding="UTF-8")
+dfsen <- utils::read.csv(filename, stringsAsFactors = FALSE, encoding="UTF-8")
 
 
 #BEWARE of order of long lat and it changing with sf version

@@ -22,7 +22,7 @@ filename <- "St Louis Data Collection Campaign-Gth_Hs_Osm_11.csv"
 filename <- system.file("extdata", filename, package = "afrihealthsites")
 
 # encoding="UTF-8" fixes accent problems
-dfsen <- read.csv(filename, stringsAsFactors = FALSE, encoding="UTF-8")
+dfsen <- utils::read.csv(filename, stringsAsFactors = FALSE, encoding="UTF-8")
 
 #BEWARE of order of long lat and it changing with sf version
 #sfsen <- sf::st_as_sf(dfsen, coords=c("Facility.Location...latitude","Facility.Location...longitude"))

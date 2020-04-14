@@ -16,7 +16,9 @@ compare_hs_sources(
   hs_amenity = "all",
   canvas = TRUE,
   plotlabels1 = FALSE,
-  plotlabels2 = FALSE
+  plotlabels2 = FALSE,
+  type_column = "Facility Type",
+  label_column = "Facility Name"
 )
 }
 \arguments{
@@ -41,6 +43,10 @@ compare_hs_sources(
 \item{plotlabels1}{whether to add static labels for source1}
 
 \item{plotlabels2}{whether to add static labels for source2}
+
+\item{type_column}{just for user provided files which column has information on type of site, default : 'Facility Type'}
+
+\item{label_column}{just for user provided files which column has information on name of site, default : 'Facility Name'}
 }
 \value{
 \code{sf}

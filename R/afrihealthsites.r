@@ -123,7 +123,7 @@ afrihealthsites <- function(country,
 
     # most options are likely to be csvs
     #set check.names to FALSE to stop names being cahnged e.g. spaces to dots
-    dfcountry <- read.csv(datasource, as.is=TRUE, check.names = FALSE)
+    dfcountry <- utils::read.csv(datasource, as.is=TRUE, check.names = FALSE)
 
     #TODO allow names of coord columns to be set by user
     #ideally detect which they are likely to be

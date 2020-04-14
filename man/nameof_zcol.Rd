@@ -8,6 +8,8 @@ nameof_zcol(datasource, type_column)
 }
 \arguments{
 \item{datasource}{'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}
+
+\item{type_column}{just for user provided files which column has information on type of site, default : 'Facility Type'}
 }
 \value{
 character column name
