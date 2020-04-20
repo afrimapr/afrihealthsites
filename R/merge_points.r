@@ -32,7 +32,7 @@
 merge_points <- function(country,
                           datasources = c('healthsites','who'),
                           hs_amenity = c('clinic', 'doctors', 'pharmacy', 'hospital'), #exclude dentist 'all',
-                          dist_same_m = 100,
+                          dist_same_m = 50,
                           toreturn = 'summary' ) {
                           #priority #could offer option to preferentially keep one or other source
                           #later work out what to do with attributes
@@ -49,38 +49,67 @@ merge_points <- function(country,
   sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity)
 
   #TODO put in some protection for if either sf1,2 doesn't exist, e.g. for N.Africa with no WHO
-  if (is.null(sf1) | is.null(sf2) ) return(NULL)
+  #firstly if either is null just return other and no overlap to summary
+  if (is.null(sf1) | is.null(sf2) )
+  {
 
-  # for each point in sf1 what is the index of the closest point in sf2
-  nrst_index1 <- st_nearest_feature(sf1, sf2)
+    if (is.null(sf1) & is.null(sf2) ) return(NULL)
 
-  # distance from each point in sf1 to it's nearest neighbour in sf2
-  distances1 <- st_distance(sf1$geometry, sf2$geometry[nrst_index1], by_element = TRUE)
+    same_index1 <- NULL
 
-  # set units for threshold to m
-  units(dist_same_m) <- 'm'
+    if ( is.null(sf1) )
+      {
+       numpoints1 <- 0
+       numpoints2 <- nrow(sf2)
+       sf3 <- sf2
+      }
+    else if ( is.null(sf2) )
+    {
+      numpoints2 <- 0
+      numpoints1 <- nrow(sf1)
+      sf3 <- sf1
+    }
+  }
+  else
+  {
+    # for each point in sf1 what is the index of the closest point in sf2
+    nrst_index1 <- st_nearest_feature(sf1, sf2)
 
-  #find index of points in sf1 that are closer than the threshold to a point in sf2
-  same_index1 <- which(distances1 < dist_same_m)
+    # distance from each point in sf1 to it's nearest neighbour in sf2
+    distances1 <- st_distance(sf1$geometry, sf2$geometry[nrst_index1], by_element = TRUE)
 
-  #TODO improve this
-  #FIRST ATTEMPT merge sf1 & sf2 missing out the sf1 points that are too close
-  #LATER I will have to make the attribute columns the same
-  #FOR FIRST ATTEMPT just keep a few select columns, e.g. the zcol and the namecol for each datasource
-  #i think geometry columns will be kept automatically
-  sf1new <- sf1[-same_index1, c(nameof_labcol(datasources[1]), nameof_zcol(datasources[1]))]
-  sf2new <- sf2[,c(nameof_labcol(datasources[2]), nameof_zcol(datasources[2]))]
-  names(sf2new) <- names(sf1new)
+    # set units for threshold to m
+    units(dist_same_m) <- 'm'
 
-  sf3 <- rbind(sf1new, sf2new)
+    #find index of points in sf1 that are closer than the threshold to a point in sf2
+    same_index1 <- which(distances1 < dist_same_m)
+
+    #TODO improve this
+    #FIRST ATTEMPT merge sf1 & sf2 missing out the sf1 points that are too close
+    #LATER I will have to make the attribute columns the same
+    #FOR FIRST ATTEMPT just keep a few select columns, e.g. the zcol and the namecol for each datasource
+    #i think geometry columns will be kept automatically
+    # if no overlap then keep all
+    if (length(same_index1)==0) sf1new <- sf1[, c(nameof_labcol(datasources[1]), nameof_zcol(datasources[1]))]
+    else                        sf1new <- sf1[-same_index1, c(nameof_labcol(datasources[1]), nameof_zcol(datasources[1]))]
+    sf2new <- sf2[,c(nameof_labcol(datasources[2]), nameof_zcol(datasources[2]))]
+    names(sf2new) <- names(sf1new)
+
+    sf3 <- rbind(sf1new, sf2new)
+
+    numpoints1 <- nrow(sf1)
+    numpoints2 <- nrow(sf2)
+  }
+
+
 
   # summarise results in a dataframe, maybe keep it tidy can summarise after
   # todo may want to save hs_amenity filter too
   dfsumm <- data.frame(country = country,
                        source1 = datasources[1],
-                       numpoints1 = nrow(sf1),
+                       numpoints1 = numpoints1,
                        source2 = datasources[2],
-                       numpoints2 = nrow(sf2),
+                       numpoints2 = numpoints2,
                        threshdistm = dist_same_m,
                        num_shared = length(same_index1),
                        num_merged = nrow(sf3) )
@@ -88,8 +117,8 @@ merge_points <- function(country,
 
   cat(country,
       "num points:",
-      datasources[1], ":", nrow(sf1),
-      datasources[2], ":", nrow(sf2),
+      datasources[1], ":", numpoints1,
+      datasources[2], ":", numpoints2,
       " shared at dist thresh", dist_same_m, "m :", length(same_index1),
       " after merging:", nrow(sf3),
       "\n"
