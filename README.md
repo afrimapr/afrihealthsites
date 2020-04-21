@@ -14,7 +14,21 @@ Install the development version from GitHub using [devtools](https://github.com/
     # install.packages("devtools") # if not already installed
     
     devtools::install_github("afrimapr/afrihealthsites")
+    
+### Note
 
+To specify country, it is possible to use the following:
+
+- capitalisation (as you would write the country name in normal text e.g. "South Africa"
+- all lower caps (e.g. "south africa")
+- 3 letter country iso3c code (e.g. "zaf")
+
+```
+dfzaf <- afrihealthsites("south africa", datasource='who', plot=FALSE, returnclass='dataframe')
+dfzaf <- afrihealthsites("ZAF", datasource='who', plot=FALSE, returnclass='dataframe')
+dfzaf <- afrihealthsites("South Africa", datasource='who', plot=FALSE, returnclass='dataframe')
+
+```
 
 ### First Usage
 
