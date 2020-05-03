@@ -99,6 +99,16 @@ merge_points <- function(country,
 
     numpoints1 <- nrow(sf1)
     numpoints2 <- nrow(sf2)
+
+    # BUT BURUNDI at 50m gives who:665 healthsites:1416 shared:680 merged:1401
+    # so the % of max is > 100
+    # probably due to internal overlaps in healthsites
+    # i.e. at least 15 healthsites locations must be <50m from another healthsites location
+
+    #see near_points()
+
+
+
   }
 
 

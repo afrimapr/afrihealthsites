@@ -122,7 +122,7 @@ afrihealthsites <- function(country,
     #TODO test whether it is sf compatible
 
     # most options are likely to be csvs
-    #set check.names to FALSE to stop names being cahnged e.g. spaces to dots
+    #set check.names to FALSE to stop names being changed e.g. spaces to dots
     dfcountry <- utils::read.csv(datasource, as.is=TRUE, check.names = FALSE)
 
     #TODO allow names of coord columns to be set by user

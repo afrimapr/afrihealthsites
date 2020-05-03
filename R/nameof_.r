@@ -10,6 +10,10 @@
 #' @export
 #'
 nameof_zcol <- function(datasource, type_column) {
+
+  #TODO i think type_column should be set to NULL above so that it doesn't have to be passed
+  #then probably doesn't need to be passed from some places it is
+
   zcol <- switch(datasource,
                  'healthsites' = 'amenity',
                  'healthsites_live' = 'amenity',
