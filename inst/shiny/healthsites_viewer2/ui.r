@@ -1,4 +1,4 @@
-#afrihealthsites/healthsites_viewer/ui.r
+#afrihealthsites/healthsites_viewer2/ui.r
 # keeping this very simple partly so it can be used as a template by other (maybe new) R users
 
 cran_packages <- c("shiny","leaflet","remotes")
@@ -30,12 +30,15 @@ pageWithSidebar(
 
     #selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
     #miss out Western Sahara because no healthsites or WHO
-    selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]), 
+    selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]),
                 size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
 
-    checkboxGroupInput("hs_amenity", label = h5("healthsites amenities"),
+    checkboxGroupInput("hs_amenity", label = h5("healthsites categories"),
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
                        selected = c("hospital","clinic","doctors","pharmacy")),
+
+    # dynamic who category selection
+    uiOutput("select_who_cat"),
 
     p("under development March 2020\n"),
 

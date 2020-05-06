@@ -7,6 +7,7 @@
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #'                   to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')
+# TODO add ability to select by who-kemri categories - which change according to country
 #' @param returnclass 'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords
 #' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
