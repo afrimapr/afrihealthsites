@@ -10,6 +10,7 @@ afrihealthsites(
   datasource = "healthsites",
   plot = "mapview",
   hs_amenity = "all",
+  who_type = "all",
   returnclass = "sf",
   type_column = "Facility Type",
   label_column = "Facility Name"
@@ -24,6 +25,8 @@ afrihealthsites(
 
 \item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
+
+\item{who_type}{filter by Facility type}
 
 \item{returnclass}{'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords}
 
@@ -53,6 +56,13 @@ dfzaf <- afrihealthsites("south africa", datasource='who', plot=FALSE, returncla
 #note that ISO 3 letter codes and country names with upper case letters can also be used
 #afrihealthsites("ZAF")
 #afrihealthsites("South Africa")
+
+
+#filter healthsites data by amenity type
+afrihealthsites('chad',datasource = 'healthsites', hs_amenity=c('clinic','hospital'))
+#filter who data by Facility type
+afrihealthsites('chad',datasource = 'who',who_type=c('Regional hospital','Health Centre'))
+
 
 }
 \seealso{

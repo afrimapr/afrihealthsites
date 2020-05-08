@@ -23,6 +23,7 @@
 #' #near_points("burundi", datasources=c('who', 'healthsites'), plot='mapview')
 #'
 #' @return \code{sf}
+# @import nngeo
 #' @export
 #'
 near_points <- function(country,
@@ -51,7 +52,7 @@ near_points <- function(country,
     # i.e. at least 15 healthsites locations must be <50m from another healthsites location
 
     # checking proximity of points within a single dataset
-    library(nngeo)
+    #library(nngeo)
 
     # find neighbours within 50m to each point (max 10)
     # passing same object twice, it will always return index of same point, & others if there are any

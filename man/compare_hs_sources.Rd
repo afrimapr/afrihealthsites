@@ -14,6 +14,7 @@ compare_hs_sources(
     "BuPu")),
   plotlegend = TRUE,
   hs_amenity = "all",
+  who_type = "all",
   canvas = TRUE,
   plotlabels1 = FALSE,
   plotlabels2 = FALSE,
@@ -37,6 +38,8 @@ compare_hs_sources(
 \item{plotlegend}{whether to add legend to mapview plot}
 
 \item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'}
+
+\item{who_type}{filter by Facility type}
 
 \item{canvas}{mapview plotting option, TRUE by default for better performance with larger data}
 
