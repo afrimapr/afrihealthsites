@@ -18,7 +18,7 @@ library(afrihealthsites)
 
 
 pageWithSidebar(
-  headerPanel('afrimapr healthsites viewer'),
+  headerPanel('afrimapr healthsites viewer2'),
   sidebarPanel( width=3,
 
     p(tags$strong("view healthsite locations provided by",
@@ -33,7 +33,7 @@ pageWithSidebar(
     selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]),
                 size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
 
-    checkboxGroupInput("hs_amenity", label = h5("healthsites categories"),
+    checkboxGroupInput("hs_amenity", label = "healthsites categories",
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
                        selected = c("hospital","clinic","doctors","pharmacy")),
 

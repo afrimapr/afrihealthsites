@@ -27,7 +27,8 @@ function(input, output) {
                                                    datasources=c('healthsites','who'),
                                                    plot='mapview',
                                                    plotshow=FALSE,
-                                                   hs_amenity=input$hs_amenity)
+                                                   hs_amenity=input$hs_amenity,
+                                                   who_type=input$selected_who_cats)
 
     #important that this returns the @map bit
     #otherwise get Error in : $ operator not defined for this S4 class
@@ -47,10 +48,10 @@ function(input, output) {
     sfwho <- afrihealthsites::afrihealthsites(input$country, datasource = 'who', plot = FALSE)
     who_cats <- unique(sfwho$`Facility type`)
 
-    checkboxGroupInput("selected_who_cats", label = h5("who-kemri categories"),
+    checkboxGroupInput("selected_who_cats", label = "who-kemri categories", #label = h5("who-kemri categories"),
                        choices = who_cats,
                        selected = who_cats,
-                       inline = TRUE)
+                       inline = FALSE)
   })
 
 

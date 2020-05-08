@@ -8,6 +8,8 @@
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #'                   to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')
 # TODO add ability to select by who-kemri categories - which change according to country
+# MAYBE LATER CHANGE TO GENERIC FILTER using type_column
+#' @param who_type filter by Facility type
 #' @param returnclass 'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords
 #' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
@@ -27,6 +29,13 @@
 #' #afrihealthsites("ZAF")
 #' #afrihealthsites("South Africa")
 #'
+#'
+#' #filter healthsites data by amenity type
+#' afrihealthsites('chad',datasource = 'healthsites', hs_amenity=c('clinic','hospital'))
+#' #filter who data by Facility type
+#' afrihealthsites('chad',datasource = 'who',who_type=c('Regional hospital','Health Centre'))
+#'
+#'
 #' @return \code{sf}
 #' @export
 #'
@@ -34,6 +43,7 @@ afrihealthsites <- function(country,
                       datasource = 'healthsites', #'hdx', #'who',
                       plot = 'mapview',
                       hs_amenity = 'all',
+                      who_type = 'all',
                       returnclass = 'sf',
                       type_column = 'Facility Type',
                       label_column = 'Facility Name'
@@ -72,6 +82,17 @@ afrihealthsites <- function(country,
 
       #sfcountry <- df_who_sites[ tolower(df_who_sites$Country) == tolower(country),]
       sfcountry <- df_who_sites[ filter_country, ]
+
+      # filter by Facility Type
+      # todo later make filter generic
+      # todo add checks for filters that leave nothing
+      if (!isTRUE(who_type == 'all'))
+      {
+        #important that for who data name has lowercase *type*
+        filter_type <- tolower(sfcountry$`Facility type`) %in% tolower(who_type)
+        sfcountry <- sfcountry[filter_type,]
+      }
+
     }
 
    if (returnclass == 'sf')

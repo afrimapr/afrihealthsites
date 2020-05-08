@@ -10,6 +10,7 @@
 #' @param col.regions list of two colour palettes to pass to mapview
 #' @param plotlegend whether to add legend to mapview plot
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
+#' @param who_type filter by Facility type
 #' @param canvas mapview plotting option, TRUE by default for better performance with larger data
 #' @param plotlabels1 whether to add static labels for source1
 #' @param plotlabels2 whether to add static labels for source2
@@ -32,6 +33,7 @@ compare_hs_sources <- function(country,
                             col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
                             plotlegend = TRUE,
                             hs_amenity = 'all',
+                            who_type = 'all',
                             canvas = TRUE,
                             plotlabels1 = FALSE,
                             plotlabels2 = FALSE,
@@ -40,8 +42,8 @@ compare_hs_sources <- function(country,
                             label_column = 'Facility Name'
                             ) {
 
-  sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity)
-  sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity)
+  sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type)
+  sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type)
 
 
   #TODO add a plot='sf' option
