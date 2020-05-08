@@ -2,6 +2,8 @@
 
 #sf_healthsites_af <- NULL
 
+data(afcountries)
+
 #country names that currently need changing for rhealthsites
 afcountries$name2 <- afcountries$name
 
@@ -19,6 +21,9 @@ afcountries <- afcountries[-which(afcountries$name=='Sao Tome and Principe'),]
 # numbers of columns of arguments do not match
 #remove it temporarily
 #afcountries <- afcountries[-which(afcountries$name=='South Africa'),]
+
+warning("temporarily removed Burundi because erroring")
+afcountries <- afcountries[-which(afcountries$name=='Burundi'),]
 
 for(countrynum in 1:nrow(afcountries))
 {
@@ -44,6 +49,13 @@ for(countrynum in 1:nrow(afcountries))
     sfcountry <- sfcountry[,-indexExtraCol]
   }
 
+  #2020-05-04 Ghana has extra 'tag' column, remove it
+  indexExtraCol <- which(names(sfcountry) %in% "tag")
+  if (isTRUE( indexExtraCol > 0))
+  {
+    sfcountry <- sfcountry[,-indexExtraCol]
+  }
+
 
   if (countrynum==1) sf_healthsites_af <- sfcountry
   else sf_healthsites_af <- rbind(sf_healthsites_af, sfcountry)
@@ -51,4 +63,4 @@ for(countrynum in 1:nrow(afcountries))
 }
 
 
-usethis::use_data(sf_healthsites_af, overwrite = TRUE)
+#usethis::use_data(sf_healthsites_af, overwrite = TRUE)
