@@ -6,8 +6,9 @@
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
 #' @param type_filter filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #'                   to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')
-#' @param ggcol_h c(0,360) ggplot colour hue range
+# @param ggcolour_h c(0,360) ggplot colour hue range
 #' @param plot whether to display plot
+#' @param brewer_palette ColorBrewer palette default 'BuPu',
 # @param who_type filter by Facility type
 # @param returnclass 'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords
 # @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
@@ -15,20 +16,21 @@
 #'
 #' @examples
 #'
-#' sfnga <- facility_types("nigeria", datasource='who', plot='sf')
+#' sfnga <- facility_types("nigeria", datasource='who')
 #'
-#' facility_types('chad', datasource='who', plot='sf')
-#' facility_types('chad', datasource='healthsites', plot='sf')
+#' facility_types('chad', datasource='who')
+#' facility_types('chad', datasource='healthsites')
 #'
 #'
 #' #filter healthsites data by amenity type
-#' facility_types('chad',datasource = 'healthsites', hs_amenity=c('clinic','hospital'))
+#' facility_types('chad',datasource = 'healthsites', type_filter=c('clinic','hospital'))
 #' #filter who data by Facility type
-#' facility_types('chad',datasource = 'who',who_type=c('Regional hospital','Health Centre'))
+#' facility_types('chad',datasource = 'who', type_filter=c('Regional hospital','Health Centre'))
 #'
 #'
 #' @return \code{ggplot2} object
 #' @importFrom ggplot2 ggplot aes geom_bar geom_text theme_minimal labs scale_fill_manual scale_x_reverse
+#' @importFrom grDevices colorRampPalette
 #' @export
 #'
 facility_types <- function(country,
@@ -40,7 +42,7 @@ facility_types <- function(country,
                       #returnclass = 'sf',
                       # type_column = 'Facility Type',
                       # label_column = 'Facility Name'
-                      ggcolour_h = c(0, 360),
+                      # ggcolour_h = c(0, 360),
                       brewer_palette = 'BuPu',
                       plot = TRUE
                       ) {
@@ -94,13 +96,13 @@ facility_types <- function(country,
     {
       #reversing order to match order in map from compare_hs_sources()
       sf1$amenity <- factor(sf1$amenity, levels = rev(sort(unique(sf1$amenity))))
-      gg <- ggplot(sf1, aes(y = amenity, fill = amenity))
+      gg <- ggplot2::ggplot(sf1, aes(y = amenity, fill = amenity))
       numcolours <- length(unique(sf1[["amenity"]]))
 
     } else     if (datasource == 'who')
     {
       sf1$`Facility type` <- factor(sf1$`Facility type`, levels = rev(sort(unique(sf1$`Facility type`))))
-      gg <- ggplot(sf1, aes(y = `Facility type`, fill = `Facility type`))
+      gg <- ggplot2::ggplot(sf1, aes(y = `Facility type`, fill = `Facility type`))
       numcolours <- length(unique(sf1[["Facility type"]]))
     }
 

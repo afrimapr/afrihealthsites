@@ -8,7 +8,6 @@ facility_types(
   country,
   datasource = "healthsites",
   type_filter = "all",
-  ggcolour_h = c(0, 360),
   brewer_palette = "BuPu",
   plot = TRUE
 )
@@ -21,9 +20,9 @@ facility_types(
 \item{type_filter}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
 
-\item{plot}{whether to display plot}
+\item{brewer_palette}{ColorBrewer palette default 'BuPu',}
 
-\item{ggcol_h}{c(0,360) ggplot colour hue range}
+\item{plot}{whether to display plot}
 }
 \value{
 \code{ggplot2} object
@@ -33,16 +32,16 @@ get & plot freq of facility types for a country
 }
 \examples{
 
-sfnga <- facility_types("nigeria", datasource='who', plot='sf')
+sfnga <- facility_types("nigeria", datasource='who')
 
-facility_types('chad', datasource='who', plot='sf')
-facility_types('chad', datasource='healthsites', plot='sf')
+facility_types('chad', datasource='who')
+facility_types('chad', datasource='healthsites')
 
 
 #filter healthsites data by amenity type
-facility_types('chad',datasource = 'healthsites', hs_amenity=c('clinic','hospital'))
+facility_types('chad',datasource = 'healthsites', type_filter=c('clinic','hospital'))
 #filter who data by Facility type
-facility_types('chad',datasource = 'who',who_type=c('Regional hospital','Health Centre'))
+facility_types('chad',datasource = 'who', type_filter=c('Regional hospital','Health Centre'))
 
 
 }
