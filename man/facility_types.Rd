@@ -8,6 +8,8 @@ facility_types(
   country,
   datasource = "healthsites",
   type_filter = "all",
+  ggcolour_h = c(0, 360),
+  brewer_palette = "BuPu",
   plot = TRUE
 )
 }
@@ -20,9 +22,11 @@ facility_types(
 to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
 
 \item{plot}{whether to display plot}
+
+\item{ggcol_h}{c(0,360) ggplot colour hue range}
 }
 \value{
-\code{sf}
+\code{ggplot2} object
 }
 \description{
 get & plot freq of facility types for a country

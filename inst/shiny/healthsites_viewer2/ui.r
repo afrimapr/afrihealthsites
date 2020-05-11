@@ -65,7 +65,7 @@ pageWithSidebar(
     #tabs
     tabsetPanel(type = "tabs",
                 tabPanel("map", leafletOutput("serve_healthsites_map", height=1000)),
-                tabPanel("facility types", plotOutput("plot_fac_types"))
+                tabPanel("facility types", plotOutput("plot_fac_types", height=800))
                 #tabPanel("about", NULL)
     )
   )

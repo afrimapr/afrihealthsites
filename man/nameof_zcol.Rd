@@ -4,7 +4,7 @@
 \alias{nameof_zcol}
 \title{name of z column according to datasource}
 \usage{
-nameof_zcol(datasource, type_column)
+nameof_zcol(datasource, type_column = NULL)
 }
 \arguments{
 \item{datasource}{'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}

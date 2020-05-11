@@ -8,6 +8,8 @@ lapply(cran_packages, function(x) if(!require(x,character.only = TRUE)) install.
 
 library(remotes)
 library(leaflet)
+library(ggplot2)
+library(patchwork) #for combining ggplots
 
 if(!require(afrihealthsites)){
   remotes::install_github("afrimapr/afrihealthsites")
@@ -59,11 +61,31 @@ function(input, output) {
   output$plot_fac_types <- renderPlot({
 
 
-    afrihealthsites::facility_types(input$country,
+    #palletes here set to match those in map from compare_hs_sources()
+
+    gg1 <- afrihealthsites::facility_types(input$country,
                                     datasource = 'healthsites',
                                     plot = TRUE,
-                                    type_filter = input$hs_amenity )
+                                    type_filter = input$hs_amenity,
+                                    #ggcolour_h=c(0,175)
+                                    brewer_palette = "YlGn" )
 
+    gg2 <- afrihealthsites::facility_types(input$country,
+                                           datasource = 'who',
+                                           plot = TRUE,
+                                           type_filter = input$selected_who_cats,
+                                           #ggcolour_h=c(185,360)
+                                           brewer_palette = "BuPu" )
+
+    #set xmax to be the same for both plots
+    #hack to find max xlim for each object
+    max1 <- max(ggplot_build(gg1)$layout$panel_params[[1]]$x$continuous_range)
+    max2 <- max(ggplot_build(gg2)$layout$panel_params[[1]]$x$continuous_range)
+    #set xmax for both plots to this
+    gg1 <- gg1 + xlim(c(0,max(max1,max2, na.rm=TRUE)))
+    gg2 <- gg2 + xlim(c(0,max(max1,max2, na.rm=TRUE)))
+
+    gg1 / gg2 #patchwork
 
   })
 

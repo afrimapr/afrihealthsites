@@ -52,6 +52,7 @@ compare_hs_sources <- function(country,
   if (plot == 'mapview')
   {
 
+    #type_columnb is only used if the dataset is not one of the recognised ones
     zcol1 <- nameof_zcol(datasources[1], type_column)
     zcol2 <- nameof_zcol(datasources[2], type_column)
 

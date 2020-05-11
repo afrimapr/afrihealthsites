@@ -9,7 +9,7 @@
 #' @return character column name
 #' @export
 #'
-nameof_zcol <- function(datasource, type_column) {
+nameof_zcol <- function(datasource, type_column = NULL) {
 
   #TODO i think type_column should be set to NULL above so that it doesn't have to be passed
   #then probably doesn't need to be passed from some places it is
