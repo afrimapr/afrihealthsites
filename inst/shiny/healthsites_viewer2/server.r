@@ -55,5 +55,17 @@ function(input, output) {
   })
 
 
+  # plot of facility types
+  output$plot_fac_types <- renderPlot({
+
+
+    afrihealthsites::facility_types(input$country,
+                                    datasource = 'healthsites',
+                                    plot = TRUE,
+                                    type_filter = input$hs_amenity )
+
+
+  })
+
 
 }

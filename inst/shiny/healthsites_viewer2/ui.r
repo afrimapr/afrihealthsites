@@ -56,8 +56,18 @@ pageWithSidebar(
     p(tags$small("Disclaimer : Data used by afrimapr are sourced from published open data sets. We provide no guarantee of accuracy.")),
 
   ),
+
   mainPanel(
-    leafletOutput("serve_healthsites_map", height=1000)
+
+    #when just had the map
+    #leafletOutput("serve_healthsites_map", height=1000)
+
+    #tabs
+    tabsetPanel(type = "tabs",
+                tabPanel("map", leafletOutput("serve_healthsites_map", height=1000)),
+                tabPanel("facility types", plotOutput("plot_fac_types"))
+                #tabPanel("about", NULL)
+    )
   )
 )
 
