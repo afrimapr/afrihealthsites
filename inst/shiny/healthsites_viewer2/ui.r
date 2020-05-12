@@ -40,7 +40,7 @@ pageWithSidebar(
     # dynamic who category selection
     uiOutput("select_who_cat"),
 
-    p("under development March 2020\n"),
+    p("active development May 2020\n"),
 
     p("Developed by ", a("afrimapr", href="http://www.afrimapr.org", target="_blank"), "Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),
@@ -65,7 +65,9 @@ pageWithSidebar(
     #tabs
     tabsetPanel(type = "tabs",
                 tabPanel("map", leafletOutput("serve_healthsites_map", height=800)),
-                tabPanel("facility types", plotOutput("plot_fac_types", height=600))
+                tabPanel("facility types", plotOutput("plot_fac_types", height=600)),
+                tabPanel("healthsites data", DT::dataTableOutput("table_raw_hs")),
+                tabPanel("WHO data", DT::dataTableOutput("table_raw_who"))
                 #tabPanel("about", NULL)
     )
   )

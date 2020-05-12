@@ -20,6 +20,7 @@ compare_hs_sources(
   canvas = TRUE,
   plotlabels1 = FALSE,
   plotlabels2 = FALSE,
+  map.types = c("CartoDB.Positron", "OpenStreetMap.HOT"),
   type_column = "Facility Type",
   label_column = "Facility Name"
 )
@@ -37,6 +38,10 @@ compare_hs_sources(
 
 \item{col.regions}{list of two colour palettes to pass to mapview}
 
+\item{alpha}{list of two alphas to pass to mapview - low keeps borders light}
+
+\item{alpha.regions}{list of two alpha.regions to pass to mapview}
+
 \item{plotlegend}{whether to add legend to mapview plot}
 
 \item{hs_amenity}{filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'}
@@ -48,6 +53,8 @@ compare_hs_sources(
 \item{plotlabels1}{whether to add static labels for source1}
 
 \item{plotlabels2}{whether to add static labels for source2}
+
+\item{map.types}{optional specification of background map tiles for mapview, default c('CartoDB.Positron','OpenStreetMap.HOT')}
 
 \item{type_column}{just for user provided files which column has information on type of site, default : 'Facility Type'}
 

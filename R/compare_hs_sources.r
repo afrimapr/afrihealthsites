@@ -8,12 +8,15 @@
 #' @param plotshow whether to show the plot, otherwiser just return plot object
 #' @param plotcex sizes of symbols for each source default=c(6,3), helps view symbol overlap
 #' @param col.regions list of two colour palettes to pass to mapview
+#' @param alpha list of two alphas to pass to mapview - low keeps borders light
+#' @param alpha.regions list of two alpha.regions to pass to mapview
 #' @param plotlegend whether to add legend to mapview plot
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #' @param who_type filter by Facility type
 #' @param canvas mapview plotting option, TRUE by default for better performance with larger data
 #' @param plotlabels1 whether to add static labels for source1
 #' @param plotlabels2 whether to add static labels for source2
+#' @param map.types optional specification of background map tiles for mapview, default c('CartoDB.Positron','OpenStreetMap.HOT')
 #' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
 #'
@@ -39,6 +42,7 @@ compare_hs_sources <- function(country,
                             canvas = TRUE,
                             plotlabels1 = FALSE,
                             plotlabels2 = FALSE,
+                            map.types=c('CartoDB.Positron','OpenStreetMap.HOT'),
                             #TODO allow these columns to be specified for both sources
                             type_column = 'Facility Type',
                             label_column = 'Facility Name'
@@ -74,6 +78,7 @@ compare_hs_sources <- function(country,
                                   alpha = alpha[1],
                                   layer.name=datasources[1],
                                   legend=plotlegend,
+                                  map.types=map.types,
                                   canvas=canvas)
 
 
@@ -93,6 +98,7 @@ compare_hs_sources <- function(country,
                                           alpha = alpha[2],
                                           layer.name=datasources[2],
                                           legend=plotlegend,
+                                          map.types=map.types,
                                           canvas=canvas )
       } else {
         #if there's no sf1 then start the plot with sf2
@@ -105,6 +111,7 @@ compare_hs_sources <- function(country,
                                      alpha = alpha[2],
                                      layer.name=datasources[2],
                                      legend=plotlegend,
+                                     map.types=map.types,
                                      canvas=canvas )
 
       }
