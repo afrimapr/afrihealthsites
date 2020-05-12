@@ -79,13 +79,19 @@ function(input, output) {
 
     #set xmax to be the same for both plots
     #hack to find max xlim for each object
-    max1 <- max(ggplot_build(gg1)$layout$panel_params[[1]]$x$continuous_range)
-    max2 <- max(ggplot_build(gg2)$layout$panel_params[[1]]$x$continuous_range)
+    #TODO make this less hacky ! it will probably fail when ggplot changes
+    max_x1 <- max(ggplot_build(gg1)$layout$panel_params[[1]]$x$continuous_range)
+    max_x2 <- max(ggplot_build(gg2)$layout$panel_params[[1]]$x$continuous_range)
     #set xmax for both plots to this
-    gg1 <- gg1 + xlim(c(0,max(max1,max2, na.rm=TRUE)))
-    gg2 <- gg2 + xlim(c(0,max(max1,max2, na.rm=TRUE)))
+    gg1 <- gg1 + xlim(c(0,max(max_x1,max_x2, na.rm=TRUE)))
+    gg2 <- gg2 + xlim(c(0,max(max_x1,max_x2, na.rm=TRUE)))
 
-    gg1 / gg2 #patchwork
+    #set size of y plots to be dependent on num cats
+    #y axis has cats, this actually gets max of y axis, e.g. for 6 cats is 6.6
+    max_y1 <- max(ggplot_build(gg1)$layout$panel_params[[1]]$y$continuous_range)
+    max_y2 <- max(ggplot_build(gg2)$layout$panel_params[[1]]$y$continuous_range)
+
+    gg1 / gg2 + plot_layout(heights=c(max_y1, max_y2)) #patchwork
 
   })
 

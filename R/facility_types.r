@@ -113,7 +113,8 @@ facility_types <- function(country,
       labs(title=paste("Selected facility types from", datasource,"for",country,"( Total =",tot_facilities,")" )) +
       #subtitle= paste("Total =",tot_facilities)) +
       #scale_fill_brewer(palette=brewer_palette) + #problem with scale_fill_brewer when too many classes
-      scale_fill_manual(values = colorRampPalette(RColorBrewer::brewer.pal(5, brewer_palette))(numcolours)) +
+      #pallete reversed to match those in map from compare_hs_sources()
+      scale_fill_manual(values = rev(colorRampPalette(RColorBrewer::brewer.pal(5, brewer_palette))(numcolours))) +
       #scale_y_reverse() #to get order of cats to match those in map from compare_hs_sources()
       #scale_fill_hue(h = ggcolour_h, c=150) +
       NULL
