@@ -11,9 +11,11 @@ afrihealthsites(
   plot = "mapview",
   hs_amenity = "all",
   who_type = "all",
+  type_filter = "all",
   returnclass = "sf",
   type_column = "Facility Type",
-  label_column = "Facility Name"
+  label_column = "Facility Name",
+  lonlat_columns = c("Longitude", "Latitude")
 )
 }
 \arguments{
@@ -28,11 +30,15 @@ to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
 
 \item{who_type}{filter by Facility type}
 
+\item{type_filter}{filter by facility type (from the type_column, or internally defined for healthsites & who)}
+
 \item{returnclass}{'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords}
 
 \item{type_column}{just for user provided files which column has information on type of site, default : 'Facility Type'}
 
 \item{label_column}{just for user provided files which column has information on name of site, default : 'Facility Name'}
+
+\item{lonlat_columns}{just for user provided files which columns contain longitude, latitude}
 }
 \value{
 \code{sf}

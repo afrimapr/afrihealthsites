@@ -10,9 +10,11 @@
 # TODO add ability to select by who-kemri categories - which change according to country
 # MAYBE LATER CHANGE TO GENERIC FILTER using type_column
 #' @param who_type filter by Facility type
+#' @param type_filter filter by facility type (from the type_column, or internally defined for healthsites & who)
 #' @param returnclass 'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords
 #' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
+#' @param lonlat_columns just for user provided files which columns contain longitude, latitude
 #'
 #' @examples
 #'
@@ -42,11 +44,13 @@
 afrihealthsites <- function(country,
                       datasource = 'healthsites', #'hdx', #'who',
                       plot = 'mapview',
-                      hs_amenity = 'all',
+                      hs_amenity = 'all', #todo, subsume these 2 into type_filter
                       who_type = 'all',
+                      type_filter = 'all',
                       returnclass = 'sf',
                       type_column = 'Facility Type',
-                      label_column = 'Facility Name'
+                      label_column = 'Facility Name',
+                      lonlat_columns = c("Longitude", "Latitude")
                       ) {
 
 
@@ -151,11 +155,21 @@ afrihealthsites <- function(country,
     #ideally detect which they are likely to be
 
     #convert to sf
-    sfcountry <- sf::st_as_sf(dfcountry, coords = c("Longitude", "Latitude"), crs = 4326)
+    sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326)
 
     #other option if it is shp and 1 country already
     #sfcountry <- sf::st_read(datasource)
 
+    # NOTE this generic filter can also work for who & healthsites
+    # TODO convert who & healthsites to use this
+
+    # filter by facility type
+    if (!isTRUE(type_filter == 'all'))
+    {
+      #NOTE i convert all to lowercase here, is there a chance that a user might want to filter e.g. clinic not Clinic ?
+      type_truefalse <- tolower(sfcountry[[type_column]]) %in% tolower(type_filter)
+      sfcountry <- sfcountry[type_truefalse,]
+    }
 
 
   } else if (datasource == 'healthsites_live')

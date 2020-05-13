@@ -4,19 +4,19 @@
 #' @param country a character vector of country names or iso3c character codes.
 #' @param datasource data source, 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
-#' @param type_filter filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
-#'                   to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')
+#' @param type_filter filter by facility type - will depend on the data source
 # @param ggcolour_h c(0,360) ggplot colour hue range
 #' @param plot whether to display plot
 #' @param brewer_palette ColorBrewer palette default 'BuPu',
 # @param who_type filter by Facility type
 # @param returnclass 'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords
-# @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
-# @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
+#' @param lonlat_columns just for user provided files which columns contain longitude, latitude
+#' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
+#' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
 #'
 #' @examples
 #'
-#' sfnga <- facility_types("nigeria", datasource='who')
+#' ggnga <- facility_types("nigeria", datasource='who')
 #'
 #' facility_types('chad', datasource='who')
 #' facility_types('chad', datasource='healthsites')
@@ -40,14 +40,15 @@ facility_types <- function(country,
                       #hs_amenity = 'all',
                       #who_type = 'all',
                       #returnclass = 'sf',
-                      # type_column = 'Facility Type',
-                      # label_column = 'Facility Name'
+                      type_column = 'Facility Type',
+                      label_column = 'Facility Name',
                       # ggcolour_h = c(0, 360),
                       brewer_palette = 'BuPu',
+                      lonlat_columns = c("Longitude", "Latitude"),
                       plot = TRUE
+
                       ) {
 
-  #warning('only works for healthsites so far')
 
   # country <- 'Togo'
   # type_filter = c('clinic', 'doctors', 'pharmacy', 'hospital')
@@ -70,7 +71,19 @@ facility_types <- function(country,
 
     sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, who_type=type_filter) #, who_type=who_type)
 
+  }  else if (file.exists(datasource)) # a user supplied file
+  {
+
+    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE,
+                           type_filter = type_filter,
+                           type_column = type_column,
+                           label_column = label_column,
+                           lonlat_columns = lonlat_columns) #, who_type=who_type)
+
+
   }
+
+
 
   # if there are no facilities (e.g. North Africa WHO) return NULL
   if (is.null(sf1)) return(NULL)
@@ -92,19 +105,30 @@ facility_types <- function(country,
 
 
     #TODO try to generalise this so that can use the type_column argument to specify y & fill
-    if (datasource == 'healthsites')
-    {
-      #reversing order to match order in map from compare_hs_sources()
-      sf1$amenity <- factor(sf1$amenity, levels = rev(sort(unique(sf1$amenity))))
-      gg <- ggplot2::ggplot(sf1, aes(y = amenity, fill = amenity))
-      numcolours <- length(unique(sf1[["amenity"]]))
+    # one option is just to create a new column with the same name for all
 
-    } else     if (datasource == 'who')
-    {
-      sf1$`Facility type` <- factor(sf1$`Facility type`, levels = rev(sort(unique(sf1$`Facility type`))))
-      gg <- ggplot2::ggplot(sf1, aes(y = `Facility type`, fill = `Facility type`))
-      numcolours <- length(unique(sf1[["Facility type"]]))
-    }
+    #reversing order to match order in map from compare_hs_sources()
+    sf1$facility_type <- factor(sf1[[type_column]], levels = rev(sort(unique(sf1[[type_column]]))))
+
+    numcolours <- length(unique(sf1$facility_type))
+
+    gg <- ggplot2::ggplot(sf1, aes(y = facility_type, fill = facility_type))
+
+
+    # OLD WAY OF DOING
+    # if (datasource == 'healthsites')
+    # {
+    #   #reversing order to match order in map from compare_hs_sources()
+    #   sf1$amenity <- factor(sf1$amenity, levels = rev(sort(unique(sf1$amenity))))
+    #   gg <- ggplot2::ggplot(sf1, aes(y = amenity, fill = amenity))
+    #   numcolours <- length(unique(sf1[["amenity"]]))
+    #
+    # } else if (datasource == 'who')
+    # {
+    #   sf1$`Facility type` <- factor(sf1$`Facility type`, levels = rev(sort(unique(sf1$`Facility type`))))
+    #   gg <- ggplot2::ggplot(sf1, aes(y = `Facility type`, fill = `Facility type`))
+    #   numcolours <- length(unique(sf1[["Facility type"]]))
+    # }
 
 
     gg <- gg + geom_bar(show.legend=FALSE) +

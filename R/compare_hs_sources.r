@@ -13,6 +13,7 @@
 #' @param plotlegend whether to add legend to mapview plot
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #' @param who_type filter by Facility type
+#TODO replace filters with generic type_filters = list(c(x,y), c(z))
 #' @param canvas mapview plotting option, TRUE by default for better performance with larger data
 #' @param plotlabels1 whether to add static labels for source1
 #' @param plotlabels2 whether to add static labels for source2
