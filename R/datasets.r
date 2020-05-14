@@ -25,6 +25,17 @@ NULL
 "sf_healthsites_af"
 
 
+#' south sudan health facility points from moh
+#'
+#'
+#' @format \code{sf}
+#' @slot data health facility points
+#' @aliases sfssd
+#' @name south_sudan_moh
+NULL
+#' @source \url{https://www.southsudanhealth.info/facility/fac.php?list&s=0&p=0&ps=2889}
+#' @rdname south_sudan_moh
+"sfssd"
 
 
 #' african country names and iso 3 letter country codes
