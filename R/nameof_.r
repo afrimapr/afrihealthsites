@@ -11,8 +11,8 @@
 #'
 nameof_zcol <- function(datasource, type_column = NULL) {
 
-  #TODO i think type_column should be set to NULL above so that it doesn't have to be passed
-  #then probably doesn't need to be passed from some places it is
+  # to avoid problems if df or sf objects passed here
+  if (!is.character(datasource)) datasource <- 'other'
 
   zcol <- switch(datasource,
                  'healthsites' = 'amenity',
@@ -37,6 +37,10 @@ nameof_zcol <- function(datasource, type_column = NULL) {
 #' @export
 #'
 nameof_labcol <- function(datasource, label_column) {
+
+  # to avoid problems if df or sf objects passed here
+  if (!is.character(datasource)) datasource <- 'other'
+
   labcol <- switch(datasource,
                    'healthsites' = 'name',
                    'healthsites_live' = 'name',

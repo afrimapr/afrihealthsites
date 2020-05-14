@@ -60,8 +60,8 @@ afrihealthsites <- function(country,
   #copes better with any naming differences
   iso3c <- country2iso(country)
 
-
-  if (datasource == 'who')
+  #todo check on how best to avoid error from df & sf, the && is necessary here
+  if (is.character(datasource) && datasource == 'who')
   {
     if (country=='all')
     {
@@ -109,7 +109,7 @@ afrihealthsites <- function(country,
      sfcountry <- sf::st_as_sf(sfcountry, coords = c("Long", "Lat"), crs = 4326)
    }
 
-  } else if (datasource == 'healthsites') #pre-downloaded healthsites data stored in this package
+  } else if (is.character(datasource) && datasource == 'healthsites') #pre-downloaded healthsites data stored in this package
   {
 
     if (country=='all')
@@ -142,20 +142,37 @@ afrihealthsites <- function(country,
       }
     }
 
-  } else if (file.exists(datasource)) # a user supplied file
+  }
+  # user supplied file or dataframe
+  else if ((is.character(datasource) && file.exists(datasource)) | class(datasource)=="data.frame" | class(datasource)=="sf")
   {
     ######################################
     #TODO test whether it is sf compatible
 
-    # most options are likely to be csvs
+    # most file options are likely to be csvs
     #set check.names to FALSE to stop names being changed e.g. spaces to dots
-    dfcountry <- utils::read.csv(datasource, as.is=TRUE, check.names = FALSE)
 
-    #TODO allow names of coord columns to be set by user
-    #ideally detect which they are likely to be
+    #if file, read into dataframe
+    if (is.character(datasource) && file.exists(datasource))
+    {
+      dfcountry <- utils::read.csv(datasource, as.is=TRUE, check.names = FALSE)
+    }
 
-    #convert to sf
-    sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326)
+    #if dataframe convert to sf
+    if ((is.character(datasource) && file.exists(datasource)) | class(datasource)=="data.frame")
+    {
+
+      if (class(datasource)=="data.frame") dfcountry <- datasource
+
+      #convert to sf
+      sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326)
+    }
+
+    #if an sf object passed just change name
+    if (class(datasource)=="sf")
+    {
+      sfcountry <- datasource
+    }
 
     #other option if it is shp and 1 country already
     #sfcountry <- sf::st_read(datasource)
@@ -172,7 +189,7 @@ afrihealthsites <- function(country,
     }
 
 
-  } else if (datasource == 'healthsites_live')
+  } else if (is.character(datasource) && datasource == 'healthsites_live')
   {
     # access healthsites.io data by country from rhealthsites package
     # using healthsites_live requires API key to be set first
@@ -197,7 +214,7 @@ afrihealthsites <- function(country,
   # access healthsites.io data by country stored monthly at hdx
   # NOT WORKING YET, has advantage that no API key needed
   # but now that I save data in the package this not a priority
-  if (datasource == 'hdx')
+  if (is.character(datasource) && datasource == 'hdx')
   {
     if (country=='all')
     {

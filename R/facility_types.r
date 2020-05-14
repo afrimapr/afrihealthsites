@@ -27,6 +27,11 @@
 #' #filter who data by Facility type
 #' facility_types('chad',datasource = 'who', type_filter=c('Regional hospital','Health Centre'))
 #'
+#' # from an sf object
+#' data(sfssd)
+#' ggssd <- facility_types("south sudan",
+#'                         datasource=sfssd,
+#'                         type_column = "type")
 #'
 #' @return \code{ggplot2} object
 #' @importFrom ggplot2 ggplot aes geom_bar geom_text theme_minimal labs scale_fill_manual scale_x_reverse
@@ -35,6 +40,7 @@
 #'
 facility_types <- function(country,
                       datasource = 'healthsites', #'hdx', #'who',
+                      datasource_title = NULL,
                       #plot = 'mapview',
                       type_filter = 'all',
                       #hs_amenity = 'all',
@@ -55,23 +61,22 @@ facility_types <- function(country,
   # type_filter = 'all'
   # datasource = 'healthsites' #'who'
 
-
   # setting name of the type_column for who & healthsites (potential to supply user-defined option)
   type_column <- nameof_zcol(datasource = datasource, type_column = type_column)
 
   #currently different filter arg used for healthsites (hs_amenity) & who (who_type)
   #todo maybe try to generalise that in afrihealthsites()
-  if (datasource == 'healthsites')
+  if (is.character(datasource) && datasource == 'healthsites')
   {
 
     sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, hs_amenity=type_filter) #, who_type=who_type)
 
-  } else if (datasource == 'who')
+  } else if (is.character(datasource) && datasource == 'who')
   {
 
     sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, who_type=type_filter) #, who_type=who_type)
 
-  }  else if (file.exists(datasource)) # a user supplied file
+  }  else if (class(datasource)=="data.frame" || class(datasource)=="sf" || file.exists(datasource)) # a user supplied file
   {
 
     sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE,
@@ -131,10 +136,19 @@ facility_types <- function(country,
     # }
 
 
+    if ( is.null(datasource_title) )
+    {
+      if (is.character(datasource)) datasource_title <- datasource
+      else datasource_title <- "file"
+    }
+
+    plot_title <- paste("Selected facility types from", datasource_title,"for",country,"( Total =",tot_facilities,")" )
+
+
     gg <- gg + geom_bar(show.legend=FALSE) +
       theme_minimal() +
       geom_text(stat='count', aes(label=..count..), hjust='left') + # hjust=-1) +
-      labs(title=paste("Selected facility types from", datasource,"for",country,"( Total =",tot_facilities,")" )) +
+      labs(title=plot_title) +
       #subtitle= paste("Total =",tot_facilities)) +
       #scale_fill_brewer(palette=brewer_palette) + #problem with scale_fill_brewer when too many classes
       #pallete reversed to match those in map from compare_hs_sources()
