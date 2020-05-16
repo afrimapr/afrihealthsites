@@ -1,8 +1,9 @@
 # afrihealthsites
 access to geographic locations of african health sites from different sources
 
+A [web interface](https://andysouth.shinyapps.io/healthsites_viewer/) demonstrating these components.
 
-A part of the [afrimapr](www.afrimapr.org) project.
+Part of the [afrimapr](www.afrimapr.org) project.
 
 In early development, will change, contact Andy South with questions.
 
