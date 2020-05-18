@@ -18,7 +18,7 @@ library(afrihealthsites)
 
 
 pageWithSidebar(
-  headerPanel('afrimapr healthsites viewer2'),
+  headerPanel('afrimapr healthsites viewer v0.2'),
   sidebarPanel( width=3,
 
     p(tags$strong("view healthsite locations provided by",
