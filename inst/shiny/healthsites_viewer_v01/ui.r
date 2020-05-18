@@ -1,5 +1,6 @@
-#afrihealthsites/healthsites_viewer/ui.r
+#afrihealthsites/healthsites_viewer_v01/ui.r
 # keeping this very simple partly so it can be used as a template by other (maybe new) R users
+# v0.1 just showed a map, and only allowed selection of healthsites facility types
 
 cran_packages <- c("shiny","leaflet","remotes")
 
@@ -18,7 +19,7 @@ library(afrihealthsites)
 
 
 pageWithSidebar(
-  headerPanel('afrimapr healthsites viewer'),
+  headerPanel('afrimapr healthsites viewer v0.1'),
   sidebarPanel( width=3,
 
     p(tags$strong("view healthsite locations provided by",
@@ -30,7 +31,7 @@ pageWithSidebar(
 
     #selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
     #miss out Western Sahara because no healthsites or WHO
-    selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]), 
+    selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]),
                 size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
 
     checkboxGroupInput("hs_amenity", label = h5("healthsites amenities"),
@@ -59,8 +60,3 @@ pageWithSidebar(
 )
 
 
-# navbarPage("healthsites in Africa, from healthsites.io and WHO", id="main",
-#            tabPanel("map", leafletOutput("serve_healthsites_map", height=1000)) )
-#            #tabPanel("map", mapviewOutput("serve_healthsites_map", height=1000)) )
-#            #tabPanel("Data", DT::dataTableOutput("data")),
-#            #tabPanel("Read Me",includeMarkdown("readme.md")))

@@ -1,4 +1,4 @@
-#afrihealthsites/healthsites_viewer/server.r
+#afrihealthsites/healthsites_viewer_v01/server.r
 # keeping this very simple partly so it can be used as a template by other (maybe new) R users
 
 
