@@ -17,16 +17,30 @@ library(afrihealthsites)
 # library(mapview)
 
 
-pageWithSidebar(
-  headerPanel('afrimapr healthsites viewer v0.2'),
+fluidPage(
+
+  headerPanel('afrimapr healthsites viewer'),
+
+  p("There are 2 main sources for locations of > 100k hospital and health facilities in Africa. Neither is perfect.
+      This app allows detailed comparison to inform pandemic response and allow improvement."),
+
+  sidebarLayout(
+
   sidebarPanel( width=3,
 
-    p(tags$strong("view healthsite locations provided by",
+    #p(tags$strong("There are 2 main sources for locations of > 100k hospital and health facilities in Africa. Neither is perfect.
+    #  This app allows detailed comparison to inform pandemic response and allow improvement.")),
+
+    p("data from",
                   a("healthsites.io", href="https://www.healthsites.io", target="_blank"),
                   " & ",
                   a("KEMRI Wellcome", href="https://www.nature.com/articles/s41597-019-0142-2", target="_blank"),
                   " / ",
-                  a("WHO", href="https://www.who.int/malaria/areas/surveillance/public-sector-health-facilities-ss-africa/en/", target="_blank"))),
+                  a("WHO", href="https://www.who.int/malaria/areas/surveillance/public-sector-health-facilities-ss-africa/en/", target="_blank")),
+
+    p("By ", a("afrimapr", href="http://www.afrimapr.org", target="_blank"),
+      " a project to create R building-blocks to ease use of health data in Africa"),
+
 
     #selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
     #miss out Western Sahara because no healthsites or WHO
@@ -40,18 +54,15 @@ pageWithSidebar(
     # dynamic who category selection
     uiOutput("select_who_cat"),
 
-    p("active development May 2020\n"),
+    p("active development May 2020, v0.2\n"),
 
-    p("Developed by ", a("afrimapr", href="http://www.afrimapr.org", target="_blank"), "Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
+    #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),
-
-    #p("Compares data from :"),
-    #p(a("healthsites.io", href="https://www.healthsites.io", target="_blank")),
-    #p("\n", a("WHO", href="https://www.who.int/malaria/areas/surveillance/public-sector-health-facilities-ss-africa/en/", target="_blank")),
 
     p("\nWHO data Sub-Sahara only, symbols shown smaller, rings indicate overlap\n"),
 
-    p("Input and suggestions ", a("welcome", href="https://github.com/afrimapr/suggestions_and_requests", target="_blank")),
+    p("Input and suggestions ", a("welcome", href="https://github.com/afrimapr/suggestions_and_requests", target="_blank"),
+      "Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
 
     p(tags$small("Disclaimer : Data used by afrimapr are sourced from published open data sets. We provide no guarantee of accuracy.")),
 
@@ -71,6 +82,7 @@ pageWithSidebar(
                 #tabPanel("about", NULL)
     )
   )
+)
 )
 
 
