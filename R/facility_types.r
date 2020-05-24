@@ -3,6 +3,7 @@
 #'
 #' @param country a character vector of country names or iso3c character codes.
 #' @param datasource data source, 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
+#' @param datasource_title optional title for datasource to be used in plots - particularly if a filname has been passed for datasource
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
 #' @param type_filter filter by facility type - will depend on the data source
 # @param ggcolour_h c(0,360) ggplot colour hue range
@@ -66,17 +67,10 @@ facility_types <- function(country,
 
   #currently different filter arg used for healthsites (hs_amenity) & who (who_type)
   #todo maybe try to generalise that in afrihealthsites()
-  if (is.character(datasource) && datasource == 'healthsites')
-  {
 
-    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, hs_amenity=type_filter) #, who_type=who_type)
-
-  } else if (is.character(datasource) && datasource == 'who')
-  {
-
-    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, who_type=type_filter) #, who_type=who_type)
-
-  }  else if (class(datasource)=="data.frame" || class(datasource)=="sf" || file.exists(datasource)) # a user supplied file
+  # deal with passed object first - can cause problems with other conditions
+  # have to use %in% because sf objects give both sf & dataframe for class
+  if ("data.frame" %in% class(datasource) || "sf" %in% class(datasource) || file.exists(datasource)) # a user supplied file
   {
 
     sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE,
@@ -85,6 +79,16 @@ facility_types <- function(country,
                            label_column = label_column,
                            lonlat_columns = lonlat_columns) #, who_type=who_type)
 
+
+  }  else if (is.character(datasource) && datasource == 'healthsites')
+  {
+
+    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, hs_amenity=type_filter) #, who_type=who_type)
+
+  } else if (is.character(datasource) && datasource == 'who')
+  {
+
+    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, who_type=type_filter) #, who_type=who_type)
 
   }
 

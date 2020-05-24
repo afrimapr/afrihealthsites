@@ -7,6 +7,7 @@
 facility_types(
   country,
   datasource = "healthsites",
+  datasource_title = NULL,
   type_filter = "all",
   type_column = "Facility Type",
   label_column = "Facility Name",
@@ -19,6 +20,8 @@ facility_types(
 \item{country}{a character vector of country names or iso3c character codes.}
 
 \item{datasource}{data source, 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet}
+
+\item{datasource_title}{optional title for datasource to be used in plots - particularly if a filname has been passed for datasource}
 
 \item{type_filter}{filter by facility type - will depend on the data source}
 
@@ -51,5 +54,10 @@ facility_types('chad',datasource = 'healthsites', type_filter=c('clinic','hospit
 #filter who data by Facility type
 facility_types('chad',datasource = 'who', type_filter=c('Regional hospital','Health Centre'))
 
+# from an sf object
+data(sfssd)
+ggssd <- facility_types("south sudan",
+                        datasource=sfssd,
+                        type_column = "type")
 
 }

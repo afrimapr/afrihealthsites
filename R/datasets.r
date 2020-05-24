@@ -11,6 +11,18 @@ NULL
 "df_who_sites"
 
 
+#' lookup table to convert 173 WHO facility types to 9 broad categories
+#'
+#'
+#' @format \code{dataframe}
+#' @slot data who type lookup
+#' @aliases who_type_lookup
+#' @name who_type_lookup
+NULL
+#' @source \url{https://link.springer.com/article/10.1186/s12916-019-1459-6}
+#' @rdname who_type_lookup
+"who_type_lookup"
+
 
 #' africa healthsite points from healthsites.io
 #'

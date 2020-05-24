@@ -60,8 +60,55 @@ afrihealthsites <- function(country,
   #copes better with any naming differences
   iso3c <- country2iso(country)
 
-  #todo check on how best to avoid error from df & sf, the && is necessary here
-  if (is.character(datasource) && datasource == 'who')
+  #TODO move different datasource options into their own functions
+
+  ################# user supplied file or dataframe
+  # have to use %in% because sf objects give both sf & dataframe for class
+  if ( "data.frame" %in% class(datasource) || "sf" %in% class(datasource) || file.exists(datasource) )
+  {
+    ######################################
+    #TODO test whether it is sf compatible
+
+    # most file options are likely to be csvs
+    #set check.names to FALSE to stop names being changed e.g. spaces to dots
+
+    #if file, read into dataframe
+    if (is.character(datasource) && file.exists(datasource))
+    {
+      dfcountry <- utils::read.csv(datasource, as.is=TRUE, check.names = FALSE)
+    }
+
+    #if dataframe convert to sf
+    if ((is.character(datasource) && file.exists(datasource)) | class(datasource)=="data.frame")
+    {
+
+      if (class(datasource)=="data.frame") dfcountry <- datasource
+
+      #convert to sf
+      sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326)
+    }
+
+    #if an sf object passed just change name
+    if (class(datasource)=="sf")
+    {
+      sfcountry <- datasource
+    }
+
+    #other option if it is shp and 1 country already
+    #sfcountry <- sf::st_read(datasource)
+
+    # NOTE this generic filter can also work for who & healthsites
+    # TODO convert who & healthsites to use this
+
+    # filter by facility type
+    if (!isTRUE(type_filter == 'all'))
+    {
+      #NOTE i convert all to lowercase here, is there a chance that a user might want to filter e.g. clinic not Clinic ?
+      type_truefalse <- tolower(sfcountry[[type_column]]) %in% tolower(type_filter)
+      sfcountry <- sfcountry[type_truefalse,]
+    }
+
+  }  else if (is.character(datasource) && datasource == 'who')
   {
     if (country=='all')
     {
@@ -140,52 +187,6 @@ afrihealthsites <- function(country,
         filter_amenity <- tolower(sfcountry$amenity) %in% tolower(hs_amenity)
         sfcountry <- sfcountry[filter_amenity,]
       }
-    }
-
-  }
-  # user supplied file or dataframe
-  else if ((is.character(datasource) && file.exists(datasource)) | class(datasource)=="data.frame" | class(datasource)=="sf")
-  {
-    ######################################
-    #TODO test whether it is sf compatible
-
-    # most file options are likely to be csvs
-    #set check.names to FALSE to stop names being changed e.g. spaces to dots
-
-    #if file, read into dataframe
-    if (is.character(datasource) && file.exists(datasource))
-    {
-      dfcountry <- utils::read.csv(datasource, as.is=TRUE, check.names = FALSE)
-    }
-
-    #if dataframe convert to sf
-    if ((is.character(datasource) && file.exists(datasource)) | class(datasource)=="data.frame")
-    {
-
-      if (class(datasource)=="data.frame") dfcountry <- datasource
-
-      #convert to sf
-      sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326)
-    }
-
-    #if an sf object passed just change name
-    if (class(datasource)=="sf")
-    {
-      sfcountry <- datasource
-    }
-
-    #other option if it is shp and 1 country already
-    #sfcountry <- sf::st_read(datasource)
-
-    # NOTE this generic filter can also work for who & healthsites
-    # TODO convert who & healthsites to use this
-
-    # filter by facility type
-    if (!isTRUE(type_filter == 'all'))
-    {
-      #NOTE i convert all to lowercase here, is there a chance that a user might want to filter e.g. clinic not Clinic ?
-      type_truefalse <- tolower(sfcountry[[type_column]]) %in% tolower(type_filter)
-      sfcountry <- sfcountry[type_truefalse,]
     }
 
 
