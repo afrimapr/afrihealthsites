@@ -26,19 +26,24 @@ indices_na_coords <- which(is.na(df_who_sites$Long) | is.na(df_who_sites$Lat))
 #df_who_sites <- df_who_sites[-indices_na_coords,]
 
 #move WHO Zanzibar data into Tanzania (consistent with healthsites that has it in Tanzania)
+#TODO BUT think about this, Maina(2019) paper says Zanzibar data kept separate because has it's own MoH
+#if do keep it separate will need to put healthsites data into Zanzibar and add Zanazibar as a country to the UI
 df_who_sites$Country[df_who_sites$Country=='Zanzibar'] <- 'Tanzania'
 
 # add iso3c helps with country ids later
 df_who_sites$iso3c <- country2iso(df_who_sites$Country)
 
-# used to convert to sf here
+# conversion to sf now happens elsewhere
 #sf_who_sites <- sf::st_as_sf(df_who_sites, coords = c("Long", "Lat"), crs = 4326)
 
 #nrow(df_who_sites)
 #[1] 96395
 
-countries_who <- unique(df_who_sites$Country)
+#countries_who <- unique(df_who_sites$Country)
 
+# add a column with broad 9 category type consistent across countries
+#df_who_sites <- afrihealthsites::afrihealthsites('all', datasource = 'who', plot=FALSE)
+df_who_sites$facility_type_9 <- who_type_lookup$facility_type_9[ match(df_who_sites$`Facility type`,who_type_lookup$type_who) ]
 
 # > unique(df_who_sites$`Facility type`)
 # [1] "Hospital"                                     "Municipal Hospital"

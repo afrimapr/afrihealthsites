@@ -21,7 +21,7 @@ fluidPage(
 
   headerPanel('afrimapr healthsites viewer'),
 
-  p("There are 2 main sources for locations of > 100k hospital and health facilities in Africa. Neither is perfect.
+  p("There are two main Africa-wide sources of open data on the locations of > 100k hospitals and health facilities. Neither is perfect.
       This app allows detailed comparison to inform pandemic response and allow improvement."),
 
   sidebarLayout(
@@ -38,14 +38,14 @@ fluidPage(
                   " / ",
                   a("WHO", href="https://www.who.int/malaria/areas/surveillance/public-sector-health-facilities-ss-africa/en/", target="_blank")),
 
-    p("By ", a("afrimapr", href="http://www.afrimapr.org", target="_blank"),
-      " a project to create R building-blocks to ease use of health data in Africa"),
+    p("by ", a("afrimapr", href="http://www.afrimapr.org", target="_blank"),
+      ": creating R building-blocks to ease use of open health data in Africa"),
 
 
     #selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
     #miss out Western Sahara because no healthsites or WHO
     selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]),
-                size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
+                size=7, selectize=FALSE, multiple=TRUE, selected="Angola"),
 
     checkboxGroupInput("hs_amenity", label = "healthsites categories",
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
@@ -59,10 +59,12 @@ fluidPage(
     #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),
 
-    p("\nWHO data Sub-Sahara only, symbols shown smaller, rings indicate overlap\n"),
 
-    p("Input and suggestions ", a("welcome", href="https://github.com/afrimapr/suggestions_and_requests", target="_blank"),
-      "Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
+    p("\nWHO data Sub-Sahara only, symbols shown smaller, rings indicate overlap",
+      a(",  blog post", href="https://afrimapr.github.io/afrimapr.website/blog/2020/healthsites-app/", target="_blank")),
+
+    p("Input and suggestions ", a("welcome", href="https://github.com/afrimapr/suggestions_and_requests", target="_blank")),
+    #  "Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
 
     p(tags$small("Disclaimer : Data used by afrimapr are sourced from published open data sets. We provide no guarantee of accuracy.")),
 
