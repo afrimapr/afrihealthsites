@@ -49,8 +49,8 @@ compare_hs_sources <- function(country,
                             label_column = 'Facility Name'
                             ) {
 
-  sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type)
-  sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type)
+  sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column)
+  sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column)
 
 
   #TODO add a plot='sf' option

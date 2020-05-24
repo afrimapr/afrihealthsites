@@ -14,6 +14,10 @@ nameof_zcol <- function(datasource, type_column = NULL) {
   # to avoid problems if df or sf objects passed here
   if (!is.character(datasource)) datasource <- 'other'
 
+  #TODO check if this is a good way of doing
+  #to allow conversion of who to 9 cats, this just allows it to return the passed type_column
+  if ( datasource == 'who' & type_column == "facility_type_9" ) datasource <- 'other'
+
   zcol <- switch(datasource,
                  'healthsites' = 'amenity',
                  'healthsites_live' = 'amenity',

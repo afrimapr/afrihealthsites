@@ -34,6 +34,9 @@
 #'                         datasource=sfssd,
 #'                         type_column = "type")
 #'
+#' # using consistent 9 class facility types for WHO data, specify type_column='facility_type_9'
+#' facility_types('all', datasource='who', type_column='facility_type_9')
+#'
 #' @return \code{ggplot2} object
 #' @importFrom ggplot2 ggplot aes geom_bar geom_text theme_minimal labs scale_fill_manual scale_x_reverse
 #' @importFrom grDevices colorRampPalette
@@ -88,7 +91,7 @@ facility_types <- function(country,
   } else if (is.character(datasource) && datasource == 'who')
   {
 
-    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, who_type=type_filter) #, who_type=who_type)
+    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, who_type=type_filter, type_column=type_column) #, who_type=who_type)
 
   }
 

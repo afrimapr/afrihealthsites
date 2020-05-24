@@ -110,6 +110,12 @@ afrihealthsites <- function(country,
 
   }  else if (is.character(datasource) && datasource == 'who')
   {
+    ######################### who-kemri #########################
+
+    #after adding 9 cat option needed to set this, ma
+    #type_column <- ifelse(is.null(type_column),'Facility type',type_column)
+    type_column <- nameof_zcol(datasource, type_column)
+
     if (country=='all')
     {
       #it's not yet sf gets converted later if requested
@@ -140,7 +146,10 @@ afrihealthsites <- function(country,
       if (!isTRUE(who_type == 'all'))
       {
         #important that for who data name has lowercase *type*
-        filter_type <- tolower(sfcountry$`Facility type`) %in% tolower(who_type)
+        #filter_type <- tolower(sfcountry$`Facility type`) %in% tolower(who_type)
+        #making filter cope with 9 cat option
+        filter_type <- tolower(sfcountry[[type_column]]) %in% tolower(who_type)
+
         sfcountry <- sfcountry[filter_type,]
       }
 
@@ -158,6 +167,8 @@ afrihealthsites <- function(country,
 
   } else if (is.character(datasource) && datasource == 'healthsites') #pre-downloaded healthsites data stored in this package
   {
+
+    ######################### healthsites #########################
 
     if (country=='all')
     {

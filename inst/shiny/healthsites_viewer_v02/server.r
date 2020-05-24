@@ -40,6 +40,7 @@ function(input, output) {
                                                    plot='mapview',
                                                    plotshow=FALSE,
                                                    hs_amenity=input$hs_amenity,
+                                                   type_column = input$who_type_option, #allows for 9 broad cats
                                                    who_type=input$selected_who_cats)
 
     # to retain zoom if only types have been changed
@@ -102,9 +103,13 @@ function(input, output) {
     # first get the sf object - but later don't need to do that
     # TODO add a function to afrihealthsites package to return just the cats
     sfwho <- afrihealthsites::afrihealthsites(input$country, datasource = 'who', plot = FALSE)
-    who_cats <- unique(sfwho$`Facility type`)
 
-    checkboxGroupInput("selected_who_cats", label = "who-kemri categories", #label = h5("who-kemri categories"),
+    #who_cats <- unique(sfwho$`Facility type`)
+    # allowing for 9 cat reclass
+    who_cats <- unique(sfwho[[input$who_type_option]])
+
+    #"who-kemri categories"
+    checkboxGroupInput("selected_who_cats", label = NULL, #label = h5("who-kemri categories"),
                        choices = who_cats,
                        selected = who_cats,
                        inline = FALSE)
@@ -128,6 +133,7 @@ function(input, output) {
                                            datasource = 'who',
                                            plot = TRUE,
                                            type_filter = input$selected_who_cats,
+                                           type_column = input$who_type_option, #allows for 9 broad cats
                                            #ggcolour_h=c(185,360)
                                            brewer_palette = "BuPu" )
 

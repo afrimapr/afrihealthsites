@@ -51,6 +51,11 @@ fluidPage(
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
                        selected = c("hospital","clinic","doctors","pharmacy")),
 
+    #who cats whether to display raw or 9 broad
+    selectInput("who_type_option", label = "WHO-KEMRI categories",
+                choices = list("raw" = "Facility type", "reclassified to 9" = "facility_type_9"),
+                selected = 1),
+
     # dynamic who category selection
     uiOutput("select_who_cat"),
 
