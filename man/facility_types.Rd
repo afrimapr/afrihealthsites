@@ -60,4 +60,7 @@ ggssd <- facility_types("south sudan",
                         datasource=sfssd,
                         type_column = "type")
 
+# using consistent 9 class facility types for WHO data, specify type_column='facility_type_9'
+facility_types('all', datasource='who', type_column='facility_type_9')
+
 }
