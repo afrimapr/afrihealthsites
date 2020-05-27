@@ -191,13 +191,13 @@ afrihealthsites <- function(country,
       }
 
       sfcountry <- sf_healthsites_af[filter_country,]
+    }
 
-      # filter by amenity type
-      if (!isTRUE(hs_amenity == 'all'))
-      {
-        filter_amenity <- tolower(sfcountry$amenity) %in% tolower(hs_amenity)
-        sfcountry <- sfcountry[filter_amenity,]
-      }
+    # filter by amenity type
+    if (!isTRUE(hs_amenity == 'all'))
+    {
+      filter_amenity <- tolower(sfcountry$amenity) %in% tolower(hs_amenity)
+      sfcountry <- sfcountry[filter_amenity,]
     }
 
 
