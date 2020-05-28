@@ -12,9 +12,9 @@
 #' @param who_type filter by Facility type
 #' @param type_filter filter by facility type (from the type_column, or internally defined for healthsites & who)
 #' @param returnclass 'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords
-#' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
-#' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
-#' @param lonlat_columns just for user provided files which columns contain longitude, latitude
+#' @param type_column for user provided files which column has information on type of site, default : 'Facility Type'
+#' @param label_column for user provided files which column has information on name of site, default : 'Facility Name'
+#' @param lonlat_columns for user provided files which columns contain longitude, latitude. option of NULL if no coords
 #'
 #' @examples
 #'
@@ -83,6 +83,14 @@ afrihealthsites <- function(country,
     {
 
       if (class(datasource)=="data.frame") dfcountry <- datasource
+
+      # to allow for if no coordinates (& e.g. still allow facility_types() to work)
+      if ( is.null(lonlat_columns))
+      {
+        warning("no coordinates, returning dataframe")
+        return(dfcountry) #invisible didn't work here
+      }
+
 
       #convert to sf
       sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326)

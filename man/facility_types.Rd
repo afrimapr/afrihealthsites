@@ -13,6 +13,7 @@ facility_types(
   label_column = "Facility Name",
   brewer_palette = "BuPu",
   lonlat_columns = c("Longitude", "Latitude"),
+  plot_title = "default",
   plot = TRUE
 )
 }
@@ -32,6 +33,8 @@ facility_types(
 \item{brewer_palette}{ColorBrewer palette default 'BuPu',}
 
 \item{lonlat_columns}{just for user provided files which columns contain longitude, latitude}
+
+\item{plot_title}{title for plot, 'default', string or NULL for no title}
 
 \item{plot}{whether to display plot}
 }

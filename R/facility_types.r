@@ -7,13 +7,14 @@
 #' @param plot option to display map 'mapview' for interactive, 'sf' for static
 #' @param type_filter filter by facility type - will depend on the data source
 # @param ggcolour_h c(0,360) ggplot colour hue range
-#' @param plot whether to display plot
 #' @param brewer_palette ColorBrewer palette default 'BuPu',
 # @param who_type filter by Facility type
 # @param returnclass 'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords
 #' @param lonlat_columns just for user provided files which columns contain longitude, latitude
 #' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
+#' @param plot_title title for plot, 'default', string or NULL for no title
+#' @param plot whether to display plot
 #'
 #' @examples
 #'
@@ -55,6 +56,7 @@ facility_types <- function(country,
                       # ggcolour_h = c(0, 360),
                       brewer_palette = 'BuPu',
                       lonlat_columns = c("Longitude", "Latitude"),
+                      plot_title = 'default',
                       plot = TRUE
 
                       ) {
@@ -149,7 +151,8 @@ facility_types <- function(country,
       else datasource_title <- "file"
     }
 
-    plot_title <- paste("Selected facility types from", datasource_title,"for",country,"( Total =",tot_facilities,")" )
+    if (plot_title == 'default')
+       plot_title <- paste("Selected facility types from", datasource_title,"for",country,"( Total =",tot_facilities,")" )
 
 
     gg <- gg + geom_bar(show.legend=FALSE) +

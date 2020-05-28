@@ -34,11 +34,11 @@ to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
 
 \item{returnclass}{'sf' or 'dataframe', currently 'dataframe' only offered for WHO so that can have points with no coords}
 
-\item{type_column}{just for user provided files which column has information on type of site, default : 'Facility Type'}
+\item{type_column}{for user provided files which column has information on type of site, default : 'Facility Type'}
 
-\item{label_column}{just for user provided files which column has information on name of site, default : 'Facility Name'}
+\item{label_column}{for user provided files which column has information on name of site, default : 'Facility Name'}
 
-\item{lonlat_columns}{just for user provided files which columns contain longitude, latitude}
+\item{lonlat_columns}{for user provided files which columns contain longitude, latitude. option of NULL if no coords}
 }
 \value{
 \code{sf}
