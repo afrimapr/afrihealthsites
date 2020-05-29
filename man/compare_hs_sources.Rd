@@ -14,6 +14,7 @@ compare_hs_sources(
     "BuPu")),
   alpha = c(0.1, 0.1),
   alpha.regions = c(0.7, 0.7),
+  layer.names = NULL,
   plotlegend = TRUE,
   hs_amenity = "all",
   who_type = "all",
@@ -42,6 +43,8 @@ compare_hs_sources(
 \item{alpha}{list of two alphas to pass to mapview - low keeps borders light}
 
 \item{alpha.regions}{list of two alpha.regions to pass to mapview}
+
+\item{layer.names}{allow mapview layer.names to be set c('a','b')}
 
 \item{plotlegend}{whether to add legend to mapview plot}
 

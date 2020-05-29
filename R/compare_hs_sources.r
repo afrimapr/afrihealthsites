@@ -10,6 +10,7 @@
 #' @param col.regions list of two colour palettes to pass to mapview
 #' @param alpha list of two alphas to pass to mapview - low keeps borders light
 #' @param alpha.regions list of two alpha.regions to pass to mapview
+#' @param layer.names allow mapview layer.names to be set c('a','b')
 #' @param plotlegend whether to add legend to mapview plot
 #' @param hs_amenity filter healthsites data by amenity. 'all', 'clinic', 'dentist', 'doctors', 'pharmacy', 'hospital'
 #' @param who_type filter by Facility type
@@ -38,6 +39,7 @@ compare_hs_sources <- function(country,
                             col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5, "BuPu")),
                             alpha = c(0.1, 0.1), #keep point borders light, but present to show light colours
                             alpha.regions = c(0.7, 0.7),
+                            layer.names = NULL, #layer.names = c('a','b')
                             plotlegend = TRUE,
                             hs_amenity = 'all',
                             who_type = 'all',
@@ -70,8 +72,13 @@ compare_hs_sources <- function(country,
 
     #to try to avoid problem with layer.name when one of datasources is an object
     #this just replaces object with layer1 or 2
-    layer.name1 <- ifelse(is.character(datasources[[1]]),datasources[[1]],"layer1")
-    layer.name2 <- ifelse(is.character(datasources[[2]]),datasources[[2]],"layer2")
+    if (is.null(layer.names))
+    {
+      layer.names = c(1,1)
+      layer.names[[1]] <- ifelse(is.character(datasources[[1]]),datasources[[1]],"layer1")
+      layer.names[[2]] <- ifelse(is.character(datasources[[2]]),datasources[[2]],"layer2")
+    }
+
 
     #add datasources separately to cope when one is missing or empty
     if (!is.null(sf1) & isTRUE(nrow(sf1) > 0))
@@ -83,7 +90,7 @@ compare_hs_sources <- function(country,
                                   col.regions=col.regions[[1]],
                                   alpha.regions = alpha.regions[1],
                                   alpha = alpha[1],
-                                  layer.name=layer.name1,
+                                  layer.name=layer.names[[1]],
                                   legend=plotlegend,
                                   map.types=map.types,
                                   canvas=canvas)
@@ -103,7 +110,7 @@ compare_hs_sources <- function(country,
                                           col.regions=col.regions[[2]],
                                           alpha.regions = alpha.regions[2],
                                           alpha = alpha[2],
-                                          layer.name=layer.name2,
+                                          layer.name=layer.names[[2]],
                                           legend=plotlegend,
                                           map.types=map.types,
                                           canvas=canvas )
@@ -116,7 +123,7 @@ compare_hs_sources <- function(country,
                                      col.regions=col.regions[[2]],
                                      alpha.regions = alpha.regions[2],
                                      alpha = alpha[2],
-                                     layer.name=layer.name2,
+                                     layer.name=layer.names[[2]],
                                      legend=plotlegend,
                                      map.types=map.types,
                                      canvas=canvas )
