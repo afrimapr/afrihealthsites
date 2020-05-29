@@ -64,7 +64,15 @@ afrihealthsites <- function(country,
 
   ################# user supplied file or dataframe
   # have to use %in% because sf objects give both sf & dataframe for class
-  if ( "data.frame" %in% class(datasource) || "sf" %in% class(datasource) || file.exists(datasource) )
+
+  isfile <- ifelse(is.character(datasource) &&
+                    (file.exists(datasource) ||
+                     grepl("http", datasource) || #quickfix to allow a url to be passed here
+                     grepl("www", datasource)), TRUE, FALSE)
+
+  if ( "data.frame" %in% class(datasource) ||
+       "sf" %in% class(datasource) ||
+        isfile )
   {
     ######################################
     #TODO test whether it is sf compatible
@@ -73,13 +81,13 @@ afrihealthsites <- function(country,
     #set check.names to FALSE to stop names being changed e.g. spaces to dots
 
     #if file, read into dataframe
-    if (is.character(datasource) && file.exists(datasource))
+    if (is.character(datasource) && isfile )
     {
       dfcountry <- utils::read.csv(datasource, as.is=TRUE, check.names = FALSE)
     }
 
     #if dataframe convert to sf
-    if ((is.character(datasource) && file.exists(datasource)) | class(datasource)=="data.frame")
+    if ((is.character(datasource) && isfile) | class(datasource)=="data.frame")
     {
 
       if (class(datasource)=="data.frame") dfcountry <- datasource
@@ -148,19 +156,19 @@ afrihealthsites <- function(country,
       #sfcountry <- df_who_sites[ tolower(df_who_sites$Country) == tolower(country),]
       sfcountry <- df_who_sites[ filter_country, ]
 
-      # filter by Facility Type
-      # todo later make filter generic
-      # todo add checks for filters that leave nothing
-      if (!isTRUE(who_type == 'all'))
-      {
-        #important that for who data name has lowercase *type*
-        #filter_type <- tolower(sfcountry$`Facility type`) %in% tolower(who_type)
-        #making filter cope with 9 cat option
-        filter_type <- tolower(sfcountry[[type_column]]) %in% tolower(who_type)
+    }
 
-        sfcountry <- sfcountry[filter_type,]
-      }
+    # filter by Facility Type
+    # todo later make filter generic
+    # todo add checks for filters that leave nothing
+    if (!isTRUE(who_type == 'all'))
+    {
+      #important that for who data name has lowercase *type*
+      #filter_type <- tolower(sfcountry$`Facility type`) %in% tolower(who_type)
+      #making filter cope with 9 cat option
+      filter_type <- tolower(sfcountry[[type_column]]) %in% tolower(who_type)
 
+      sfcountry <- sfcountry[filter_type,]
     }
 
    if (returnclass == 'sf')

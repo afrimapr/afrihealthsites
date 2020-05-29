@@ -20,6 +20,7 @@
 #' @param map.types optional specification of background map tiles for mapview, default c('CartoDB.Positron','OpenStreetMap.HOT')
 #' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
+#' @param lonlat_columns for user provided files which columns contain longitude, latitude. option of NULL if no coords
 #'
 #' @examples
 #'
@@ -46,11 +47,12 @@ compare_hs_sources <- function(country,
                             map.types=c('CartoDB.Positron','OpenStreetMap.HOT'),
                             #TODO allow these columns to be specified for both sources
                             type_column = 'Facility Type',
-                            label_column = 'Facility Name'
+                            label_column = 'Facility Name',
+                            lonlat_columns = c("Longitude", "Latitude")
                             ) {
 
-  sf1 <- afrihealthsites(country, datasource = datasources[1], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column)
-  sf2 <- afrihealthsites(country, datasource = datasources[2], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column)
+  sf1 <- afrihealthsites(country, datasource = datasources[[1]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns)
+  sf2 <- afrihealthsites(country, datasource = datasources[[2]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns)
 
 
   #TODO add a plot='sf' option
@@ -60,12 +62,16 @@ compare_hs_sources <- function(country,
   {
 
     #type_columnb is only used if the dataset is not one of the recognised ones
-    zcol1 <- nameof_zcol(datasources[1], type_column)
-    zcol2 <- nameof_zcol(datasources[2], type_column)
+    zcol1 <- nameof_zcol(datasources[[1]], type_column)
+    zcol2 <- nameof_zcol(datasources[[2]], type_column)
 
-    labcol1 <- nameof_labcol(datasources[1], label_column)
-    labcol2 <- nameof_labcol(datasources[2], label_column)
+    labcol1 <- nameof_labcol(datasources[[1]], label_column)
+    labcol2 <- nameof_labcol(datasources[[2]], label_column)
 
+    #to try to avoid problem with layer.name when one of datasources is an object
+    #this just replaces object with layer1 or 2
+    layer.name1 <- ifelse(is.character(datasources[[1]]),datasources[[1]],"layer1")
+    layer.name2 <- ifelse(is.character(datasources[[2]]),datasources[[2]],"layer2")
 
     #add datasources separately to cope when one is missing or empty
     if (!is.null(sf1) & isTRUE(nrow(sf1) > 0))
@@ -77,7 +83,7 @@ compare_hs_sources <- function(country,
                                   col.regions=col.regions[[1]],
                                   alpha.regions = alpha.regions[1],
                                   alpha = alpha[1],
-                                  layer.name=datasources[1],
+                                  layer.name=layer.name1,
                                   legend=plotlegend,
                                   map.types=map.types,
                                   canvas=canvas)
@@ -97,7 +103,7 @@ compare_hs_sources <- function(country,
                                           col.regions=col.regions[[2]],
                                           alpha.regions = alpha.regions[2],
                                           alpha = alpha[2],
-                                          layer.name=datasources[2],
+                                          layer.name=layer.name2,
                                           legend=plotlegend,
                                           map.types=map.types,
                                           canvas=canvas )
@@ -110,7 +116,7 @@ compare_hs_sources <- function(country,
                                      col.regions=col.regions[[2]],
                                      alpha.regions = alpha.regions[2],
                                      alpha = alpha[2],
-                                     layer.name=datasources[2],
+                                     layer.name=layer.name2,
                                      legend=plotlegend,
                                      map.types=map.types,
                                      canvas=canvas )
@@ -176,8 +182,8 @@ compare_hs_sources <- function(country,
   # of course can't do the below because they have different numbers columns
   # TODO I could subset just the geometry and zcol columns (and maybe name) and then rbind to return
   #add source column, rbind and return in case it is useful
-  # sf1$datasource <- datasources[1]
-  # sf2$datasource <- datasources[2]
+  # sf1$datasource <- datasources[[1]]
+  # sf2$datasource <- datasources[[2]]
   #
   # sfboth <- rbind(sf1,sf2)
   # invisible(sfboth)

@@ -22,7 +22,8 @@ compare_hs_sources(
   plotlabels2 = FALSE,
   map.types = c("CartoDB.Positron", "OpenStreetMap.HOT"),
   type_column = "Facility Type",
-  label_column = "Facility Name"
+  label_column = "Facility Name",
+  lonlat_columns = c("Longitude", "Latitude")
 )
 }
 \arguments{
@@ -59,6 +60,8 @@ compare_hs_sources(
 \item{type_column}{just for user provided files which column has information on type of site, default : 'Facility Type'}
 
 \item{label_column}{just for user provided files which column has information on name of site, default : 'Facility Name'}
+
+\item{lonlat_columns}{for user provided files which columns contain longitude, latitude. option of NULL if no coords}
 }
 \value{
 \code{sf}
