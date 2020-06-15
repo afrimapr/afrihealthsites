@@ -4,7 +4,6 @@
 #' @param country a character vector of country names or iso3c character codes.
 #' @param datasource data source, 'healthsites' predownloaded, 'who', 'healthsites_live' needs API, 'hdx' not working yet
 #' @param datasource_title optional title for datasource to be used in plots - particularly if a filname has been passed for datasource
-#' @param plot option to display map 'mapview' for interactive, 'sf' for static
 #' @param type_filter filter by facility type - will depend on the data source
 # @param ggcolour_h c(0,360) ggplot colour hue range
 #' @param brewer_palette ColorBrewer palette default 'BuPu',
@@ -46,7 +45,6 @@
 facility_types <- function(country,
                       datasource = 'healthsites', #'hdx', #'who',
                       datasource_title = NULL,
-                      #plot = 'mapview',
                       type_filter = 'all',
                       #hs_amenity = 'all',
                       #who_type = 'all',
