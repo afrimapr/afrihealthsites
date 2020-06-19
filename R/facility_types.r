@@ -107,8 +107,8 @@ facility_types <- function(country,
 
   #todo order facilities
 
-  if (plot != FALSE)
-  {
+  #if (plot != FALSE)
+  #{
 
     if (!requireNamespace("ggplot2", quietly = TRUE)) {
       stop("Package \"ggplot2\" needed for this function to work. Please install it from CRAN",
@@ -165,7 +165,7 @@ facility_types <- function(country,
       #scale_fill_hue(h = ggcolour_h, c=150) +
       NULL
 
-    plot(gg)
+    if (plot) plot(gg)
 
     # return the ggplot object
     invisible(gg)
@@ -179,6 +179,6 @@ facility_types <- function(country,
     #   NULL
 
 
-    }
+    #}
 
 }
