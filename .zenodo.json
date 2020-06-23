@@ -1,0 +1,24 @@
+{
+    "creators": [
+        {
+            "affiliation": "Liverpool School of Tropical Medicine",
+            "name": "South, Andy",
+            "orcid": "0000-0003-4051-6135"
+        },
+        {
+            "affiliation": "Talarify",
+            "name": "Van der Walt, Anelda",
+            "orcid": "0000-0003-4245-8119"
+        }
+    ],
+    "description": "Access to geographic locations of African health facilities from different sources. A webinterface is also made available. The package form part of the afrimapr project - http://afrimapr.org.",
+    "keywords": [
+        "Health facilities",
+        "Africa",
+        "public health"
+    ],
+    "license": {
+        "id": "GNU General Public License v3.0"
+    },
+    "title": "afrihealthsites"
+}
