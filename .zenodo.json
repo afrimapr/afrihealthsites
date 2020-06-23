@@ -11,11 +11,14 @@
             "orcid": "0000-0003-4245-8119"
         }
     ],
-    "description": "Access to geographic locations of African health facilities from different sources. A webinterface is also made available. The package form part of the afrimapr project - http://afrimapr.org.",
+    "description": "Access to geographic locations of African health facilities from different sources. A webinterface is also made available. Part of the afrimapr project - http://afrimapr.org.",
     "keywords": [
         "Health facilities",
         "Africa",
-        "public health"
+        "public health",
+        "Master Facility List",
+        "rspatial",
+        "GIS"
     ],
     "license": {
         "id": "GNU General Public License v3.0"
