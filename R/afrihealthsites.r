@@ -102,10 +102,9 @@ afrihealthsites <- function(country,
 
       #convert to sf
       sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326)
-    }
 
-    #if an sf object passed just change name
-    if (class(datasource)=="sf")
+
+    } else if (class(datasource)=="sf") #if an sf object passed just change name
     {
       sfcountry <- datasource
     }
