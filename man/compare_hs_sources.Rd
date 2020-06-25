@@ -10,7 +10,7 @@ compare_hs_sources(
   plot = "mapview",
   plotshow = TRUE,
   plotcex = c(6, 4),
-  col.regions = list(RColorBrewer::brewer.pal(5, "YlGn"), RColorBrewer::brewer.pal(5,
+  col.regions = list(RColorBrewer::brewer.pal(9, "YlGn"), RColorBrewer::brewer.pal(9,
     "BuPu")),
   alpha = c(0.1, 0.1),
   alpha.regions = c(0.7, 0.7),
