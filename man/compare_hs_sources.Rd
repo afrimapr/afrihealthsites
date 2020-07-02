@@ -18,7 +18,7 @@ compare_hs_sources(
   plotlegend = TRUE,
   hs_amenity = "all",
   who_type = "all",
-  canvas = TRUE,
+  canvas = FALSE,
   plotlabels1 = FALSE,
   plotlabels2 = FALSE,
   map.types = c("CartoDB.Positron", "OpenStreetMap.HOT"),

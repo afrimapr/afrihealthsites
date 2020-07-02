@@ -43,7 +43,7 @@ compare_hs_sources <- function(country,
                             plotlegend = TRUE,
                             hs_amenity = 'all',
                             who_type = 'all',
-                            canvas = TRUE,
+                            canvas = FALSE, #with TRUE was causing plots not to display
                             plotlabels1 = FALSE,
                             plotlabels2 = FALSE,
                             map.types=c('CartoDB.Positron','OpenStreetMap.HOT'),
@@ -56,9 +56,7 @@ compare_hs_sources <- function(country,
   sf1 <- afrihealthsites(country, datasource = datasources[[1]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns)
   sf2 <- afrihealthsites(country, datasource = datasources[[2]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns)
 
-
   #TODO add a plot='sf' option
-
 
   if (plot == 'mapview')
   {
