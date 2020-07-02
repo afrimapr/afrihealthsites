@@ -100,8 +100,8 @@ afrihealthsites <- function(country,
       }
 
 
-      #convert to sf
-      sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326)
+      #convert to sf, na.fail=FALSE to avoid failure if any points don't have coords
+      sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326, na.fail = FALSE )
 
 
     } else if (class(datasource)=="sf") #if an sf object passed just change name
@@ -176,8 +176,8 @@ afrihealthsites <- function(country,
      indices_na_coords <- which(is.na(sfcountry$Long) | is.na(sfcountry$Lat))
      #remove rows with no coords
      if (length(indices_na_coords) > 0) sfcountry <- sfcountry[-indices_na_coords,]
-     #convert to sf
-     sfcountry <- sf::st_as_sf(sfcountry, coords = c("Long", "Lat"), crs = 4326)
+     #convert to sf,  na.fail=FALSE to avoid failure if any points don't have coords
+     sfcountry <- sf::st_as_sf(sfcountry, coords = c("Long", "Lat"), crs = 4326, na.fail = FALSE)
    }
 
   } else if (is.character(datasource) && datasource == 'healthsites') #pre-downloaded healthsites data stored in this package

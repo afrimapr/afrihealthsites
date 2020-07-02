@@ -22,7 +22,7 @@ dfsen <- utils::read.csv(filename, stringsAsFactors = FALSE, encoding="UTF-8")
 
 #BEWARE of order of long lat and it changing with sf version
 #sfsen <- sf::st_as_sf(dfsen, coords=c("Facility.Location...latitude","Facility.Location...longitude"))
-sfsen <- sf::st_as_sf(dfsen, coords=c("Facility.Location...longitude", "Facility.Location...latitude"), crs = 4326)
+sfsen <- sf::st_as_sf(dfsen, coords=c("Facility.Location...longitude", "Facility.Location...latitude"), crs = 4326, na.fail = FALSE)
 
 # have to specify the crs above for it to display on the map
 mapview::mapview(sfsen)

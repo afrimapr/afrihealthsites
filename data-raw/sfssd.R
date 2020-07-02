@@ -27,7 +27,7 @@ names(dfcoords) <- c("Latitude", "Longitude")
 #bind back onto df
 dfssd <- cbind(dfssd, dfcoords)
 
-sfssd <- sf::st_as_sf(dfssd, coords=c("Longitude", "Latitude"), crs = 4326)
+sfssd <- sf::st_as_sf(dfssd, coords=c("Longitude", "Latitude"), crs = 4326, na.fail = FALSE)
 
 #mapview::mapview(sfssd)
 
