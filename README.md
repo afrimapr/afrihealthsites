@@ -8,13 +8,13 @@ Part of the [afrimapr](https://afrimapr.github.io/afrimapr.website/) project.
 In early development, will change, contact Andy South with questions.
 
 
-### Install afriadmin
+### Install afrihealthsites
 
-Install the development version from GitHub using [devtools](https://github.com/hadley/devtools).
+Install the development version from GitHub :
 
-    # install.packages("devtools") # if not already installed
+    # install.packages("remotes") # if not already installed
     
-    devtools::install_github("afrimapr/afrihealthsites")
+    remotes::install_github("afrimapr/afrihealthsites")
     
 ### Note
 
