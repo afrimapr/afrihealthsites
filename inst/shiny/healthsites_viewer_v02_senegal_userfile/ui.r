@@ -1,5 +1,6 @@
-#afrihealthsites/healthsites_viewer2/ui.r
-# keeping this very simple partly so it can be used as a template by other (maybe new) R users
+#afrihealthsites/healthsites_viewer_v02_senegal_userfile/ui.r
+
+# add ability for Senegal to show user supplied file for Senegal data collection (alongside existing kemri & healthsites data)
 
 cran_packages <- c("shiny","leaflet","remotes")
 
@@ -19,10 +20,11 @@ library(afrihealthsites)
 
 fluidPage(
 
-  headerPanel('afrimapr healthsites viewer'),
+  #headerPanel('afrimapr Senegal healthsites data collection viewer'),
+  headerPanel('Visionneuse de collecte de données des sites de santé au Sénégal'),
 
-  p("There are two main Africa-wide sources of open data on the locations of > 100k hospitals and health facilities. Neither is perfect.
-      This app allows detailed comparison to inform pandemic response and allow improvement."),
+  #p("View data being collected in a 2020 HOTOSM project and compare with existing data from healthsites.io and WHO."),
+  p("Consultez les données collectées dans un projet HOTOSM 2020 et comparez-les avec les données existantes de healthsites.io et de l'OMS."),
 
   sidebarLayout(
 
@@ -42,10 +44,11 @@ fluidPage(
       ": creating R building-blocks to ease use of open health data in Africa"),
 
 
-    #selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
     #miss out Western Sahara because no healthsites or WHO
     selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]),
-                size=7, selectize=FALSE, multiple=TRUE, selected="Angola"),
+                selectize=TRUE, multiple=TRUE, selected="Senegal"),
+
+    #country <- "Senegal",
 
     checkboxGroupInput("hs_amenity", label = "healthsites categories",
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
@@ -85,7 +88,8 @@ fluidPage(
                 tabPanel("map", leafletOutput("serve_healthsites_map", height=800)),
                 tabPanel("facility types", plotOutput("plot_fac_types", height=600)),
                 tabPanel("healthsites data", DT::dataTableOutput("table_raw_hs")),
-                tabPanel("WHO data", DT::dataTableOutput("table_raw_who"))
+                tabPanel("WHO data", DT::dataTableOutput("table_raw_who")),
+                tabPanel("new data", DT::dataTableOutput("table_raw_user"))
                 #tabPanel("about", NULL)
     )
   )

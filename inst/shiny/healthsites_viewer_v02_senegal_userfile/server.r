@@ -1,5 +1,6 @@
-#afrihealthsites/healthsites_viewer2/server.r
-# keeping this very simple partly so it can be used as a template by other (maybe new) R users
+#afrihealthsites/healthsites_viewer_v02_senegal_userfile/server.r
+
+# add ability for Senegal to show user supplied file for Senegal data collection (alongside existing kemri & healthsites data)
 
 
 cran_packages <- c("leaflet","remotes")
@@ -10,6 +11,7 @@ library(remotes)
 library(leaflet)
 library(ggplot2)
 library(patchwork) #for combining ggplots
+library(googlesheets4) # to get user data from googlesheets
 
 if(!require(afrihealthsites)){
   remotes::install_github("afrimapr/afrihealthsites")
@@ -28,6 +30,24 @@ zoom_view <- NULL
 # perhaps can just reset zoomed view to NULL when country is changed
 
 
+###################################################################
+#TODO can I add the extra Senegal data to the mapplot object here ?
+
+# as first test try reading the data from the googledoc
+# https://drive.google.com/file/d/1wYPUYv__fE47WsCmndb9BkaD1guS10uW/view
+# original xls file from Mark failed to read
+#urldata <- "https://docs.google.com/spreadsheets/d/1wYPUYv__fE47WsCmndb9BkaD1guS10uW/edit#gid=2021053723"
+# saved as a googlesheet
+urldata <- "https://docs.google.com/spreadsheets/d/1gXtpV-B7L1nP4PK1WMDP7qvkWygw4XJSkVO-gN5IM4E/edit#gid=2021053723"
+
+# read in data
+#dfuser <- read.csv(urldata)
+dfuser <- googlesheets4::read_sheet(ss = urldata)
+# convert to spatial format
+sfuser <- sf::st_as_sf(dfuser, coords = c("_Facility Location_longitude", "_Facility Location_latitude"), crs = 4326, na.fail=FALSE)
+
+
+
 # Define a server for the Shiny app
 function(input, output) {
 
@@ -42,6 +62,18 @@ function(input, output) {
                                                    hs_amenity=input$hs_amenity,
                                                    type_column = input$who_type_option, #allows for 9 broad cats
                                                    who_type=input$selected_who_cats)
+
+
+    ###################################################################
+    #TODO can I add the extra Senegal data to the mapplot object here ?
+
+    # coolio either of these adds new data to the existing map
+    # mapplot + sfuser
+    # mvsen + mapview(sfuser)
+    mapplot <- mapplot + mapview(sfuser,
+                                 zcol = "Facility Category",
+                                 label=paste("new data",sfuser[["Facility Category"]],sfuser[["Name of Facility"]]),
+                                 layer.name = "new data")
 
     # to retain zoom if only types have been changed
     if (!is.null(zoom_view))
@@ -182,6 +214,14 @@ function(input, output) {
     sfhs <- afrihealthsites::afrihealthsites(input$country, datasource = 'healthsites', hs_amenity = input$hs_amenity, plot = FALSE)
 
     DT::datatable(sfhs, options = list(pageLength = 50))
+  })
+
+  #######################
+  # table of new user supplied data
+  output$table_raw_user <- DT::renderDataTable({
+
+    #data read in at start
+    DT::datatable(dfuser, options = list(pageLength = 50))
   })
 
 
