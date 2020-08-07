@@ -78,6 +78,11 @@ compare_hs_sources <- function(country,
     }
 
 
+    # to set length of colour palette to length of data by interpolation partly to avoid warnings from mapview
+    # colorRampPalette() returns a function that accepts the number of categories
+    col.regions[[1]] <- grDevices::colorRampPalette(col.regions[[1]])
+    col.regions[[2]] <- grDevices::colorRampPalette(col.regions[[2]])
+
     #add datasources separately to cope when one is missing or empty
     if (!is.null(sf1) & isTRUE(nrow(sf1) > 0))
     {
