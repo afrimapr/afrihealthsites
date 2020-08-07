@@ -20,10 +20,18 @@ library(afrihealthsites)
 
 fluidPage(
 
+  # couldn't quite get internationalisation to work
+  # # Initialize shi18ny
+  # useShi18ny(),
+  # # Language selector input
+  # langSelectorInput("lang", position = "fixed"),
+
+
   #headerPanel('afrimapr Senegal healthsites data collection viewer'),
   headerPanel('Visionneuse de collecte de données des sites de santé au Sénégal'),
+  #headerPanel(ui_('Senegal healthsites data collection viewer')),
 
-  #p("View data being collected in a 2020 HOTOSM project and compare with existing data from healthsites.io and WHO."),
+  #p(ui_("View data being collected in a 2020 HOTOSM project and compare with existing data from healthsites.io and WHO.")),
   p("Consultez les données collectées dans un projet HOTOSM 2020 et comparez-les avec les données existantes de healthsites.io et de l'OMS."),
 
   sidebarLayout(
@@ -62,7 +70,7 @@ fluidPage(
     # dynamic who category selection
     uiOutput("select_who_cat"),
 
-    p("active development May 2020, v0.2\n"),
+    p("active development Aug 2020, v0.2 senegal_userfile\n"),
 
     #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),

@@ -11,7 +11,7 @@ library(remotes)
 library(leaflet)
 library(ggplot2)
 library(patchwork) #for combining ggplots
-library(googlesheets4) # to get user data from googlesheets
+#library(googlesheets4) # to get user data from googlesheets
 
 if(!require(afrihealthsites)){
   remotes::install_github("afrimapr/afrihealthsites")
@@ -19,6 +19,12 @@ if(!require(afrihealthsites)){
 
 library(afrihealthsites)
 #library(mapview)
+
+# trying out shi18ny for internationalisation
+# if(!require(shi18ny)){
+#   remotes::install_github("datasketch/shi18ny")
+# }
+
 
 
 #global variables
@@ -38,11 +44,13 @@ zoom_view <- NULL
 # original xls file from Mark failed to read
 #urldata <- "https://docs.google.com/spreadsheets/d/1wYPUYv__fE47WsCmndb9BkaD1guS10uW/edit#gid=2021053723"
 # saved as a googlesheet
-urldata <- "https://docs.google.com/spreadsheets/d/1gXtpV-B7L1nP4PK1WMDP7qvkWygw4XJSkVO-gN5IM4E/edit#gid=2021053723"
+# urldata <- "https://docs.google.com/spreadsheets/d/1gXtpV-B7L1nP4PK1WMDP7qvkWygw4XJSkVO-gN5IM4E/edit#gid=2021053723"
+# saved to github otherwise fails on shinyapps due to needed google authorisation (prob fixable but this easier)
+urldata <- "https://raw.githubusercontent.com/afrimapr/afrimapr_dev/master/data-raw/senegal-emergency-health-data-English-2020-08-03.csv"
 
 # read in data
-#dfuser <- read.csv(urldata)
-dfuser <- googlesheets4::read_sheet(ss = urldata)
+dfuser <- read.csv(urldata, encoding = 'UTF-8', check.names = FALSE)
+#dfuser <- googlesheets4::read_sheet(ss = urldata)
 # convert to spatial format
 sfuser <- sf::st_as_sf(dfuser, coords = c("_Facility Location_longitude", "_Facility Location_latitude"), crs = 4326, na.fail=FALSE)
 
@@ -70,7 +78,7 @@ function(input, output) {
     # coolio either of these adds new data to the existing map
     # mapplot + sfuser
     # mvsen + mapview(sfuser)
-    mapplot <- mapplot + mapview(sfuser,
+    mapplot <- mapplot + mapview::mapview(sfuser,
                                  zcol = "Facility Category",
                                  label=paste("new data",sfuser[["Facility Category"]],sfuser[["Name of Facility"]]),
                                  layer.name = "new data")
@@ -224,5 +232,19 @@ function(input, output) {
     DT::datatable(dfuser, options = list(pageLength = 50))
   })
 
+  #trying out internationalisation, I couldn't quite get it to work e.g. for headerPanel etc.
+  # # Configure shi18ny
+  # i18n <- list(
+  #   defaultLang = "en",
+  #   availableLangs = c("fr", "en", "pt")
+  # )
+  #
+  # # Call language module to get currently selected language and save it in a reactive
+  # lang <- callModule(langSelector, "lang", i18n = i18n, showSelector = TRUE)
+  #
+  # # Update UI translation
+  # observeEvent(lang(),{
+  #   uiLangUpdate(input$shi18ny_ui_classes, lang())
+  # })
 
 }
