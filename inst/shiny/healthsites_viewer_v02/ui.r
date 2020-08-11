@@ -21,7 +21,7 @@ fluidPage(
 
   headerPanel('afrimapr healthsites viewer'),
 
-  p("There are two main Africa-wide sources of open data on the locations of > 100k hospitals and health facilities. Neither is perfect.
+  p(a("Paper here. ", href="https://wellcomeopenresearch.org/articles/5-157", target="_blank"), "There are two main Africa-wide sources of open data on the locations of > 100k hospitals and health facilities. Neither is perfect.
       This app allows detailed comparison to inform pandemic response and allow improvement."),
 
   sidebarLayout(
