@@ -60,7 +60,7 @@ fluidPage(
 
     checkboxGroupInput("hs_amenity", label = "healthsites categories",
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
-                       selected = c("hospital","clinic","doctors","pharmacy")),
+                       selected = c("hospital","clinic","doctors")), #senegal remove pharmacy
 
     #who cats whether to display raw or 9 broad
     selectInput("who_type_option", label = "WHO-KEMRI categories",

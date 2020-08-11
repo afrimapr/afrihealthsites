@@ -151,10 +151,11 @@ function(input, output) {
     # allowing for 9 cat reclass
     who_cats <- unique(sfwho[[input$who_type_option]])
 
+
     #"who-kemri categories"
     checkboxGroupInput("selected_who_cats", label = NULL, #label = h5("who-kemri categories"),
                        choices = who_cats,
-                       selected = who_cats,
+                       selected = who_cats[which(who_cats!="Poste de Santé")], #for senegal app deselect post de sante (last one) because not aiming to survey those
                        inline = FALSE)
   })
 
