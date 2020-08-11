@@ -46,7 +46,9 @@ zoom_view <- NULL
 # saved as a googlesheet
 # urldata <- "https://docs.google.com/spreadsheets/d/1gXtpV-B7L1nP4PK1WMDP7qvkWygw4XJSkVO-gN5IM4E/edit#gid=2021053723"
 # saved to github otherwise fails on shinyapps due to needed google authorisation (prob fixable but this easier)
-urldata <- "https://raw.githubusercontent.com/afrimapr/afrimapr_dev/master/data-raw/senegal-emergency-health-data-English-2020-08-03.csv"
+#urldata <- "https://raw.githubusercontent.com/afrimapr/afrimapr_dev/master/data-raw/senegal-emergency-health-data-English-2020-08-03.csv"
+urldata <- "https://raw.githubusercontent.com/afrimapr/afrimapr_dev/master/data-raw/senegal-emergency-health-data-English-2020-08-07.csv"
+
 
 # read in data
 dfuser <- read.csv(urldata, encoding = 'UTF-8', check.names = FALSE)
@@ -81,7 +83,8 @@ function(input, output) {
     mapplot <- mapplot + mapview::mapview(sfuser,
                                  zcol = "Facility Category",
                                  label=paste("new data",sfuser[["Facility Category"]],sfuser[["Name of Facility"]]),
-                                 layer.name = "new data")
+                                 layer.name = "new data",
+                                 col.regions = RColorBrewer::brewer.pal(3, "Oranges"))
 
     # to retain zoom if only types have been changed
     if (!is.null(zoom_view))
@@ -177,7 +180,17 @@ function(input, output) {
                                            #ggcolour_h=c(185,360)
                                            brewer_palette = "BuPu" )
 
+    #newly collected data in dataframe
+    gg3 <- afrihealthsites::facility_types(input$country,
+                                           datasource = sfuser, #using sf stops it from needing names of coord columns
+                                           plot = TRUE,
+                                           #lonlat_columns =
+                                           type_filter = 'all',
+                                           type_column = 'Facility Category',
+                                           brewer_palette = "Oranges" )
+
     # avoid error for N.Africa countries with no WHO data
+    # this version is just for Senegal so not a problem - but possible future issue for other countries
     if (is.null(gg2))
     {
       gg1
@@ -189,17 +202,21 @@ function(input, output) {
       #TODO make this less hacky ! it will probably fail when ggplot changes
       max_x1 <- max(ggplot_build(gg1)$layout$panel_params[[1]]$x$continuous_range)
       max_x2 <- max(ggplot_build(gg2)$layout$panel_params[[1]]$x$continuous_range)
-      #set xmax for both plots to this
-      gg1 <- gg1 + xlim(c(0,max(max_x1,max_x2, na.rm=TRUE)))
-      gg2 <- gg2 + xlim(c(0,max(max_x1,max_x2, na.rm=TRUE)))
+      max_x3 <- max(ggplot_build(gg3)$layout$panel_params[[1]]$x$continuous_range)
+      #set xmax for all plots to this
+      max_x <- max(max_x1,max_x2,max_x3, na.rm=TRUE)
+      gg1 <- gg1 + xlim(c(0,max_x))
+      gg2 <- gg2 + xlim(c(0,max_x))
+      gg3 <- gg3 + xlim(c(0,max_x))
 
       #set size of y plots to be dependent on num cats
       #y axis has cats, this actually gets max of y axis, e.g. for 6 cats is 6.6
       max_y1 <- max(ggplot_build(gg1)$layout$panel_params[[1]]$y$continuous_range)
       max_y2 <- max(ggplot_build(gg2)$layout$panel_params[[1]]$y$continuous_range)
+      max_y3 <- max(ggplot_build(gg3)$layout$panel_params[[1]]$y$continuous_range)
 
       #setting heights to num cats makes bar widths constant between cats
-      gg1 / gg2 + plot_layout(heights=c(max_y1, max_y2)) #patchwork
+      gg1 / gg2 / gg3 + plot_layout(heights=c(max_y1, max_y2, max_y3)) #patchwork
     }
 
 
