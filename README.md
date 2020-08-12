@@ -1,7 +1,7 @@
 # afrihealthsites
-access to geographic locations of african health sites from different sources
+access to geographic locations of african health sites from different sources.
 
-A [web interface](https://andysouth.shinyapps.io/healthsites_viewer/) demonstrating these components.
+See [web interface](https://andysouth.shinyapps.io/healthsites_viewer/) and [paper](https://wellcomeopenresearch.org/articles/5-157) demonstrating these components.
 
 Part of the [afrimapr](https://afrimapr.github.io/afrimapr.website/) project.
 
