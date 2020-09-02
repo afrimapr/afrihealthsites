@@ -37,7 +37,8 @@ zoom_view <- NULL
 
 
 ###################################################################
-#TODO can I add the extra Senegal data to the mapplot object here ?
+# reading in extra Senegal data
+# **MAKE SURE TO SAVE DATA AS CSV FROM GOOGLEDOCS - other methods with excel or notepad caused encoding problems**
 
 # as first test try reading the data from the googledoc
 # https://drive.google.com/file/d/1wYPUYv__fE47WsCmndb9BkaD1guS10uW/view
@@ -46,12 +47,28 @@ zoom_view <- NULL
 # saved as a googlesheet
 # urldata <- "https://docs.google.com/spreadsheets/d/1gXtpV-B7L1nP4PK1WMDP7qvkWygw4XJSkVO-gN5IM4E/edit#gid=2021053723"
 # saved to github otherwise fails on shinyapps due to needed google authorisation (prob fixable but this easier)
-#urldata <- "https://raw.githubusercontent.com/afrimapr/afrimapr_dev/master/data-raw/senegal-emergency-health-data-English-2020-08-03.csv"
-urldata <- "https://raw.githubusercontent.com/afrimapr/afrimapr_dev/master/data-raw/senegal-emergency-health-data-English-2020-08-07.csv"
 
+#updates
+#urldata <- "https://raw.githubusercontent.com/afrimapr/afrimapr_dev/master/data-raw/senegal-emergency-health-data-English-2020-08-03.csv"
+#urldata <- "https://raw.githubusercontent.com/afrimapr/afrimapr_dev/master/data-raw/senegal-emergency-health-data-English-2020-08-07.csv"
+urldata <- "https://raw.githubusercontent.com/afrimapr/afrimapr_dev/master/data-raw/senegal-emergency-health-data-English-2020-08-21-gsheet.csv"
+
+#local version for testing
+#urldata <- "C:\\rsprojects\\afrimapr_dev\\data-raw\\senegal-emergency-health-data-English-2020-08-21-gsheet.csv"
+
+#sometimes get this error (it is due to invisible BOM Byte Order Mark at start of file indicating UTF8)
+#unable to translate '<U+FEFF>_start' to native encoding
+#2020-09-02 on shinyapps got this encoding error making the app fail (that did run locally) was without specifying uf8encoding on read
+#Warning: Error in type.convert.default: invalid multibyte string at '<c9>tat d<75> Senegal'
+#(when I tried specifying read utf8, app failed locally with no msg)
+#solution to both was to save as csv from googlesheets
 
 # read in data
+# first versions saved from googlesheets needed to be read in utf8
 dfuser <- read.csv(urldata, encoding = 'UTF-8', check.names = FALSE)
+
+#dfuser <- read.csv(urldata, check.names = FALSE)
+
 #dfuser <- googlesheets4::read_sheet(ss = urldata)
 # convert to spatial format
 sfuser <- sf::st_as_sf(dfuser, coords = c("_Facility Location_longitude", "_Facility Location_latitude"), crs = 4326, na.fail=FALSE)
@@ -75,16 +92,17 @@ function(input, output) {
 
 
     ###################################################################
-    #TODO can I add the extra Senegal data to the mapplot object here ?
+    # ADD the extra Senegal data to the mapplot object
 
     # coolio either of these adds new data to the existing map
     # mapplot + sfuser
     # mvsen + mapview(sfuser)
+    numcolours <- length(unique(sfuser$`Facility Category`))
     mapplot <- mapplot + mapview::mapview(sfuser,
                                  zcol = "Facility Category",
                                  label=paste("new data",sfuser[["Facility Category"]],sfuser[["Name of Facility"]]),
                                  layer.name = "new data",
-                                 col.regions = RColorBrewer::brewer.pal(3, "Oranges"))
+                                 col.regions = RColorBrewer::brewer.pal(numcolours, "Oranges"))
 
     # to retain zoom if only types have been changed
     if (!is.null(zoom_view))
