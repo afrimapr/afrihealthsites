@@ -59,7 +59,7 @@ fluidPage(
     # dynamic who category selection
     uiOutput("select_who_cat"),
 
-    p("active development May 2020, v0.2\n"),
+    p("active development October 2020, v0.2.1\n"),
 
     #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),

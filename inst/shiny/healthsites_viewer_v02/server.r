@@ -172,7 +172,11 @@ function(input, output) {
 
     sfwho <- afrihealthsites::afrihealthsites(input$country, datasource = 'who', who_type = input$selected_who_cats, plot = FALSE)
 
+    # drop the geometry column - not wanted in table
+    sfwho <- sf::st_drop_geometry(sfwho)
+
     DT::datatable(sfwho, options = list(pageLength = 50))
+
   })
 
   ###############################
@@ -180,6 +184,10 @@ function(input, output) {
   output$table_raw_hs <- DT::renderDataTable({
 
     sfhs <- afrihealthsites::afrihealthsites(input$country, datasource = 'healthsites', hs_amenity = input$hs_amenity, plot = FALSE)
+
+    # drop the geometry column and few others - not wanted in table
+    sfhs <- sf::st_drop_geometry(sfhs)
+    sfhs <- sfhs[, which(names(sfhs)!="iso3c" & names(sfhs)!="country")]
 
     DT::datatable(sfhs, options = list(pageLength = 50))
   })
