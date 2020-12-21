@@ -1,5 +1,6 @@
-#afrihealthsites/healthsites_viewer2/ui.r
-# keeping this very simple partly so it can be used as a template by other (maybe new) R users
+#afrihealthsites/healthsites_viewer_v03/ui.r
+
+# to add selection by admin region
 
 cran_packages <- c("shiny","leaflet","remotes")
 
@@ -45,7 +46,21 @@ fluidPage(
     #selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
     #miss out Western Sahara because no healthsites or WHO
     selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]),
-                size=7, selectize=FALSE, multiple=TRUE, selected="Angola"),
+                size=5, selectize=FALSE, multiple=TRUE, selected="Angola"),
+
+    #selection by admin regions
+    checkboxInput("cboxadmin", "Select facilities by admin1 region"),
+    conditionalPanel(
+      condition = "input.cboxadmin",
+
+      #"admin regions selection to go here"
+
+      #will want a selectInput box of potential admin levels by country
+
+      #first try it for admin1
+      uiOutput("select_admin")
+    ),
+
 
     checkboxGroupInput("hs_amenity", label = "healthsites categories",
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),

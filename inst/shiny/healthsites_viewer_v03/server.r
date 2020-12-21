@@ -1,6 +1,6 @@
-#afrihealthsites/healthsites_viewer2/server.r
-# keeping this very simple partly so it can be used as a template by other (maybe new) R users
+#afrihealthsites/healthsites_viewer_v03/server.r
 
+# to add selection by admin region
 
 cran_packages <- c("leaflet","remotes")
 lapply(cran_packages, function(x) if(!require(x,character.only = TRUE)) install.packages(x))
@@ -112,6 +112,29 @@ function(input, output) {
     checkboxGroupInput("selected_who_cats", label = NULL, #label = h5("who-kemri categories"),
                        choices = who_cats,
                        selected = who_cats,
+                       inline = FALSE)
+  })
+
+  ################################################################################
+  # dynamic selectable list of admin regions for selected country [&later admin level]
+  output$select_admin <- renderUI({
+
+    # get selected country name
+    #input$country
+
+    # get categories in who for this country
+    # first get the sf object - but maybe later don't need to do that
+    # TODO? add a function to afriadmin package to return just the cats
+    sfadmin <- afriadmin::afriadmin(input$country, datasource = 'geoboundaries', plot = FALSE)
+
+    admin_names <- unique(sfadmin$shapeName)
+
+    #should I allow multiple regions or just one ?
+    #problem doing this as checkboxGroupInput is that it takes up loads of space
+    #better  MVP may be to offer selectInput() with just one regions selectable
+    checkboxGroupInput("selected_admin_names", label = NULL, #label = h5("who-kemri categories"),
+                       choices = admin_names,
+                       selected = admin_names[1],
                        inline = FALSE)
   })
 
