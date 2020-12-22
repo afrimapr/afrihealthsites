@@ -83,4 +83,7 @@ main aim to plot map comparing different sources
 #compare_hs_sources("nigeria", datasources=c('who', 'healthsites'), plot='mapview')
 #compare_hs_sources(c('malawi','zambia'))
 
+#filter by admin regions
+compare_hs_sources('togo', admin_level=1, admin_names=c('Maritime Region', 'Centrale Region'))
+
 }

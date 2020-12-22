@@ -303,7 +303,7 @@ afrihealthsites <- function(country,
     #TODO check that this admin level is available for this country & datasource
     #initially start on admin1
     admin_level <- 1
-    sfadmin <- afriadmin::afriadmin(country, level=admin_level, datasource='geoboundaries')
+    sfadmin <- afriadmin::afriadmin(country, level=admin_level, datasource='geoboundaries', plot=FALSE)
 
     #filter just the selected regions
     #BEWARE that shapeName is particular to geoboundaries

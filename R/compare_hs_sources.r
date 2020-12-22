@@ -30,6 +30,9 @@
 #' #compare_hs_sources("nigeria", datasources=c('who', 'healthsites'), plot='mapview')
 #' #compare_hs_sources(c('malawi','zambia'))
 #'
+#' #filter by admin regions
+#' compare_hs_sources('togo', admin_level=1, admin_names=c('Maritime Region', 'Centrale Region'))
+#'
 #' @return \code{sf}
 #' @export
 #'
@@ -137,7 +140,28 @@ compare_hs_sources <- function(country,
 
       }
     }
-  }
+
+    # adding selected admin regions to the plot
+    # bit wasteful because regions are already downloaded in afrihealthsites()
+    # this code is copied from there
+    if (!is.null(admin_level) & isTRUE(admin_level > 0) & !is.null(admin_names))
+    {
+      #TODO check that this admin level is available for this country & datasource
+      #initially start on admin1
+      admin_level <- 1
+      sfadmin <- afriadmin::afriadmin(country, level=admin_level, datasource='geoboundaries', plot=FALSE)
+
+      #filter just the selected regions
+      #BEWARE that shapeName is particular to geoboundaries
+      #TODO ignore case
+      sfadmin_sel <- dplyr::filter(sfadmin, shapeName%in%admin_names)
+
+      #add polygons to the plot
+      mapplot <- mapplot + mapview::mapview(sfadmin_sel, zcol="shapeName", color = "darkred", col.regions = "blue", alpha.regions=0.01, lwd = 2, legend=FALSE)
+
+    }
+
+  } #end if plot mapview
 
 
   #option to add static labels
@@ -186,6 +210,7 @@ compare_hs_sources <- function(country,
 
     mapplot <- mapview::addStaticLabels(mapplot, label=paste(sf2[[zcol2]],sf2[[labcol2]]), labelOptions = lopt)
   }
+
 
 
 
