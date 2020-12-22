@@ -41,7 +41,9 @@ function(input, output) {
                                                    plotshow=FALSE,
                                                    hs_amenity=input$hs_amenity,
                                                    type_column = input$who_type_option, #allows for 9 broad cats
-                                                   who_type=input$selected_who_cats)
+                                                   who_type=input$selected_who_cats,
+                                                   admin_level=input$cboxadmin,
+                                                   admin_names=input$selected_admin_names)
 
     # to retain zoom if only types have been changed
     if (!is.null(zoom_view))
@@ -132,10 +134,12 @@ function(input, output) {
     #should I allow multiple regions or just one ?
     #problem doing this as checkboxGroupInput is that it takes up loads of space
     #better  MVP may be to offer selectInput() with just one regions selectable
-    checkboxGroupInput("selected_admin_names", label = NULL, #label = h5("who-kemri categories"),
+    #or selectInput even with multiple selections allowed takes less space
+    #checkboxGroupInput("selected_admin_names", label = NULL, #label = h5("who-kemri categories"),
+    selectInput("selected_admin_names", label = NULL, #label = h5("who-kemri categories"),
                        choices = admin_names,
                        selected = admin_names[1],
-                       inline = FALSE)
+                       size=5, selectize=FALSE, multiple=TRUE)
   })
 
   ########################
