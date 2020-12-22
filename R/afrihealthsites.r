@@ -15,7 +15,7 @@
 #' @param type_column for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column for user provided files which column has information on name of site, default : 'Facility Name'
 #' @param lonlat_columns for user provided files which columns contain longitude, latitude. option of NULL if no coords
-#' @param admin_level what admin level to filter regions from  NULL if no filtering
+#' @param admin_level what admin level to filter regions from  FALSE or NULL if no filtering
 #' @param admin_names names of admin regions to filter NULL if no filter
 #'
 #'
@@ -298,9 +298,11 @@ afrihealthsites <- function(country,
   ####################################################################
   # TODO here add filtering by admin_names from admin_level in country
 
-  if (!is.null(admin_level) & !is.null(admin_names))
+  if (!is.null(admin_level) & isTRUE(admin_level > 0) & !is.null(admin_names))
   {
     #TODO check that this admin level is available for this country & datasource
+    #initially start on admin1
+    admin_level <- 1
     sfadmin <- afriadmin::afriadmin(country, level=admin_level, datasource='geoboundaries')
 
     #filter just the selected regions

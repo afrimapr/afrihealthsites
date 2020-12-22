@@ -22,6 +22,8 @@
 #' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
 #' @param lonlat_columns for user provided files which columns contain longitude, latitude. option of NULL if no coords
+#' @param admin_level what admin level to filter regions from  FALSE or NULL if no filtering
+#' @param admin_names names of admin regions to filter NULL if no filter
 #'
 #' @examples
 #'
@@ -50,11 +52,13 @@ compare_hs_sources <- function(country,
                             #TODO allow these columns to be specified for both sources
                             type_column = 'Facility Type',
                             label_column = 'Facility Name',
-                            lonlat_columns = c("Longitude", "Latitude")
+                            lonlat_columns = c("Longitude", "Latitude"),
+                            admin_level = NULL,
+                            admin_names = NULL
                             ) {
 
-  sf1 <- afrihealthsites(country, datasource = datasources[[1]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns)
-  sf2 <- afrihealthsites(country, datasource = datasources[[2]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns)
+  sf1 <- afrihealthsites(country, datasource = datasources[[1]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns, admin_level=admin_level, admin_names=admin_names)
+  sf2 <- afrihealthsites(country, datasource = datasources[[2]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns, admin_level=admin_level, admin_names=admin_names)
 
   #TODO add a plot='sf' option
 
