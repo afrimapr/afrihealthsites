@@ -24,7 +24,9 @@ compare_hs_sources(
   map.types = c("CartoDB.Positron", "OpenStreetMap.HOT"),
   type_column = "Facility Type",
   label_column = "Facility Name",
-  lonlat_columns = c("Longitude", "Latitude")
+  lonlat_columns = c("Longitude", "Latitude"),
+  admin_level = NULL,
+  admin_names = NULL
 )
 }
 \arguments{
@@ -65,6 +67,10 @@ compare_hs_sources(
 \item{label_column}{just for user provided files which column has information on name of site, default : 'Facility Name'}
 
 \item{lonlat_columns}{for user provided files which columns contain longitude, latitude. option of NULL if no coords}
+
+\item{admin_level}{what admin level to filter regions from  FALSE or NULL if no filtering}
+
+\item{admin_names}{names of admin regions to filter NULL if no filter}
 }
 \value{
 \code{sf}

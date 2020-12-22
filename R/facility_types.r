@@ -12,6 +12,8 @@
 #' @param lonlat_columns just for user provided files which columns contain longitude, latitude
 #' @param type_column just for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column just for user provided files which column has information on name of site, default : 'Facility Name'
+#' @param admin_level what admin level to filter regions from  FALSE or NULL if no filtering
+#' @param admin_names names of admin regions to filter NULL if no filter
 #' @param plot_title title for plot, 'default', string or NULL for no title
 #' @param plot whether to display plot
 #'
@@ -54,6 +56,8 @@ facility_types <- function(country,
                       # ggcolour_h = c(0, 360),
                       brewer_palette = 'BuPu',
                       lonlat_columns = c("Longitude", "Latitude"),
+                      admin_level = NULL,
+                      admin_names = NULL,
                       plot_title = 'default',
                       plot = TRUE
 
@@ -80,18 +84,24 @@ facility_types <- function(country,
                            type_filter = type_filter,
                            type_column = type_column,
                            label_column = label_column,
-                           lonlat_columns = lonlat_columns) #, who_type=who_type)
+                           lonlat_columns = lonlat_columns,
+                           admin_level = admin_level,
+                           admin_names = admin_names) #, who_type=who_type)
 
 
   }  else if (is.character(datasource) && datasource == 'healthsites')
   {
 
-    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, hs_amenity=type_filter) #, who_type=who_type)
+    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, hs_amenity=type_filter,
+                           admin_level = admin_level,
+                           admin_names = admin_names) #, who_type=who_type)
 
   } else if (is.character(datasource) && datasource == 'who')
   {
 
-    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, who_type=type_filter, type_column=type_column) #, who_type=who_type)
+    sf1 <- afrihealthsites(country, datasource = datasource, plot=FALSE, who_type=type_filter, type_column=type_column,
+                           admin_level = admin_level,
+                           admin_names = admin_names) #, who_type=who_type)
 
   }
 

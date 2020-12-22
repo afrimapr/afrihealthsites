@@ -154,7 +154,9 @@ function(input, output) {
                                     plot = TRUE,
                                     type_filter = input$hs_amenity,
                                     #ggcolour_h=c(0,175)
-                                    brewer_palette = "YlGn" )
+                                    brewer_palette = "YlGn",
+                                    admin_level=input$cboxadmin,
+                                    admin_names=input$selected_admin_names )
 
     gg2 <- afrihealthsites::facility_types(input$country,
                                            datasource = 'who',
@@ -162,7 +164,9 @@ function(input, output) {
                                            type_filter = input$selected_who_cats,
                                            type_column = input$who_type_option, #allows for 9 broad cats
                                            #ggcolour_h=c(185,360)
-                                           brewer_palette = "BuPu" )
+                                           brewer_palette = "BuPu",
+                                           admin_level=input$cboxadmin,
+                                           admin_names=input$selected_admin_names )
 
     # avoid error for N.Africa countries with no WHO data
     if (is.null(gg2))
@@ -197,7 +201,9 @@ function(input, output) {
   # table of raw who data
   output$table_raw_who <- DT::renderDataTable({
 
-    sfwho <- afrihealthsites::afrihealthsites(input$country, datasource = 'who', who_type = input$selected_who_cats, plot = FALSE)
+    sfwho <- afrihealthsites::afrihealthsites(input$country, datasource = 'who', who_type = input$selected_who_cats, plot = FALSE,
+                                              admin_level=input$cboxadmin,
+                                              admin_names=input$selected_admin_names)
 
     # drop the geometry column - not wanted in table
     sfwho <- sf::st_drop_geometry(sfwho)
@@ -210,7 +216,9 @@ function(input, output) {
   # table of raw healthsites data
   output$table_raw_hs <- DT::renderDataTable({
 
-    sfhs <- afrihealthsites::afrihealthsites(input$country, datasource = 'healthsites', hs_amenity = input$hs_amenity, plot = FALSE)
+    sfhs <- afrihealthsites::afrihealthsites(input$country, datasource = 'healthsites', hs_amenity = input$hs_amenity, plot = FALSE,
+                                             admin_level=input$cboxadmin,
+                                             admin_names=input$selected_admin_names)
 
     # drop the geometry column and few others - not wanted in table
     sfhs <- sf::st_drop_geometry(sfhs)

@@ -42,7 +42,7 @@ to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
 
 \item{lonlat_columns}{for user provided files which columns contain longitude, latitude. option of NULL if no coords}
 
-\item{admin_level}{what admin level to filter regions from  NULL if no filtering}
+\item{admin_level}{what admin level to filter regions from  FALSE or NULL if no filtering}
 
 \item{admin_names}{names of admin regions to filter NULL if no filter}
 }

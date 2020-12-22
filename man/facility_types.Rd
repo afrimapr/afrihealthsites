@@ -13,6 +13,8 @@ facility_types(
   label_column = "Facility Name",
   brewer_palette = "BuPu",
   lonlat_columns = c("Longitude", "Latitude"),
+  admin_level = NULL,
+  admin_names = NULL,
   plot_title = "default",
   plot = TRUE
 )
@@ -33,6 +35,10 @@ facility_types(
 \item{brewer_palette}{ColorBrewer palette default 'BuPu',}
 
 \item{lonlat_columns}{just for user provided files which columns contain longitude, latitude}
+
+\item{admin_level}{what admin level to filter regions from  FALSE or NULL if no filtering}
+
+\item{admin_names}{names of admin regions to filter NULL if no filter}
 
 \item{plot_title}{title for plot, 'default', string or NULL for no title}
 
