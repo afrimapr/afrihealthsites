@@ -315,7 +315,7 @@ afrihealthsites <- function(country,
     #sfcountry <- sf::st_within(sfcountry, sfadmin_sel)
     #this returns sf # GOOD example to put in the BOOK (not obvious to me)
     #https://geocompr.robinlovelace.net/spatial-operations.html
-    sfcountry <- sfcountry[sfadmin_sel, ,op = st_within]
+    suppressWarnings(sfcountry <- sfcountry[sfadmin_sel, ,op = st_within])
   }
 
 
