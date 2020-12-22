@@ -1,6 +1,6 @@
 Package: afrihealthsites
 Title: Geographic locations of African health facilities from different sources
-Version: 0.1.0.9004
+Version: 0.1.0.9005
 Authors@R: 
     person(given = "Andy",
            family = "South",
@@ -26,8 +26,11 @@ Suggests:
     knitr,
     shiny,
     leaflet,
-    nngeo
+    nngeo,
+    afriadmin
+Remotes:
+  afrimapr/afriadmin    
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr

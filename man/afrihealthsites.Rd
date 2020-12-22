@@ -15,7 +15,9 @@ afrihealthsites(
   returnclass = "sf",
   type_column = "Facility Type",
   label_column = "Facility Name",
-  lonlat_columns = c("Longitude", "Latitude")
+  lonlat_columns = c("Longitude", "Latitude"),
+  admin_level = NULL,
+  admin_names = NULL
 )
 }
 \arguments{
@@ -39,6 +41,10 @@ to exclude dentist hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital')}
 \item{label_column}{for user provided files which column has information on name of site, default : 'Facility Name'}
 
 \item{lonlat_columns}{for user provided files which columns contain longitude, latitude. option of NULL if no coords}
+
+\item{admin_level}{what admin level to filter regions from  NULL if no filtering}
+
+\item{admin_names}{names of admin regions to filter NULL if no filter}
 }
 \value{
 \code{sf}
@@ -69,6 +75,8 @@ afrihealthsites('chad',datasource = 'healthsites', hs_amenity=c('clinic','hospit
 #filter who data by Facility type
 afrihealthsites('chad',datasource = 'who',who_type=c('Regional hospital','Health Centre'))
 
+#filter by admin regions
+afrihealthsites('togo', admin_level=1, admin_names=c('Maritime Region', 'Centrale Region'))
 
 }
 \seealso{

@@ -15,6 +15,9 @@
 #' @param type_column for user provided files which column has information on type of site, default : 'Facility Type'
 #' @param label_column for user provided files which column has information on name of site, default : 'Facility Name'
 #' @param lonlat_columns for user provided files which columns contain longitude, latitude. option of NULL if no coords
+#' @param admin_level what admin level to filter regions from  NULL if no filtering
+#' @param admin_names names of admin regions to filter NULL if no filter
+#'
 #'
 #' @examples
 #'
@@ -37,6 +40,8 @@
 #' #filter who data by Facility type
 #' afrihealthsites('chad',datasource = 'who',who_type=c('Regional hospital','Health Centre'))
 #'
+#' #filter by admin regions
+#' afrihealthsites('togo', admin_level=1, admin_names=c('Maritime Region', 'Centrale Region'))
 #'
 #' @return \code{sf}
 #' @export
@@ -50,7 +55,9 @@ afrihealthsites <- function(country,
                       returnclass = 'sf',
                       type_column = 'Facility Type',
                       label_column = 'Facility Name',
-                      lonlat_columns = c("Longitude", "Latitude")
+                      lonlat_columns = c("Longitude", "Latitude"),
+                      admin_level = NULL,
+                      admin_names = NULL
                       ) {
 
 
@@ -286,6 +293,27 @@ afrihealthsites <- function(country,
 
     sfcountry <- sf::read_sf(dsn = "shapefiles/healthsites.shp")
 
+  }
+
+  ####################################################################
+  # TODO here add filtering by admin_names from admin_level in country
+
+  if (!is.null(admin_level) & !is.null(admin_names))
+  {
+    #TODO check that this admin level is available for this country & datasource
+    sfadmin <- afriadmin::afriadmin(country, level=admin_level, datasource='geoboundaries')
+
+    #filter just the selected regions
+    #BEWARE that shapeName is particular to geoboundaries
+    #TODO ignore case
+    sfadmin_sel <- dplyr::filter(sfadmin, shapeName%in%admin_names)
+
+    #filter points that are within selected regions
+    #this return a sgbp object that doesn't do what I want
+    #sfcountry <- sf::st_within(sfcountry, sfadmin_sel)
+    #this returns sf # GOOD example to put in the BOOK (not obvious to me)
+    #https://geocompr.robinlovelace.net/spatial-operations.html
+    sfcountry <- sfcountry[sfadmin_sel, ,op = st_within]
   }
 
 
