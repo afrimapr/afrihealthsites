@@ -77,7 +77,7 @@ fluidPage(
     # dynamic who category selection
     uiOutput("select_who_cat"),
 
-    p("active development October 2020, v0.2.1\n"),
+    p("active development December 2020, v0.3\n"),
 
     #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),
@@ -88,6 +88,7 @@ fluidPage(
 
     p("Input and suggestions ", a("welcome", href="https://github.com/afrimapr/suggestions_and_requests", target="_blank")),
     #  "Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
+    p("admin boundary data from ", a("geoboundaries", href="https://www.geoboundaries.org/", target="_blank")),
 
     p(tags$small("Disclaimer : Data used by afrimapr are sourced from published open data sets. We provide no guarantee of accuracy.")),
 
