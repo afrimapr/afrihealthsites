@@ -60,6 +60,9 @@ compare_hs_sources <- function(country,
                             admin_names = NULL
                             ) {
 
+  #for debugging from shiny
+  message(paste0("in compare_hs_sources country=",country," admin_level=",admin_level," admin_names=",admin_names))
+
   sf1 <- afrihealthsites(country, datasource = datasources[[1]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns, admin_level=admin_level, admin_names=admin_names)
   sf2 <- afrihealthsites(country, datasource = datasources[[2]], plot=FALSE, hs_amenity=hs_amenity, who_type=who_type, type_column=type_column, label_column=label_column, lonlat_columns=lonlat_columns, admin_level=admin_level, admin_names=admin_names)
 

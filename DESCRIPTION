@@ -18,7 +18,8 @@ Imports:
     mapview,
     countrycode,
     RColorBrewer,
-    ggplot2
+    ggplot2,
+    afriadmin
 Suggests:
     rhdx,
     rhealthsites,
@@ -26,8 +27,7 @@ Suggests:
     knitr,
     shiny,
     leaflet,
-    nngeo,
-    afriadmin
+    nngeo
 Remotes:
   afrimapr/afriadmin    
 Encoding: UTF-8
