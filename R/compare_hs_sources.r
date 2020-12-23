@@ -157,7 +157,9 @@ compare_hs_sources <- function(country,
       #filter just the selected regions
       #BEWARE that shapeName is particular to geoboundaries
       #TODO ignore case
-      sfadmin_sel <- dplyr::filter(sfadmin, shapeName%in%admin_names)
+      #sfadmin_sel <- dplyr::filter(sfadmin, shapeName%in%admin_names)
+      #base alternative to avoid dplyr dependency
+      sfadmin_sel <- sfadmin[which(sfadmin$shapeName%in%admin_names),]
 
       #add polygons to the plot
       mapplot <- mapplot + mapview::mapview(sfadmin_sel, zcol="shapeName", color = "darkred", col.regions = "blue", alpha.regions=0.01, lwd = 2, legend=FALSE)

@@ -308,7 +308,9 @@ afrihealthsites <- function(country,
     #filter just the selected regions
     #BEWARE that shapeName is particular to geoboundaries
     #TODO ignore case
-    sfadmin_sel <- dplyr::filter(sfadmin, shapeName%in%admin_names)
+    #sfadmin_sel <- dplyr::filter(sfadmin, shapeName%in%admin_names)
+    #base alternative to avoid dplyr dependency
+    sfadmin_sel <- sfadmin[which(sfadmin$shapeName%in%admin_names),]
 
     #filter points that are within selected regions
     #this return a sgbp object that doesn't do what I want
