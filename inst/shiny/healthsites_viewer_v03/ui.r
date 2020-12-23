@@ -48,6 +48,9 @@ fluidPage(
     selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]),
                 size=5, selectize=FALSE, multiple=TRUE, selected="Angola"),
 
+    #to allow a reduced countries list for vaccine rollout planning
+    #c('Democratic Republic of the Congo','Uganda','Liberia','Guinea','Sierra Leone')
+
     #selection by admin regions
     checkboxInput("cboxadmin", "Select facilities by admin1 region"),
     conditionalPanel(
