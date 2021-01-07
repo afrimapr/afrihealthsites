@@ -1,6 +1,6 @@
-#afrihealthsites/healthsites_viewer_v03/ui.r
+#afrihealthsites/vaccine_prototype/ui.r
 
-# to add selection by admin region
+# selected countries & selection by admin region enabled by default
 
 cran_packages <- c("shiny","leaflet","remotes")
 
@@ -20,10 +20,10 @@ library(afrihealthsites)
 
 fluidPage(
 
-  headerPanel('afrimapr healthsites viewer'),
+  headerPanel('Search health facilities by sub-national regions'),
 
-  p(a("Paper here. ", href="https://wellcomeopenresearch.org/articles/5-157", target="_blank"), "There are two main Africa-wide sources of open data on the locations of > 100k hospitals and health facilities. Neither is perfect.
-      This app allows detailed comparison to inform pandemic response and allow improvement."),
+  p("Identify health facilities from the two main Africa-wide sources of open data. Potential to add other data for facilities, populations at risk & boundaries.
+      Allows detailed comparison to allow improvement & inform vaccine rollout.", a("Background paper ", href="https://wellcomeopenresearch.org/articles/5-157", target="_blank")),
 
   sidebarLayout(
 
@@ -45,14 +45,15 @@ fluidPage(
 
     #selectInput('country', 'Country', afcountries$name, size=10, selectize=FALSE, multiple=TRUE, selected="Angola"),
     #miss out Western Sahara because no healthsites or WHO
-    selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]),
-                size=5, selectize=FALSE, multiple=TRUE, selected="Angola"),
+    # selectInput('country', 'Country', choices = sort(afcountries$name[!afcountries$name=="Western Sahara"]),
+    #             size=5, selectize=FALSE, multiple=TRUE, selected="Angola"),
+    #reduced countries list for vaccine rollout planning
+    selectInput('country', 'Country', choices = c('Democratic Republic of the Congo','Uganda','Liberia','Guinea','Sierra Leone'),
+                size=5, selectize=FALSE, multiple=TRUE, selected='Democratic Republic of the Congo'),
 
-    #to allow a reduced countries list for vaccine rollout planning
-    #c('Democratic Republic of the Congo','Uganda','Liberia','Guinea','Sierra Leone')
 
     #selection by admin regions
-    checkboxInput("cboxadmin", "Select facilities by admin1 region"),
+    checkboxInput("cboxadmin", "Select facilities by admin1 region",value=TRUE),
     conditionalPanel(
       condition = "input.cboxadmin",
 

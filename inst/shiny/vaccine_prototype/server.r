@@ -1,6 +1,6 @@
-#afrihealthsites/healthsites_viewer_v03/server.r
+#afrihealthsites/vaccine_prototype/server.r
 
-# to add selection by admin region
+# selected countries & selection by admin region enabled by default
 
 cran_packages <- c("leaflet","remotes")
 lapply(cran_packages, function(x) if(!require(x,character.only = TRUE)) install.packages(x))
@@ -129,7 +129,8 @@ function(input, output) {
     # TODO? add a function to afriadmin package to return just the cats
     sfadmin <- afriadmin::afriadmin(input$country, datasource = 'geoboundaries', plot = FALSE)
 
-    admin_names <- unique(sfadmin$shapeName)
+    #sort for alphabetical order
+    admin_names <- sort(unique(sfadmin$shapeName))
 
     #should I allow multiple regions or just one ?
     #problem doing this as checkboxGroupInput is that it takes up loads of space
