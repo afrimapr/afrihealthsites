@@ -1,0 +1,62 @@
+Country,iso3c,Official MFL accessible online,Data freely downloadable,Data machine readable,Data format,Downloaded data geocoded,MFL satisfies criteria for inclusion,Reason not included,Health facility data URL,About page URL,Alternative health facilities data source,Last updated,Owner,License,Comments
+country,iso3c,mfl_online,downloadable,machine_readable,format,geocoded,mfl_satisfies,exclusion_reasons,url_data,url_about,url_alternative,updated,owner,license,comments
+Algeria,DZA,no,yes,no,PDF,no,no,not machine readable,http://www.sante.gov.dz/media/arisoft/pdfjs/web/viewer.html?file=http%3A%2F%2Fwww.sante.gov.dz%2Fimages%2Fpdf%2Fbulletins-officiels%2Fdoc%2Fetablissements-assurant-urgences.pdf,http://www.sante.gov.dz/direction-generale-des-services-de-sante/305-etablissements-assurant-les-urgences.html,,No date,Minsitry of Health,,"List of establishments providing emergency services from MoH - shows number of beds, services"
+Angola,AGO,no,,,,,no,not available,,,,,,,
+Benin,BEN,no,,,,,no,not available,,,,,,,
+Botswana,BWA,no,yes,no,PDF,no,no,not machine readable,http://168.167.134.123/en-gb/Documents/Ministry%20of%20Local%20Government%20and%20Rural%20Development/MLGRD.Botswana%20Health%20Facilities.pdf,http://168.167.134.123/en-gb/documents/forms/allitems.aspx?rootfolder=/en-gb/documents/ministry+of+local+government+and+rural+development&folderctid=0x01200000a87b983a65ee4d9990244866d17162&view=%7B62234187-4a34-4517-b7fb-f84f2c89cd12%7D,,2012,Ministry of Local Government and Rural Development,,very limited information (updated 2012 - was valid until 2014)
+Burkina Faso,BFA,no,,,,,no,not available,,,,,,,
+Burundi,BDI,no,,,,,no,not available,,,,,,,
+Cameroon,CMR,no,yes,no,PDF,no,no,not machine readable,https://www.dhis-minsante-cm.org/portal/index.html,http://cis-minsante.cm/,https://data.ehealthafrica.org/resource/f6281f48-f325-4f4a-8559-68a54cc8a6ad?dataset=cameroon-health-facilities,2016,Ministry of Health,,"Very low resolution PDF maps with limited detail - work funded through B&M Gates, CDC & WHO"
+Cape Verde,CPV,no,,,,,no,not available,,,,,,,
+Central African Republic,CAF,no,,,,,no,not available,,,,,,,
+Chad,TCD,no,no,,,no,no,not official MFL,https://data.ehealthafrica.org/resource/ac242db9-fd08-4ec4-ac13-2d0d39d89bf6?dataset=chad-health-facilities,https://data.ehealthafrica.org/resource/ac242db9-fd08-4ec4-ac13-2d0d39d89bf6?dataset=chad-health-facilities,https://data.humdata.org/dataset/chad-list-of-health-facilities-and-health-districts,2019,eHealth Africa,,Hosted by eHealth Africa
+Comoros,COM,no,,,,,no,not available,,,,,,,
+Democratic Republic of the Congo,COD,no,no,yes,Excel,yes,no,not downloadable,https://front-office-resources.s3.eu-west-1.amazonaws.com/usaid_ihp.xlsx,https://suivi-evaluation.ihp-prosani.com/,,2019,Ministry of Health,CC-BY,Data not downloadable (error)
+Djibouti,DJI,no,,,,,no,not available,,,,,,,
+Egypt,EGY,no,,,,,no,not available,,,,,,,
+Equatorial Guinea,GNQ,no,,,,,no,not available,,,,,,,
+Eritrea,ERI,no,,,,,no,not available,,,,,,,
+Ethiopia,ETH,no,yes,yes,SHP,yes,no,not official MFL,https://data.humdata.org/dataset/679984dc-2e48-42a5-9a2d-9135d8aad307/resource/edc6b359-054f-4027-b1af-2e8d34a0b28f/download/health_facility.zip,https://data.humdata.org/dataset/ethiopia-health,,2018,OCHA Ethiopia,Custom License,"Data sourced from Ethiopian Ministry of Health, contributed by OCHA, hosted on HDX"
+Gabon,GAB,no,no,,,no,no,not downloadable,http://www.cnamgs.ga/anciensite/localhost/wp/les-etablissements-agrees-par-la-cnamgs/hopitaux-cliniques-et-centres-de-soins-agrees-par-la-cnamgs/index.html,,,No date,National Health Insurance and Social Guarantee Fund,,National Health Insurance and Social Guarantee Fund - list of approved hospitals
+Gambia,GMB,no,,,,,no,not available,,,,,,,
+Ghana,GHA,unclear,yes,yes,CSV,yes,no,not clearly labelled as official MFL,https://data.gov.gh/sites/default/files/harvest_resources/HEALTH%2520FACILITIES%2520IN%2520GHANA.csv,https://data.gov.gh/dataset/health-facilities,,2016,Ghana Open Data Initiative,Open Data Commons Open Database License (ODbL),Part of the Ghana Open Data Initiative
+Guinea,GIN,no,yes,yes,CSV,yes,no,not official MFL,https://data.humdata.org/dataset/300784da-ea33-41a5-abd9-160915d33fb7/resource/3d5e7ab6-5164-457d-bcc8-3cc1aa9b01aa/download/structures_de_sante_guinee_vf.csv,https://data.humdata.org/dataset/structures_de_sante_guinee_vf,,2020,Ocha Guinea,CC0 (Public Domain),"Data sourced from Guinea Ministry of Health, contributed by OCHA, hosted on HDX"
+Guinea Bissau,GNB,no,,,,,no,not available,,,,,,,
+Ivory Coast,CIV,no,yes,no,PDF,no,no,not machine readable,https://dipe.info/index.php/fr/documentation/cartes-sanitaire/send/3-carte-sanitaire/2-carte-sanitaire-de-la-cote-d-ivoire,,https://data.humdata.org/dataset/health-facilities-2012,2008,Département Informatique et Santé,,PDF in French - tables with health facility information found from page 56
+Kenya,KEN,yes,yes,yes,Excel,no,yes,included,http://kmhfl.health.go.ke/#/facility_filter/results,http://kmhfl.health.go.ke/#/home,,No date,Ministry of Health,,"Full dataset is geocoded as a map visualisation is available, but downloaded spreadsheet does not contain coordinates"
+Lesotho,LSO,no,,,,,no,not available,,,,,,,
+Liberia,LBR,no,yes,no,PDF,no,no,not machine readable,https://www.lisgis.net/pg_img/Health%20Facilities%20by%20County%20and%20District.pdf,https://www.lisgis.net/page_info.php?&7d5f44532cbfc489b8db9e12e44eb820=MzY3,https://data.humdata.org/dataset/health-facilities-liberia-oct-2014,2012,Liberia Institute of Statistics & Geo-Information Services,,
+Libya,LBY,no,,,,,no,not available,,,,,,,
+Madagascar,MDG,no,,,,,no,not available,,,,,,,
+Malawi,MWI,yes,yes,yes,Excel,yes,yes,included,http://zipatala.health.gov.mw/facilities,http://zipatala.health.gov.mw/about,,No date,Ministry of Health,,
+Mali,MLI,no,,,,,no,not available,,,,,,,
+Mauritania,MRT,no,,,,,no,not available,,,,,,,
+Morocco,MAR,no,,,,,no,not available,,,,,,,
+Mozambique,MOZ,yes,no,yes,Google Sheet ,yes,no,permission needed to download,https://docs.google.com/spreadsheets/d/1O8UUKnwH-XUZo7UJHVD-TpSm_7YQ3mJlqyQ8PqMcN84/pubhtml#,http://sis-ma.in/?page_id=1085,,No date,Ministry of Health,,Google Sheet - needs permission to get access to original spreadsheet although (broken) link exists to download as ODS format
+Namibia,NAM,yes,yes,yes,JSON,yes,yes,included,https://mfl.mhss.gov.na/api/facilities.json,https://mfl.mhss.gov.na/pages/about,,2020,Ministry of Health,,Facility list in Excel provides access to basic data but API provides access to rich data
+Niger,NER,no,no,,,no,no,not downloadable,,https://data.ehealthafrica.org/resource/18ac9d25-940e-4824-a468-a6ac1d610b08?dataset=niger-republic-health-facilities,,2019,eHealth Africa,,
+Nigeria,NGA,yes,no,,,Unsure (Have to request a key to download data but didn't receive one),no,permission needed to download (request not answered),https://hfr.health.gov.ng/download/facilities,https://hfr.health.gov.ng/about-us,https://data.ehealthafrica.org/resource/76506359-d2c5-4f12-b9b0-4bee9dda2a33?dataset=nigeria-health-care-facilities-primary-secondary-and-tertiary,2020,Ministry of Health,,Facility list can be downloaded after completing a short form stating purpose of data download etc. Have tried twice but verification code for download isn't sent to email. Reached out to their contact email address but did not have a response.
+Republic of Congo,COG,no,,,,,no,not available,,,,,,,
+Rwanda,RWA,yes,yes,yes,CSV,yes,yes,included,https://moh.gov.rw/index.php?id=547,https://moh.gov.rw/index.php?id=547,,No date,Ministry of Health,,
+Sao Tome and Principe,STP,no,,,,,no,not available,,,,,,,
+Senegal,SEN,no,,,,,no,not available,,,,,,,
+Sierra Leone,SLE,no,yes,yes,Excel,yes,no,not official MFL,https://data.humdata.org/dataset/7453fb80-752b-4078-a892-d936f9846dab/resource/f78dc606-04e2-4fb6-a7eb-9eb995c33f76/download/1501-sierra-leone-health-centers.xlsx,https://data.humdata.org/dataset/141121-sierra-leone-health-facilities,,2015,Standby Task Force,Creative Commons Attribution for Intergovernmental Organisations,The list comes from a variety of MOH sources in the field and not from the MOH at national level. Collected by the Standby Task Force and hosted on HDX
+Somalia,SOM,no,yes,yes,SHP,yes,no,not official MFL,https://data.humdata.org/dataset/b4fc93c9-8323-4357-9f9f-5a22cdebca83/resource/428bd8c0-8212-42c4-922c-3c5f9a84ea20/download/somalia-health-facilities.zip,https://data.humdata.org/dataset/somalia-health-facilities,,2018,FAO SWALIM,CC0 (Public Domain),Data from FAO SWALIM hosted on HDX
+South Africa,ZAF,unclear,yes,yes,CSV,yes,no,not clearly labelled as official MFL,https://dd.dhmis.org/orgunits.html?file=NIDS%20Integrated&source=nids&ver=1c11,https://dd.dhmis.org/index.html,,2019,Ministry of Health,,Download facility list by clicking on Download and selecting up to level 5
+South Sudan,SSD,yes,yes,yes,CSV,yes,yes,included,https://www.southsudanhealth.info/facility/fac.php?list&s=0&p=0&ps=2889,https://www.southsudanhealth.info/,,No date,Ministry of Health,,
+Sudan,SDN,no,,,,,no,not available,,,,,,,
+Eswatini,SWZ,no,,,,,no,not available,,,,,,,
+Togo,TGO,no,,,,,no,not available,,,,,,,
+Tunisia,TUN,unclear,yes,yes,JSON,no,no,not clearly labelled as official MFL,"http://fr-api.data.gov.tn/api/1.0/dataset/586f67d4ea9cd/search?from=0&size=10
+http://fr-api.data.gov.tn/api/1.0/dataset/586f6b401ce8b/search?from=0&size=10
+http://fr-api.data.gov.tn/api/1.0/dataset/586f605e167d2/search?from=0&size=10
+http://fr-api.data.gov.tn/api/1.0/dataset/586f63acc2053/search?from=0&size=10",http://fr.data.gov.tn/27-a-propos.htm,,,Ministry of Health,Custom Open License,"Four separate downloads:
+Centre de Soins de Santé de Base (Basic health care centre)
+Cabinet Medical Individuel (Individual medical office)
+Établissement de Santé Publique (Public health establishment)
+Hôpital de District (District hospital)"
+Uganda,UGA,yes,yes,no,PDF,no,no,not machine readable,https://health.go.ug/sites/default/files/Signed%20n%20final%20mfl.pdf,https://www.health.go.ug/cause/national-health-facility-master-list-2018/,,2018,Ministry of Health,,PDF report. Facility lists per region starts on page 24
+United Republic of Tanzania,TZA,yes,yes,yes,Excel,yes,yes,included,http://hfrportal.moh.go.tz/index.php?r=facilities/exportToExcel&url=https%3A%2F%2Fresourcemap.instedd.org%2Fapi%2Fcollections%2F409.json%3Fpage%3Dall%26box%3D-180%2C-90%2C179.99%2C90%26Admin_div%5Bunder%5D%3DTZ%26human%3Dtrue&report_title=List_of_Facilities_with_Geo,http://hfrportal.moh.go.tz/index.php?r=page/index&page_name=about_page,,2020,Ministry of Health,,
+Western Sahara,ESH,no,,,,,no,not available,,,,,,,
+Zambia,ZMB,yes,yes,yes,CSV,yes,yes,included,https://raw.githubusercontent.com/MOH-Zambia/MFL/master/geography/data/facility_list.csv,https://github.com/MOH-Zambia/MFL/,,2019,Ministry of Health,,Github repository with raw data
+Zimbabwe,ZWE,no,no,,,No (full physical address is available),no,not downloadable,,,,No date,Health Professions Authority Zimbabwe,,Quite complete list from health professions authority. not downloadable
