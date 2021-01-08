@@ -2,10 +2,10 @@
 % Please edit documentation in R/check_rhealthsites.r
 \name{install_rhealthsites}
 \alias{install_rhealthsites}
-\title{Install the naturalearthdata package after checking with the user}
+\title{Install the rhealthsites package after checking with the user}
 \usage{
 install_rhealthsites()
 }
 \description{
-Install the naturalearthdata package after checking with the user
+Install the rhealthsites package after checking with the user
 }

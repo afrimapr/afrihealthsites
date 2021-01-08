@@ -14,7 +14,7 @@ check_rhealthsites <- function() {
   }
 }
 
-#' Install the naturalearthdata package after checking with the user
+#' Install the rhealthsites package after checking with the user
 #' @export
 install_rhealthsites <- function() {
   instructions <- paste("Please try installing the package for yourself",
@@ -26,7 +26,6 @@ install_rhealthsites <- function() {
     stop(paste("Failed to install the rhealthsites package.\n", instructions))
   }
 
-  #23/2/17 changed to try install if not interactive to avoid winbuilder warning
   input <- 1
   if (interactive()) {
     input <- utils::menu(c("Yes", "No"),
