@@ -20,7 +20,7 @@ national_list_avail <- function(country = 'all'
   #later may want to auto read in the csv to an R object but will need to be careful
   #it gets auto-updated following any changes
 
-  df <- read.csv(system.file("extdata/afrihealthsites-country-facility-list-availability.csv", package="afrihealthsites"),
+  df <- utils::read.csv(system.file("extdata/afrihealthsites-country-facility-list-availability.csv", package="afrihealthsites"),
                  skip=1)
 
   if (country != 'all')

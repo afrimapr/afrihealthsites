@@ -23,11 +23,13 @@ national_list_url('South Sudan')
 #dfgha <- read.csv(national_list_url("Ghana"))
 #sfgha <- sf::st_as_sf(dfgha, coords=c("Longitude","Latitude"), crs=4326, na.fail=FALSE)
 #mapview::mapview(sfgha, zcol='Type')
-#TODO fix why this fails
-#compare_hs_sources("ghana",datasources=c("who",sfgha))
-#in compare_hs_sources country=ghana admin_level= admin_names=
-#Error in afrihealthsites(country, datasource = datasources[[2]], plot = FALSE,  :
-#                            object 'sfcountry' not found
+#afrihealthsites('gha',datasource=sfgha, type_column='Type')
+#compare_hs_sources("ghana", datasources=list(sfgha,"who"), type_column='Type')
+#3756 facilities from mfl
+#facility_types('gha',datasource=sfgha, type_column='Type')
+#1878 facilities in who-kemri data
+#facility_types('gha',datasource='who', type_column='Type')
+
 
 #to return a dataframe with all countries that have urls
 national_list_url()
