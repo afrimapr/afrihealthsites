@@ -72,7 +72,7 @@ afrihealthsites <- function(country,
   ################# user supplied file or dataframe
   # have to use %in% because sf objects give both sf & dataframe for class
 
-  isfile <- ifelse(is.character(datasource) &&
+  isfile <- ifelse("character" %in% class(datasource) &&
                     (file.exists(datasource) ||
                      grepl("http", datasource) || #quickfix to allow a url to be passed here
                      grepl("www", datasource)), TRUE, FALSE)
@@ -82,19 +82,28 @@ afrihealthsites <- function(country,
         isfile )
   {
     ######################################
+    #TODO tidy this up it is a mess
     #TODO test whether it is sf compatible
 
     # most file options are likely to be csvs
     #set check.names to FALSE to stop names being changed e.g. spaces to dots
 
     #if file, read into dataframe
-    if (is.character(datasource) && isfile )
+    if ("character" %in% class(datasource) && isfile )
     {
       dfcountry <- utils::read.csv(datasource, as.is=TRUE, check.names = FALSE)
     }
 
+    #if already sf (this condition needs to come before sf because sf is also a df !)
+    if ("sf" %in% class(datasource))
+    {
+      #if an sf object passed just change name
+      sfcountry <- datasource
+    }
+
     #if dataframe convert to sf
-    if ((is.character(datasource) && isfile) | class(datasource)=="data.frame")
+    else if (("character" %in% class(datasource) && isfile) |
+             "data.frame" %in% class(datasource))
     {
 
       if (class(datasource)=="data.frame") dfcountry <- datasource
@@ -106,14 +115,9 @@ afrihealthsites <- function(country,
         return(dfcountry) #invisible didn't work here
       }
 
-
       #convert to sf, na.fail=FALSE to avoid failure if any points don't have coords
       sfcountry <- sf::st_as_sf(dfcountry, coords = lonlat_columns, crs = 4326, na.fail = FALSE )
 
-
-    } else if (class(datasource)=="sf") #if an sf object passed just change name
-    {
-      sfcountry <- datasource
     }
 
     #other option if it is shp and 1 country already
