@@ -1,0 +1,323 @@
+---
+title: "2021-01-healthsites-paper-figs"
+#output: html_document
+output: word_document
+---
+
+R code to produce figures 4, 5 & 8 in : South et al. (2021) A reproducible picture of open access health facility data in Africa and R tools to support improvement. Wellcome Open Research.
+
+https://wellcomeopenresearch.org/articles/5-157
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+# install.packages("remotes") # if not already installed
+# remotes::install_github("afrimapr/afrihealthsites")
+
+# get development version of mapview to avoid error  Error in if (!is.na(getProjection(lst[[i]]))) 
+#remotes::install_github("r-spatial/mapview@develop")
+
+library(afrihealthsites)
+library(knitr) #for kable
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+
+```
+
+```{r, eval=TRUE, include=FALSE}
+#set to eval=TRUE to make figs for submission
+# options to create final publication quality figures
+# word doc summarises & figs get stored
+
+# wellcome open research 
+# https://wellcomeopenresearch.org/for-authors/article-guidelines/research-articles
+# they want eps
+# If none of the above options is possible then we also accept uncompressed TIFFs with a resolution of at least 600dpi at the size they are likely to be displayed at (see above).
+
+opts_chunk$set(dev="tiff",
+               #dev.args=list(compression="lzw"),
+               dpi=300, #wellcome says 600, but makes huge files
+               cache=FALSE,
+               fig.path='2020-06-paper-figs/',
+               fig.width=8.5,
+               fig.height=10)
+```
+
+
+Code to count the number of locations per country in each source dataset and save it.
+
+```{r, eval=FALSE, echo=FALSE, warning=FALSE}
+
+#eval = FALSE after have run the first time because it takes few mins
+
+  data(afcountries) #just contains country names - from afrihealthsites
+
+  dfallcountries <- NULL
+
+  #takes a few minutes to do all countries
+  for( country in afcountries$name)
+  {
+    
+    dfsumm <- afrihealthsites::merge_points(country, toreturn='summary', 
+                           hs_amenity=c('clinic', 'doctors', 'pharmacy', 'hospital'),
+                           dist_same_m = 50)
+    
+    dfallcountries <- rbind(dfallcountries, dfsumm)
+  }
+
+#reformatting dataframe
+
+# rename columns containing num locations from first entry in source columns (in this case healthsites and who)
+names(dfallcountries)[which(names(dfallcountries)=='numpoints1')] <- as.character(dfallcountries$source1[1])
+names(dfallcountries)[which(names(dfallcountries)=='numpoints2')] <- as.character(dfallcountries$source2[1])
+
+# copy and rename object
+df_hs_who_compare_50m <- dfallcountries
+
+# remove source columns
+df_hs_who_compare_50m <- df_hs_who_compare_50m[,-c(2,4)]
+
+# save object
+save(df_hs_who_compare_50m, file="data//df_hs_who_compare_50m.rda") 
+
+```
+
+```{r, echo=FALSE, asis=TRUE}
+
+# load data created above
+
+load("data//df_hs_who_compare_50m.rda")
+
+```
+
+
+Numbers by country in the three main datasets (healthsites, who-kemri and national mfls)
+
+```{r fig4OLD_points_who_hs_moh, echo=FALSE, warnings=FALSE, asis=TRUE, fig.width=9, fig.height=9}
+
+# arrange in order of who-kemri
+df2 <- dplyr::arrange(df_hs_who_compare_50m, who, -healthsites)
+
+positions <- df2$country
+
+# pivot longer to structure data for plot
+df3 <- tidyr::pivot_longer(df2, -c(country, threshdistm), names_to = "measure", values_to = "count")
+
+# filter just rows wanted in plot
+df4 <- dplyr::filter(df3,measure %in% c('healthsites','who'))
+
+# adde facility numbers from ministry of health sources 
+# hardcoded here from analysis in http://doi.org/10.5281/zenodo.3871224 and https://rpubs.com/anelda/african-mfls
+dfmoh <- data.frame(country=c("Kenya","Malawi","Namibia","Rwanda","South Sudan","United Republic of Tanzania","Zambia"),
+                    threshdistm=NA,
+                    measure="moh",
+                    count=c(12391,1546,589,1525,2889,10807,2828))
+
+
+df5 <- rbind(df4,dfmoh)
+
+# set factor order otherwise colours are wrong
+df5$measure <- factor(df5$measure,levels=c("who", "healthsites","moh"))
+
+# set colours
+#point_cols <- c("who"='steelblue2', "healthsites"='firebrick1', "moh"='green3')
+point_cols <- c('steelblue2', 'firebrick1','green3')
+
+ggplot(df5, aes(x=country, y=count, colour=measure, shape=measure)) + 
+  geom_point(alpha = 0.7) +
+  scale_colour_manual(name="data source",
+                    labels = c("WHO-KWTRP", "healthsites.io", "National List"),
+                    values = point_cols) +
+  scale_shape_manual(name="data source",
+                    labels = c("WHO-KWTRP", "healthsites.io", "National List"),
+                    values=c(19,2,15)) +
+  # labs(subtitle="Normalised mileage from 'mtcars'", 
+  #      title= "Diverging Bars") +
+  ylab("number of health facility locations") +
+  scale_x_discrete(limits = positions) +
+  #scale_y_log10() +
+  theme_minimal() +
+  coord_flip()
+
+```
+
+Numbers by country in the three main datasets + HeRAMS (healthsites, who-kemri and national mfls)
+
+```{r fig4_points_who_hs_moh_herams, echo=FALSE, warnings=FALSE, asis=TRUE, fig.width=9, fig.height=9}
+
+# arrange in order of who-kemri
+df2 <- dplyr::arrange(df_hs_who_compare_50m, who, -healthsites)
+
+positions <- df2$country
+
+# pivot longer to structure data for plot
+df3 <- tidyr::pivot_longer(df2, -c(country, threshdistm), names_to = "measure", values_to = "count")
+
+# filter just rows wanted in plot
+df4 <- dplyr::filter(df3,measure %in% c('healthsites','who'))
+
+# add facility numbers from ministry of health sources 
+# hardcoded here from analysis in http://doi.org/10.5281/zenodo.3871224 and https://rpubs.com/anelda/african-mfls
+dfmoh <- data.frame(country=c("Kenya","Malawi","Namibia","Rwanda","South Sudan","United Republic of Tanzania","Zambia"),
+                    threshdistm=NA,
+                    measure="moh",
+                    count=c(12391,1546,589,1525,2889,10807,2828))
+
+#adding HeRAMS : read by eye from www.herams.org 2020-01-22
+dfherams <- data.frame(country=c("Burkina Faso","Comoros","Ethiopia","Mali","Mozambique","Nigeria", "Central African Republic","Republic of Congo","Somalia","Sudan","Chad","Zimbabwe"),
+                    threshdistm=NA,
+                    measure="herams",
+                    count=c(2926,92,488,2538,1646,3004,1017,154,1659,1404,1992,87)) 
+
+
+df5 <- rbind(df4,dfmoh,dfherams)
+
+# set factor order otherwise colours are wrong
+df5$measure <- factor(df5$measure,levels=c("who", "healthsites","moh","herams"))
+
+# set colours
+#point_cols <- c("who"='steelblue2', "healthsites"='firebrick1', "moh"='green3')
+point_cols <- c('steelblue2', 'firebrick1','green3','black')
+
+ggplot(df5, aes(x=country, y=count, colour=measure, shape=measure)) + 
+  geom_point(alpha = 0.7) +
+  scale_colour_manual(name="data source",
+                    labels = c("WHO-KWTRP", "healthsites.io", "National List", "WHO HeRAMS\n(not open)"),
+                    values = point_cols) +
+  scale_shape_manual(name="data source",
+                    labels = c("WHO-KWTRP", "healthsites.io", "National List", "WHO HeRAMS\n(not open)"),
+                    values=c(19,2,15,3)) +
+  # labs(subtitle="Normalised mileage from 'mtcars'", 
+  #      title= "Diverging Bars") +
+  ylab("number of health facility locations") +
+  scale_x_discrete(limits = positions) +
+  #scale_y_log10() +
+  theme_minimal() +
+  coord_flip()
+
+```
+
+
+Compare per country distributions of facility types between who and healthsites 
+
+```{r fig5_facility_types_hs_who9, echo=FALSE, warnings=FALSE, asis=TRUE, fig.width=9, fig.height=9}
+
+country <- 'all'
+
+# https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dclinic
+# healthsites : clinic = > 10 doctors
+
+hs_amenity <- c('clinic', 'doctors', 'pharmacy', 'hospital','dentist')
+
+#WHO9 : I think I could cut it down further from 9
+#also whocats9 from the table actually has 12 cats !
+#whocats9
+#  "Hospital" "Health Centre" "Health Post" "Maternity" "Community Health Unit"
+#  "Dispensary" "Medical Center" "Health Clinic" NA  "Polyclinic"           
+#  "Health Station"        "Health Hut" 
+#should be:  hospital, health clinic, dispensary, community health unit, health post, health center, maternity ward, medical center, or polyclinic
+sfwhoall <- afrihealthsites('all', datasource = 'who', plot=FALSE )
+whocats9 <- unique(sfwhoall$facility_type_9)
+whocatsless <- whocats9[which(! (whocats9=='Polyclinic' | whocats9=='Maternity' | whocats9=='Health station' ))]
+
+#a check on the 240 NAs in reclassed WHO data
+sfwhoNA <- sfwhoall[which(is.na(sfwhoall$facility_type_9)),]
+#unique(sfwhoNA[['Facility type']]) # gives 17 types that appear not to have been converted
+#"Unites de Santé de village"  "Postos Sanitários"           "Hospitais Regionais"         "Hospitais Centrais"
+#"Centre Médico-Chirurgical"   "Centre Médico-Urbain"        "Poste De Santé"              "Clinic without Maternity"
+#"Public Health Unit"          "Clinic with Maternity"       "Health post"                 "Area Health Centre"         
+#"Family Health Clinic"        "Medi-Clinic"                 "Hospitais"                   "Postos de Saúde Comunitária"
+#"Primary Health Care Unit +" 
+#TODO add these into who_type_lookup
+
+#type_filter <- whocatsless  
+
+    gg1 <- afrihealthsites::facility_types(country,
+                                    datasource = 'healthsites',
+                                    plot_title = "A. healthsites.io",
+                                    type_filter = hs_amenity,
+                                    brewer_palette = "YlGn",
+                                    plot=FALSE)
+    
+    # using consistent 9 class facility types for WHO data, specify type_column='facility_type_9'
+    gg2 <- afrihealthsites::facility_types(country,
+                                           datasource = 'who',
+                                           plot_title = "B. WHO-KWTRP reclassified",
+                                           type_filter = whocatsless,
+                                           type_column = 'facility_type_9',
+                                           brewer_palette = "BuPu",
+                                           plot=FALSE)
+    
+
+      max_x1 <- max(ggplot_build(gg1)$layout$panel_params[[1]]$x$continuous_range)
+      max_x2 <- max(ggplot_build(gg2)$layout$panel_params[[1]]$x$continuous_range)
+      #set xmax for both plots to this
+      gg1 <- gg1 + xlim(c(0,max(max_x1,max_x2, na.rm=TRUE)))
+      gg2 <- gg2 + xlim(c(0,max(max_x1,max_x2, na.rm=TRUE)))
+
+      #set size of y plots to be dependent on num cats
+      #y axis has cats, this actually gets max of y axis, e.g. for 6 cats is 6.6
+      max_y1 <- max(ggplot_build(gg1)$layout$panel_params[[1]]$y$continuous_range)
+      max_y2 <- max(ggplot_build(gg2)$layout$panel_params[[1]]$y$continuous_range)
+
+      #setting heights to num cats makes bar widths constant between cats
+      gg1 / gg2 + plot_layout(heights=c(max_y1, max_y2)) #patchwork    
+
+```
+
+```{r hs_beds_doctors, echo=FALSE, warnings=FALSE, asis=TRUE, fig.width=9, fig.height=9}
+
+# try to count the numbers of attribute entries in healthsites data
+country <- 'all'
+
+sfhsall <- afrihealthsites(country, datasource = 'healthsites', plot=FALSE)
+
+ids_beds <- which((sfhsall$beds != "")) #469
+ids_docs <- which((sfhsall$staff_doctors != "")) #890
+ids_nurs <- which((sfhsall$staff_nurses != "")) #934
+
+934/56854 #1.64%
+
+```
+
+```{r fig8_zambia_moh, eval=TRUE, echo=FALSE, warnings=FALSE, asis=TRUE, fig.width=9, fig.height=9}
+
+#eval=FALSE because this produces an interactive map. A zoomed screenshot is used for the paper.
+
+url_zambia <- "https://raw.githubusercontent.com/MOH-Zambia/MFL/master/geography/data/facility_list.csv"
+
+dfzambia <- read.csv(url_zambia)
+
+library(afrihealthsites)
+
+# plot an interactive map of the locations from the two sources
+compare_hs_sources('zambia', 
+                   datasources = list('who', dfzambia), 
+                   type_column = 'facility_type', 
+                   label_column = 'name', 
+                   lonlat_columns = c('longitude', 'latitude'))
+
+
+#previous problem with data that there are some NAs in coords columns 
+#not needed now because afrihealthsites copes
+#dfzambia <- read.csv(url_zambia)
+#dfzambia <- dfzambia[-which(is.na(dfzambia$longitude)),]
+
+#plot zambia map on its own
+# sfzambia <- afrihealthsites('zambia',
+#                             datasource = dfzambia,
+#                             type_column = 'facility_type',
+#                             label_column = 'name',
+#                             lonlat_columns = c('longitude', 'latitude'),
+#                             plot=FALSE)
+
+#nice comparison between MFL and WHO - similar, extra types in MFL 
+#but bit complicated to compare for the paper
+#facility_types('zambia',datasource=dfzambia,type_column='facility_type',label_column='name',lonlat_columns = NULL)
+#facility_types('zambia',datasource='who')
+
+
+```
