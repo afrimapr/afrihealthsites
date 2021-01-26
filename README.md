@@ -1,5 +1,5 @@
 # afrihealthsites
-access to geographic locations of african health sites from different sources.
+access to geographic locations of african health facilities from different sources.
 
 See [web interface](https://andysouth.shinyapps.io/healthsites_viewer/) and [paper](https://wellcomeopenresearch.org/articles/5-157) demonstrating these components.
 
@@ -16,20 +16,6 @@ Install the development version from GitHub :
     
     remotes::install_github("afrimapr/afrihealthsites")
     
-### Note
-
-To specify country, it is possible to use the following:
-
-- capitalisation (as you would write the country name in normal text e.g. "South Africa"
-- all lower caps (e.g. "south africa")
-- 3 letter country iso3c code (e.g. "zaf")
-
-```
-dfzaf <- afrihealthsites("south africa", datasource='who', plot=FALSE, returnclass='dataframe')
-dfzaf <- afrihealthsites("ZAF", datasource='who', plot=FALSE, returnclass='dataframe')
-dfzaf <- afrihealthsites("South Africa", datasource='who', plot=FALSE, returnclass='dataframe')
-
-```
 
 ### First Usage
 
@@ -52,7 +38,7 @@ sfeth <- afrihealthsites("ethiopia", datasource='who', plot='sf')
 # with interactive map
 sfmali <- afrihealthsites("mali", datasource='healthsites', plot='mapview')
 
-## compare healthsite locations from different sources
+## compare locations from different sources
 
 compare_hs_sources('togo')
 
@@ -69,8 +55,40 @@ library(rhealthsites)
 # with interactive map
 sfmali <- afrihealthsites("mali", datasource='healthsites_live', plot='mapview')
 
+```
 
+### Find National Master Facility Lists
 
-# todo move the readme to an Rmd to allow plots
+``` r
+
+# all countries list of available MFLs
+df <- national_list_avail()
+
+# availability for a single country
+national_list_avail("Togo")
+
+# url for data (if available)
+national_list_url("Ghana")
+
+# example of reading in data direct from a url and mapping
+# will only work for countries where "machine_readable" is TRUE
+dfgha <- read.csv(national_list_url("Ghana"))
+sfgha <- sf::st_as_sf(dfgha, coords=c("Longitude","Latitude"), crs=4326, na.fail=FALSE)
+afrihealthsites('gha',datasource=sfgha, type_column='Type')
+
+``` 
+
+### specifying countries
+
+The following can be used :
+
+- capitalisation (as you would write the country name in normal text e.g. "South Africa"
+- all lower caps (e.g. "south africa")
+- 3 letter country iso3c code (e.g. "zaf")
+
+```
+sfzaf1 <- afrihealthsites("south africa", datasource='who', plot=FALSE)
+sfzaf2 <- afrihealthsites("ZAF", datasource='healthsites', plot='sf')
+sfzaf3 <- afrihealthsites("South Africa", datasource='who', plot='mapview')
 
 ```
