@@ -133,5 +133,32 @@ df_who_sites$facility_type_9 <- who_type_lookup$facility_type_9[ match(df_who_si
 # [169] "Level 3 Hospital"                             "Primary Health Care Unit +"
 # [171] "Rural Health Clinic"                          "District/Provincial Hospital"
 
+# add columns with 4 tier classication from Falchetta 2020
+# see also afrimapr_dev/falchetta2021-explore.Rmd
+# to explore data from https://www.pnas.org/content/117/50/31760
+# Falchetta2021 Planning universal accessibility to public health care in sub-Saharan Africa
+# data & analyses downloaded from https://zenodo.org/record/3757084#.YDD3euj7SUk
+
+
+datafolder <- 'C:\\Dropbox\\_afrimapr\\health-facilities-africa\\falchetta2020-code\\'
+
+# from data_preparation_and_figures.R
+# Import classified version
+parser_healthcare_types <- readxl::read_excel(paste0(datafolder, "parser_healthcare_types.xlsx")) %>% dplyr::select(-...1)
+
+# names(parser_healthcare_types)
+# [1] "ft"      "Country" "Tier"
+# 385 rows including country
+
+parser_healthcare_types %>% dplyr::group_by(ft) %>% unique()
+
+
+df_who_sites <- dplyr::left_join(df_who_sites, parser_healthcare_types, by=c("Country", "Facility type" = "ft"))
+
+df_who_sites$Tier_name <- ifelse(df_who_sites$Tier==1,"Tier1 health post",
+                                 df_who_sites$Tier==2,"Tier2 health center",
+                                 df_who_sites$Tier==3,"Tier3 provincial hospital",
+                                 df_who_sites$Tier==4,"Tier4 central hospital")
+
 
 usethis::use_data(df_who_sites, overwrite = TRUE)
