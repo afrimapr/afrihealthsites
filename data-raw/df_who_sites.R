@@ -33,7 +33,7 @@ df_who_sites$Country[df_who_sites$Country=='Zanzibar'] <- 'Tanzania'
 # add iso3c helps with country ids later
 df_who_sites$iso3c <- country2iso(df_who_sites$Country)
 
-# conversion to sf now happens elsewhere
+# conversion to sf now happens elsewhere in afrihealthsites.r
 #sf_who_sites <- sf::st_as_sf(df_who_sites, coords = c("Long", "Lat"), crs = 4326)
 
 #nrow(df_who_sites)
