@@ -153,12 +153,12 @@ parser_healthcare_types <- readxl::read_excel(paste0(datafolder, "parser_healthc
 parser_healthcare_types %>% dplyr::group_by(ft) %>% unique()
 
 
-df_who_sites <- dplyr::left_join(df_who_sites, parser_healthcare_types, by=c("Country", "Facility type" = "ft"))
+df_who_sites <- dplyr::left_join(df_who_sites, parser_healthcare_types,
+                                 by=c("Country", "Facility type" = "ft"))
 
 df_who_sites$Tier_name <- ifelse(df_who_sites$Tier==1,"Tier1 health post",
-                                 df_who_sites$Tier==2,"Tier2 health center",
-                                 df_who_sites$Tier==3,"Tier3 provincial hospital",
-                                 df_who_sites$Tier==4,"Tier4 central hospital")
-
+                            ifelse(df_who_sites$Tier==2,"Tier2 health center",
+                            ifelse(df_who_sites$Tier==3,"Tier3 provincial hospital",
+                            ifelse(df_who_sites$Tier==4,"Tier4 central hospital", NA))))
 
 usethis::use_data(df_who_sites, overwrite = TRUE)
