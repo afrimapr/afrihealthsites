@@ -107,8 +107,8 @@ function(input, output) {
     sfwho <- afrihealthsites::afrihealthsites(input$country, datasource = 'who', plot = FALSE)
 
     #who_cats <- unique(sfwho$`Facility type`)
-    # allowing for 9 cat reclass
-    who_cats <- unique(sfwho[[input$who_type_option]])
+    # allowing for 9 cat reclass, & 4 Tiers
+    who_cats <- sort(unique(sfwho[[input$who_type_option]]))
 
     #"who-kemri categories"
     checkboxGroupInput("selected_who_cats", label = NULL, #label = h5("who-kemri categories"),

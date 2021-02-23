@@ -161,4 +161,7 @@ df_who_sites$Tier_name <- ifelse(df_who_sites$Tier==1,"Tier1 health post",
                             ifelse(df_who_sites$Tier==3,"Tier3 provincial hospital",
                             ifelse(df_who_sites$Tier==4,"Tier4 central hospital", NA))))
 
+# change to a factor with levels in ascending order partly so it displays well in UI
+levels(df_who_sites$Tier_name) <- sort(unique(df_who_sites$Tier_name))
+
 usethis::use_data(df_who_sites, overwrite = TRUE)

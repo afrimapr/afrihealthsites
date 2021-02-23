@@ -1,6 +1,7 @@
 #afrihealthsites/healthsites_viewer_v03/ui.r
 
 # to add selection by admin region
+# add 4 tiers from Falchetta2020
 
 cran_packages <- c("shiny","leaflet","remotes")
 
@@ -69,9 +70,11 @@ fluidPage(
                        choices = list("hospital"="hospital", "clinic"="clinic", "doctors"="doctors", "pharmacy"="pharmacy", "unlabelled"="", "dentist" = "dentist"),
                        selected = c("hospital","clinic","doctors","pharmacy")),
 
-    #who cats whether to display raw or 9 broad
+    #who cats whether to display raw or 9 broad or 4 tiers
     selectInput("who_type_option", label = "WHO-KEMRI categories",
-                choices = list("raw" = "Facility type", "reclassified to 9" = "facility_type_9"),
+                choices = list("raw" = "Facility type",
+                               "reclassified to 9" = "facility_type_9",
+                               "4 Tiers (Falchetta 2020)" = "Tier_name"),
                 selected = 1),
 
     # dynamic who category selection

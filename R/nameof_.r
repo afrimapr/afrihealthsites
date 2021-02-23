@@ -16,7 +16,8 @@ nameof_zcol <- function(datasource, type_column = NULL) {
 
   #TODO check if this is a good way of doing
   #to allow conversion of who to 9 cats, this just allows it to return the passed type_column
-  if ( datasource == 'who' & isTRUE(type_column == "facility_type_9") ) datasource <- 'other'
+  if ( datasource == 'who' & isTRUE(type_column == "facility_type_9" | type_column == "Tier_name") )
+     datasource <- 'other'
 
   zcol <- switch(datasource,
                  'healthsites' = 'amenity',
