@@ -2,6 +2,7 @@
 
 # to add selection by admin region
 # add 4 tiers from Falchetta2020
+# add MoH MFL table as an extra tab
 
 cran_packages <- c("shiny","leaflet","remotes")
 
@@ -23,8 +24,11 @@ fluidPage(
 
   headerPanel('afrimapr healthsites viewer'),
 
-  p(a("Paper here. ", href="https://wellcomeopenresearch.org/articles/5-157", target="_blank"), "There are two main Africa-wide sources of open data on the locations of > 100k hospitals and health facilities. Neither is perfect.
-      This app allows detailed comparison to inform pandemic response and allow improvement."),
+  p(a("Paper here. ", href="https://wellcomeopenresearch.org/articles/5-157", target="_blank"),
+  "There are two main Africa-wide sources of open data on the locations of > 100k hospitals and health facilities.
+   Neither is perfect.
+   Some countries provide open Master Facility Lists, see 'National list availability' tab.
+   This app allows detailed comparison to inform pandemic response and allow improvement."),
 
   sidebarLayout(
 
@@ -80,7 +84,7 @@ fluidPage(
     # dynamic who category selection
     uiOutput("select_who_cat"),
 
-    p("active development December 2020, v0.3\n"),
+    p("active development March 2021, v0.3\n"),
 
     #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),
@@ -107,7 +111,9 @@ fluidPage(
                 tabPanel("map", leafletOutput("serve_healthsites_map", height=800)),
                 tabPanel("facility types", plotOutput("plot_fac_types", height=600)),
                 tabPanel("healthsites data", DT::dataTableOutput("table_raw_hs")),
-                tabPanel("WHO data", DT::dataTableOutput("table_raw_who"))
+                tabPanel("WHO data", DT::dataTableOutput("table_raw_who")),
+                # table of availability of MoH MFL for all countries
+                tabPanel("National list availability", DT::dataTableOutput("table_national_list_avail"))
                 #tabPanel("about", NULL)
     )
   )

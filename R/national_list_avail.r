@@ -34,5 +34,5 @@ national_list_avail <- function(country = 'all'
     df <- df[ which(iso3c == df$iso3c), ]
   }
 
-  invisible(df)
+  df
 }

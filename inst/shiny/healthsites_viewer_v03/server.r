@@ -227,5 +227,12 @@ function(input, output) {
     DT::datatable(sfhs, options = list(pageLength = 50))
   })
 
+  ###############################
+  # table of national list (MFL) availability
+  output$table_national_list_avail <- DT::renderDataTable({
+
+
+    DT::datatable(national_list_avail(), options = list(pageLength = 55))
+  })
 
 }
