@@ -1,6 +1,6 @@
 Package: afrihealthsites
 Title: Geographic locations of African health facilities from different sources
-Version: 0.1.0.9007
+Version: 0.1.0.9008
 Authors@R: 
     person(given = "Andy",
            family = "South",
