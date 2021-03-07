@@ -71,7 +71,7 @@ compare_hs_sources <- function(country,
   if (plot == 'mapview')
   {
 
-    #type_columnb is only used if the dataset is not one of the recognised ones
+    #type_column is only used if the dataset is not one of the recognised ones
     zcol1 <- nameof_zcol(datasources[[1]], type_column)
     zcol2 <- nameof_zcol(datasources[[2]], type_column)
 
@@ -161,8 +161,15 @@ compare_hs_sources <- function(country,
       #base alternative to avoid dplyr dependency
       sfadmin_sel <- sfadmin[which(sfadmin$shapeName%in%admin_names),]
 
-      #add polygons to the plot
-      mapplot <- mapplot + mapview::mapview(sfadmin_sel, zcol="shapeName", color = "darkred", col.regions = "blue", alpha.regions=0.01, lwd = 2, legend=FALSE)
+      #add admin polygons to the plot
+      mapplot_to_add <- mapview::mapview(sfadmin_sel, zcol="shapeName", color = "darkred", col.regions = "blue", alpha.regions=0.01, lwd = 2, legend=FALSE)
+
+      #if there are no facilities in a region, mapplot is not created above
+      #so just set the plot to the polygons here
+      if ( exists('mapplot'))
+         mapplot <- mapplot + mapplot_to_add
+      else
+         mapplot <- mapplot_to_add
 
     }
 
