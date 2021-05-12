@@ -17,7 +17,9 @@ if(!require(afrihealthsites)){
 }
 
 library(afrihealthsites)
-# library(mapview)
+
+library(rgeoboundaries) #I think this shouldn't be needed but seems to cause fail on shinyapps
+                        # for admin region selection this app uses afriadmin which imports rgeoboundaries
 
 
 fluidPage(
@@ -84,7 +86,7 @@ fluidPage(
     # dynamic who category selection
     uiOutput("select_who_cat"),
 
-    p("active development March 2021, v0.3\n"),
+    p("active development May 2021, v0.3\n"),
 
     #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/afrihealthsites", target="_blank")),
