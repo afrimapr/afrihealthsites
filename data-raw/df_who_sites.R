@@ -157,7 +157,7 @@ df_who_sites <- dplyr::left_join(df_who_sites, parser_healthcare_types,
                                  by=c("Country", "Facility type" = "ft"))
 
 df_who_sites$Tier_name <- ifelse(df_who_sites$Tier==1,"Tier1 health post",
-                            ifelse(df_who_sites$Tier==2,"Tier2 health center",
+                            ifelse(df_who_sites$Tier==2,"Tier2 health centre",
                             ifelse(df_who_sites$Tier==3,"Tier3 provincial hospital",
                             ifelse(df_who_sites$Tier==4,"Tier4 central hospital", NA))))
 
