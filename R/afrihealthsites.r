@@ -305,8 +305,9 @@ afrihealthsites <- function(country,
   if (!is.null(admin_level) & isTRUE(admin_level > 0) & !is.null(admin_names))
   {
     #TODO check that this admin level is available for this country & datasource
+    warning("currently afrihealthsites doesn't check if admin_level is available")
     #initially start on admin1
-    admin_level <- 1
+    #admin_level <- 1
     sfadmin <- afriadmin::afriadmin(country, level=admin_level, datasource='geoboundaries', plot=FALSE)
 
     #filter just the selected regions
